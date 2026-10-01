@@ -39,8 +39,28 @@ npx http-server . -p 4173 -c-1
 
 ## Publicar
 
-Projeto na Vercel: **valora-suisse**. Deploy automático a cada push na branch
-`main`. Para apontar o domínio da marca, adicione-o em
-Vercel → Project → Settings → Domains e configure o DNS conforme as instruções
-que a Vercel mostrar (CNAME para `cname.vercel-dns.com`, ou os nameservers da
-Vercel, se preferir que ela cuide de tudo).
+- **GitHub**: [PEDROK7MKT/VALORA](https://github.com/PEDROK7MKT/VALORA) — branch `main`.
+- **Vercel**: projeto `valora-suisse-site`, ligado ao repositório. Todo push em
+  `main` builda e publica sozinho, sem passo manual.
+- **Domínio**: `valorasuisse.com` (+ `www`, redirecionando para o domínio sem `www`)
+  já estão cadastrados no projeto. Falta só o DNS apontar — escolha uma opção no
+  registrador onde o domínio foi comprado:
+
+  **Opção A — nameservers da Vercel** (mais simples; é o que os outros domínios
+  desta conta já usam): troque os nameservers do domínio para
+  ```
+  ns1.vercel-dns.com
+  ns2.vercel-dns.com
+  ```
+  A Vercel passa a cuidar do DNS inteiro do domínio (inclusive de registros que
+  já existam, como e-mail — migre-os para lá antes de trocar, se houver).
+
+  **Opção B — só os registros do site** (mantém o DNS atual no registrador):
+  ```
+  A      @     76.76.21.21
+  CNAME  www   cname.vercel-dns.com
+  ```
+
+  Depois de apontar, a propagação costuma levar de minutos a algumas horas.
+  A Vercel emite o certificado HTTPS sozinha assim que o DNS responder certo —
+  nenhum passo extra aqui.
