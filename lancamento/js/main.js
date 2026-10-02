@@ -605,6 +605,11 @@ function validateEmail(raw) {
   if (!v) return 'Informe seu e-mail.';
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Confira o e-mail: parece faltar algo.';
 }
+function validateName(raw) {
+  const v = String(raw).trim();
+  if (!v) return 'Informe seu nome.';
+  return v.length >= 2 ? '' : 'Confira o nome.';
+}
 
 function utm() {
   const out = {};
@@ -622,7 +627,7 @@ function utm() {
  * Com URL → POST application/x-www-form-urlencoded, timeout de 8 s.
  * A confirmação só aparece com resposta 2xx. O webhook precisa liberar
  * CORS para o domínio da página (no n8n: Allowed Origins = *).
- * Campos: channel, contact (+5511987654321 | nome@email.com), stone,
+ * Campos: channel, contact (+5511987654321 | nome@email.com), name, stone,
  *         consent, consent_text, consent_version, page, referrer,
  *         created_at, utm_source, utm_medium, utm_campaign, utm_content
  */
@@ -683,6 +688,7 @@ function waitlist() {
   const form = $('#wl-form');
   if (!form) return;
   form.hidden = false;
+  const name = $('#wl-name');
   const phone = $('#wl-phone');
   const email = $('#wl-email');
   const fPhone = $('#field-whatsapp');
@@ -701,7 +707,8 @@ function waitlist() {
   let touched = false;
 
   const input = () => (channel === 'email' ? email : phone);
-  const validate = () => (channel === 'email' ? validateEmail(email.value) : validatePhone(phone.value));
+  const validate = () => validateName(name.value) || (channel === 'email' ? validateEmail(email.value) : validatePhone(phone.value));
+  const badField = () => (validateName(name.value) ? name : input());
 
   const setError = (msg, withWhatsApp) => {
     err.replaceChildren(msg || '');
@@ -715,8 +722,8 @@ function waitlist() {
     }
     err.hidden = !msg;
     if (!msg) status.textContent = ''; // não deixa um erro antigo na região lida pelo leitor de tela
-    [phone, email].forEach((el) => {
-      if (msg && el === input()) el.setAttribute('aria-invalid', 'true');
+    [name, phone, email].forEach((el) => {
+      if (msg && el === badField()) el.setAttribute('aria-invalid', 'true');
       else el.removeAttribute('aria-invalid');
     });
   };
@@ -770,6 +777,7 @@ function waitlist() {
     if (!intl) phone.value = formatBR(d);
   });
   email.addEventListener('input', () => { if (touched) setError(validate()); });
+  name.addEventListener('input', () => { if (touched) setError(validate()); });
 
   const showDone = ({ channel: ch, display, isNew }) => {
     joined = true;
@@ -820,7 +828,7 @@ function waitlist() {
     if (msg) {
       status.textContent = '';
       requestAnimationFrame(() => { status.textContent = msg; });
-      input().focus();
+      badField().focus();
       return;
     }
 
@@ -841,6 +849,7 @@ function waitlist() {
     const payload = {
       channel: ch,
       contact,
+      name: name.value.trim(),
       stone: stoneChosen ? currentStone : '',
       consent: 'sim',
       consent_text: consent.textContent.trim(),

@@ -53,7 +53,7 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
 ## Lista de espera · backend em produção
 
 `js/main.js → submitLead()` envia um `POST` `application/x-www-form-urlencoded` (sem preflight
-de CORS) com: `channel`, `contact` (E.164 ou e-mail), `stone`, `consent`, `consent_text`,
+de CORS) com: `channel`, `contact` (E.164 ou e-mail), `name`, `stone`, `consent`, `consent_text`,
 `consent_version`, `page`, `referrer`, `created_at` e `utm_*`. `CONFIG.waitlistEndpoint` aponta
 para um workflow n8n, que valida o envio e grava cada linha na tabela `leads` do projeto Supabase
 "valora-suisse" (RLS: a chave pública só pode inserir, nunca ler).
