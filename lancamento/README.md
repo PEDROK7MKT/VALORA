@@ -39,7 +39,7 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
 2. **Qual pedra está em cada foto** (`stones.*.pieceConfirmed`). Enquanto for `false`, a legenda
    do seletor diz só "Imagem ilustrativa." (a página não afirma nada sobre a composição da peça).
 3. **WhatsApp da marca** (`whatsappBrand`) — habilita o botão "Confirmar pelo WhatsApp".
-4. **Backend da lista** (`waitlistEndpoint`) — sem ele, o envio é simulado.
+4. **Backend da lista** (`waitlistEndpoint`) — já configurado (webhook n8n → Supabase); ver seção abaixo.
 5. **Instagram** e **link da loja** para depois da abertura.
 6. **Texto de consentimento** (`consent` no config) e **política de privacidade**
    (`privacidade.html`) — preencher razão social, CNPJ, contato, fornecedores e prazo de guarda
@@ -50,16 +50,20 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
 8. **Logo oficial em SVG** — o lockup atual é tipográfico (Cormorant + Montserrat) e não reproduz
    a cauda do "R" do logo gravado nos estojos. Com o SVG, basta trocar os três `.brand` do HTML.
 
-## Lista de espera · como plugar o backend
+## Lista de espera · backend em produção
 
 `js/main.js → submitLead()` envia um `POST` `application/x-www-form-urlencoded` (sem preflight
 de CORS) com: `channel`, `contact` (E.164 ou e-mail), `stone`, `consent`, `consent_text`,
-`consent_version`, `page`, `referrer`, `created_at` e `utm_*`.
+`consent_version`, `page`, `referrer`, `created_at` e `utm_*`. `CONFIG.waitlistEndpoint` aponta
+para um workflow n8n, que valida o envio e grava cada linha na tabela `leads` do projeto Supabase
+"valora-suisse" (RLS: a chave pública só pode inserir, nunca ler).
 
-- **n8n**: nó *Webhook* (POST) → *Google Sheets*/CRM. Em *Options → Allowed Origins (CORS)* use `*`.
-  O campo `stone` vem vazio quando a pessoa não mexeu no seletor de pedra.
-- **Zapier**: *Webhooks by Zapier → Catch Hook*.
-- **Make**: *Custom webhook*.
+- **Ver as inscrições**: supabase.com/dashboard → projeto `valora-suisse` → Table Editor → `leads`.
+- **Editar o fluxo** (ex.: notificar a marca por e-mail a cada novo cadastro, exportar para
+  Google Sheets etc.): pk7mkt.app.n8n.cloud → workflow "Valora Suisse — Lista de espera
+  (lançamento)".
+- **Trocar de backend**: qualquer webhook que aceite esse POST serve — basta colar a nova URL em
+  `waitlistEndpoint`. Em n8n, lembre de manter *Options → Allowed Origins (CORS)* como `*`.
 
 A confirmação só aparece com resposta 2xx. Se falhar, o cadastro fica guardado no aparelho e é
 reenviado na próxima visita, e a pessoa vê a opção de entrar pelo WhatsApp.

@@ -25,16 +25,18 @@ export const CONFIG = {
   whatsappBrand: '',
 
   // ------------------------------------------------------------------
-  // LISTA DE ESPERA · onde plugar o backend
-  // Vazio = envio SIMULADO (bom para testar a página).
-  // Para produção, cole a URL de um webhook que aceite POST:
-  //   n8n    → nó "Webhook" (POST), em Options → Allowed Origins (CORS): *
-  //   Zapier → "Webhooks by Zapier · Catch Hook"
-  //   Make   → "Custom webhook"
-  // O envio é application/x-www-form-urlencoded (não dispara preflight de CORS).
+  // LISTA DE ESPERA · backend já configurado (webhook n8n → Supabase)
+  // Cada cadastro é gravado na tabela "leads" do projeto Supabase
+  // "valora-suisse". Para ver as inscrições: supabase.com/dashboard →
+  // projeto valora-suisse → Table Editor → leads.
+  // Para editar o fluxo (ex.: notificar a marca por e-mail a cada novo
+  // cadastro): pk7mkt.app.n8n.cloud → workflow "Valora Suisse — Lista de
+  // espera (lançamento)".
+  // Trocar de backend? Cole aqui a URL de outro webhook que aceite POST
+  // application/x-www-form-urlencoded (não dispara preflight de CORS).
   // Os campos enviados estão documentados em js/main.js → submitLead().
   // ------------------------------------------------------------------
-  waitlistEndpoint: '',
+  waitlistEndpoint: 'https://pk7mkt.app.n8n.cloud/webhook/valora-lead',
 
   // Eventos de medição (opcional). Se preenchido, cada evento vai por
   // navigator.sendBeacon como JSON. Também são empurrados em window.dataLayer
