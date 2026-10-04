@@ -537,6 +537,7 @@ h1, h2, h3 {
 .invite h2 { font-size: clamp(34px, 9.4vw, 52px); line-height: 1.02; }
 .wl-text { margin-top: 12px; }
 #wl-form { margin-top: 18px; }
+.field + .field { margin-top: 18px; }
 .field-label {
   display: block;
   font-size: 13px;
