@@ -16,12 +16,12 @@
   <meta property="og:title" content="Nova coleção Valora Suisse" />
   <meta property="og:description" content="Zircônia e moissanite. Entre na lista e receba o aviso da abertura, em 10 de outubro." />
   <meta property="og:url" content="https://valorasuisse.com/" />
-  <meta property="og:image" content="https://valorasuisse.com/assets/og-image.jpg" />
+  <meta property="og:image" content="https://valorasuisse.com//assets/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
   <script>
     // Roda antes de tudo (menos de 1 KB). Decide se o envelope aparece:
     //  1ª visita → abertura completa · volta em até 7 dias → versão curta
@@ -43,16 +43,16 @@
       // o lacre só é baixado quando o envelope vai mesmo aparecer (e bem cedo)
       ['lacre.webp', 'lacre-topo.webp', 'lacre-base.webp'].forEach(function (f, i) {
         var l = document.createElement('link');
-        l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp'; l.href = 'assets/' + f;
+        l.rel = 'preload'; l.as = 'image'; l.type = 'image/webp'; l.href = '/assets/' + f;
         if (!i) l.setAttribute('fetchpriority', 'high');
         document.head.appendChild(l);
       });
     })();
   </script>
-  <link rel="preload" href="assets/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preload" href="/assets/fonts/cormorant-garamond-italic-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="/css/style.css" />
   <script>
     // Rede de segurança (conta a partir da chegada do CSS):
     //  · se o JS principal não assumiu em 2,5 s, o envelope sai e a página aparece;
@@ -67,8 +67,8 @@
     })();
   </script>
 
-  <link rel="modulepreload" href="js/config.js" />
-  <script type="module" src="js/main.js"></script>
+  <link rel="modulepreload" href="/js/config.js" />
+  <script type="module" src="/js/main.js"></script>
 </head>
 <body>
 
@@ -106,7 +106,7 @@
         <!-- sombra que a aba projeta no corpo -->
         <path class="env-flap-shadow" id="env-flap-shadow" filter="url(#f-sombra-aba)" />
       </svg>
-      <img class="seal-piece seal-base" src="assets/lacre-base.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
+      <img class="seal-piece seal-base" src="/assets/lacre-base.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
       <div class="intro-copy">
         <p class="intro-line">Um convite da Valora Suisse</p>
         <p class="seal-label" aria-hidden="true">Abrir o convite</p>
@@ -118,19 +118,19 @@
         <defs>
           <pattern id="p-aba" width="160" height="160" patternUnits="userSpaceOnUse">
             <rect width="160" height="160" fill="#063826" />
-            <image href="assets/papel-aba.webp" width="160" height="160" />
+            <image href="/assets/papel-aba.webp" width="160" height="160" />
           </pattern>
         </defs>
         <path class="flap-face" id="flap-face" fill="url(#p-aba)" />
         <path class="flap-edge" id="flap-edge" />
         <path class="flap-dark" id="flap-dark" />
       </svg>
-      <img class="seal-piece seal-top" src="assets/lacre-topo.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
+      <img class="seal-piece seal-top" src="/assets/lacre-topo.webp" alt="" width="680" height="680" loading="lazy" decoding="async" />
     </div>
   </div>
 
   <button class="seal" id="seal" type="button" aria-label="Abrir o convite">
-    <img class="seal-whole" src="assets/lacre.webp" alt="" width="680" height="680" loading="lazy" decoding="async" fetchpriority="high" />
+    <img class="seal-whole" src="/assets/lacre.webp" alt="" width="680" height="680" loading="lazy" decoding="async" fetchpriority="high" />
     <svg class="seal-crack" viewBox="0 0 200 200" aria-hidden="true">
       <path d="M12 43.46 L16 44.47 L20 47.97 L24 50.24 L28 54.09 L32 57.24 L36 58.57 L40 61.42 L44 62.67 L48 66.09 L52 69.72 L56 72.07 L60 75.48 L64 76.33 L68 78.79 L72 81.67 L76 84.27 L80 88.61 L84 90.23 L88 92.64 L92 94.60 L96 96.33 L100 100.58 L104 97.78 L108 95.97 L112 92.92 L116 88.78 L120 86.84 L124 83.64 L128 82.43 L132 80.34 L136 76.74 L140 74.35 L144 70.14 L148 68.31 L152 66.49 L156 63.89 L160 62.23 L164 57.86 L168 55.16 L172 52.46 L176 49.88 L180 49.06 L184 45.60 L188 43.09" />
     </svg>
@@ -187,9 +187,9 @@
   <header class="hero" id="topo">
     <div class="hero-media">
       <picture>
-        <source type="image/avif" srcset="assets/img/produto-2-480.avif 480w, assets/img/produto-2-800.avif 800w, assets/img/produto-2-1254.avif 1254w" sizes="(min-width: 900px) 50vw, 100vw" />
-        <source type="image/webp" srcset="assets/img/produto-2-480.webp 480w, assets/img/produto-2-800.webp 800w, assets/img/produto-2-1254.webp 1254w" sizes="(min-width: 900px) 50vw, 100vw" />
-        <img src="assets/img/produto-2-800.jpg" srcset="assets/img/produto-2-480.jpg 480w, assets/img/produto-2-800.jpg 800w, assets/img/produto-2-1254.jpg 1254w" sizes="(min-width: 900px) 50vw, 100vw"
+        <source type="image/avif" srcset="/assets/img/produto-2-480.avif 480w, /assets/img/produto-2-800.avif 800w, /assets/img/produto-2-1254.avif 1254w" sizes="(min-width: 900px) 50vw, 100vw" />
+        <source type="image/webp" srcset="/assets/img/produto-2-480.webp 480w, /assets/img/produto-2-800.webp 800w, /assets/img/produto-2-1254.webp 1254w" sizes="(min-width: 900px) 50vw, 100vw" />
+        <img src="/assets/img/produto-2-800.jpg" srcset="/assets/img/produto-2-480.jpg 480w, /assets/img/produto-2-800.jpg 800w, /assets/img/produto-2-1254.jpg 1254w" sizes="(min-width: 900px) 50vw, 100vw"
              width="1254" height="1254" fetchpriority="high" decoding="async"
              alt="Anel solitário de seis garras com uma pedra redonda, sobre papel claro, com um envelope verde ao canto." />
       </picture>
@@ -246,17 +246,17 @@
     <div class="stone-stage" id="stone-stage">
       <div class="stone-layer" data-stone="zirconia">
         <picture>
-          <source type="image/avif" srcset="assets/img/pedra-zirconia-480.avif 480w, assets/img/pedra-zirconia-800.avif 800w, assets/img/pedra-zirconia-1003.avif 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
-          <source type="image/webp" srcset="assets/img/pedra-zirconia-480.webp 480w, assets/img/pedra-zirconia-800.webp 800w, assets/img/pedra-zirconia-1003.webp 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
-          <img src="assets/img/pedra-zirconia-800.jpg" width="1003" height="1254" loading="lazy" decoding="async" draggable="false"
+          <source type="image/avif" srcset="/assets/img/pedra-zirconia-480.avif 480w, /assets/img/pedra-zirconia-800.avif 800w, /assets/img/pedra-zirconia-1003.avif 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <source type="image/webp" srcset="/assets/img/pedra-zirconia-480.webp 480w, /assets/img/pedra-zirconia-800.webp 800w, /assets/img/pedra-zirconia-1003.webp 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <img src="/assets/img/pedra-zirconia-800.jpg" width="1003" height="1254" loading="lazy" decoding="async" draggable="false"
                alt="Pulseira riviera com uma fileira contínua de pedras redondas, sobre um estojo de veludo verde com o logo Valora Suisse." />
         </picture>
       </div>
       <div class="stone-layer" data-stone="moissanite">
         <picture>
-          <source type="image/avif" srcset="assets/img/pedra-moissanite-480.avif 480w, assets/img/pedra-moissanite-800.avif 800w, assets/img/pedra-moissanite-1003.avif 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
-          <source type="image/webp" srcset="assets/img/pedra-moissanite-480.webp 480w, assets/img/pedra-moissanite-800.webp 800w, assets/img/pedra-moissanite-1003.webp 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
-          <img src="assets/img/pedra-moissanite-800.jpg" width="1003" height="1254" loading="lazy" decoding="async" draggable="false"
+          <source type="image/avif" srcset="/assets/img/pedra-moissanite-480.avif 480w, /assets/img/pedra-moissanite-800.avif 800w, /assets/img/pedra-moissanite-1003.avif 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <source type="image/webp" srcset="/assets/img/pedra-moissanite-480.webp 480w, /assets/img/pedra-moissanite-800.webp 800w, /assets/img/pedra-moissanite-1003.webp 1003w" sizes="(min-width: 900px) 40vw, 90vw" />
+          <img src="/assets/img/pedra-moissanite-800.jpg" width="1003" height="1254" loading="lazy" decoding="async" draggable="false"
                alt="Anel solitário de seis garras com uma pedra redonda, sobre papel claro." />
         </picture>
       </div>
@@ -307,7 +307,7 @@
       <div class="invite-done" id="invite-done" hidden>
         <div class="done-seal" aria-hidden="true">
           <span class="done-ripple"></span>
-          <img src="assets/lacre-sm.webp" alt="" width="340" height="340" loading="lazy" decoding="async" />
+          <img src="/assets/lacre-sm.webp" alt="" width="340" height="340" loading="lazy" decoding="async" />
         </div>
         <h3 id="done-title" tabindex="-1">Você está na lista.</h3>
         <p class="done-text" id="done-text"></p>
@@ -329,9 +329,9 @@
 
     <figure class="piece piece--1">
       <picture>
-        <source type="image/avif" srcset="assets/img/produto-1-480.avif 480w, assets/img/produto-1-800.avif 800w, assets/img/produto-1-1254.avif 1254w" sizes="(min-width: 900px) 34vw, 100vw" />
-        <source type="image/webp" srcset="assets/img/produto-1-480.webp 480w, assets/img/produto-1-800.webp 800w, assets/img/produto-1-1254.webp 1254w" sizes="(min-width: 900px) 34vw, 100vw" />
-        <img src="assets/img/produto-1-800.jpg" width="1254" height="1254" loading="lazy" decoding="async"
+        <source type="image/avif" srcset="/assets/img/produto-1-480.avif 480w, /assets/img/produto-1-800.avif 800w, /assets/img/produto-1-1254.avif 1254w" sizes="(min-width: 900px) 34vw, 100vw" />
+        <source type="image/webp" srcset="/assets/img/produto-1-480.webp 480w, /assets/img/produto-1-800.webp 800w, /assets/img/produto-1-1254.webp 1254w" sizes="(min-width: 900px) 34vw, 100vw" />
+        <img src="/assets/img/produto-1-800.jpg" width="1254" height="1254" loading="lazy" decoding="async"
              alt="Bracelete aberto de linhas orgânicas e acabamento polido, apoiado em um estojo de veludo verde com o logo Valora Suisse." />
       </picture>
       <figcaption><b>Bracelete aberto</b><span>Uma curva, um gesto.</span></figcaption>
@@ -339,9 +339,9 @@
 
     <figure class="piece piece--2">
       <picture>
-        <source type="image/avif" srcset="assets/img/produto-3-480.avif 480w, assets/img/produto-3-800.avif 800w, assets/img/produto-3-1254.avif 1254w" sizes="(min-width: 900px) 28vw, 78vw" />
-        <source type="image/webp" srcset="assets/img/produto-3-480.webp 480w, assets/img/produto-3-800.webp 800w, assets/img/produto-3-1254.webp 1254w" sizes="(min-width: 900px) 28vw, 78vw" />
-        <img src="assets/img/produto-3-800.jpg" width="1254" height="1254" loading="lazy" decoding="async"
+        <source type="image/avif" srcset="/assets/img/produto-3-480.avif 480w, /assets/img/produto-3-800.avif 800w, /assets/img/produto-3-1254.avif 1254w" sizes="(min-width: 900px) 28vw, 78vw" />
+        <source type="image/webp" srcset="/assets/img/produto-3-480.webp 480w, /assets/img/produto-3-800.webp 800w, /assets/img/produto-3-1254.webp 1254w" sizes="(min-width: 900px) 28vw, 78vw" />
+        <img src="/assets/img/produto-3-800.jpg" width="1254" height="1254" loading="lazy" decoding="async"
              alt="Pulseira riviera aberta, com o fecho à mostra, sobre um estojo de veludo verde." />
       </picture>
       <figcaption><b>Pulseira riviera</b><span>Uma linha contínua de luz.</span></figcaption>
@@ -349,9 +349,9 @@
 
     <figure class="piece piece--3">
       <picture>
-        <source type="image/avif" srcset="assets/img/anel-galeria-480.avif 480w, assets/img/anel-galeria-800.avif 800w" sizes="(min-width: 900px) 22vw, 56vw" />
-        <source type="image/webp" srcset="assets/img/anel-galeria-480.webp 480w, assets/img/anel-galeria-800.webp 800w" sizes="(min-width: 900px) 22vw, 56vw" />
-        <img src="assets/img/anel-galeria-480.jpg" srcset="assets/img/anel-galeria-480.jpg 480w, assets/img/anel-galeria-800.jpg 800w" sizes="(min-width: 900px) 22vw, 56vw" width="1020" height="1020" loading="lazy" decoding="async"
+        <source type="image/avif" srcset="/assets/img/anel-galeria-480.avif 480w, /assets/img/anel-galeria-800.avif 800w" sizes="(min-width: 900px) 22vw, 56vw" />
+        <source type="image/webp" srcset="/assets/img/anel-galeria-480.webp 480w, /assets/img/anel-galeria-800.webp 800w" sizes="(min-width: 900px) 22vw, 56vw" />
+        <img src="/assets/img/anel-galeria-480.jpg" srcset="/assets/img/anel-galeria-480.jpg 480w, /assets/img/anel-galeria-800.jpg 800w" sizes="(min-width: 900px) 22vw, 56vw" width="1020" height="1020" loading="lazy" decoding="async"
              alt="Anel solitário de seis garras, sobre papel claro." />
       </picture>
       <figcaption><b>Anel solitário</b><span>Seis garras, uma só pedra.</span></figcaption>
@@ -370,7 +370,7 @@
   <a class="ig" id="ig-link" href="https://www.instagram.com/valorasuisse/" target="_blank" rel="noopener">
     <svg aria-hidden="true"><use href="#i-instagram" /></svg><span id="ig-handle">@valorasuisse</span>
   </a>
-  <p class="legal"><a href="privacidade.html">Política de privacidade</a><span aria-hidden="true"> · </span>© 2026 Valora Suisse</p>
+  <p class="legal"><a href="/privacidade.html">Política de privacidade</a><span aria-hidden="true"> · </span>© 2026 Valora Suisse</p>
 </footer>
 
 </body>

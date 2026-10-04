@@ -1,9 +1,9 @@
 # Valora Suisse
 
 Loading page de pré-lançamento da nova coleção (zircônia e moissanite), feita para o
-tráfego do Instagram: mobile primeiro, leve e sem dependências. Vive na raiz do domínio
-(`valorasuisse.com`) — links antigos para `/lancamento` continuam funcionando, redirecionados
-pelo `vercel.json`.
+tráfego do Instagram: mobile primeiro, leve e sem dependências. A mesma página responde em
+dois endereços — `valorasuisse.com` e `valorasuisse.com/lancamento` — sem redirecionar: o
+`vercel.json` serve o mesmo conteúdo nos dois, cada um mantendo a própria URL.
 
 - **HTML + CSS + JS puro**, sem etapa de build. Módulos ES nativos. Sem bibliotecas externas.
 - Primeira tela (envelope com o lacre, fontes, foto do hero, CSS e JS, com gzip): **~270 KB** em
@@ -104,7 +104,7 @@ CNAME a mais, sem depender da Shopify nem de app.
 ```
 ├── index.html            página (vive na raiz do domínio)
 ├── privacidade.html      política de privacidade (preencher)
-├── vercel.json           redireciona /lancamento/* (link antigo) para a raiz
+├── vercel.json           serve /lancamento/* com o mesmo conteúdo da raiz, sem redirecionar
 ├── css/style.css         estilos (tokens da marca no topo)
 ├── js/config.js          ⚠ tudo que a marca edita
 ├── js/main.js            abertura, contagem, seletor de pedra, lista

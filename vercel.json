@@ -1,6 +1,6 @@
 {
-  "redirects": [
-    { "source": "/lancamento", "destination": "/", "permanent": false },
-    { "source": "/lancamento/:path*", "destination": "/:path*", "permanent": false }
+  "rewrites": [
+    { "source": "/lancamento", "destination": "/" },
+    { "source": "/lancamento/:path*", "destination": "/:path*" }
   ]
 }
