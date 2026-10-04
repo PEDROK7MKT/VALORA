@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/lancamento", "destination": "/", "permanent": false },
+    { "source": "/lancamento/:path*", "destination": "/:path*", "permanent": false }
+  ]
+}
