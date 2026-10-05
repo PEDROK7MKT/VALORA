@@ -760,6 +760,7 @@ dialog::backdrop { background: rgba(3, 45, 31, .55); }
 }
 .checkout[open] { animation: fade-up .3s var(--ease); }
 .co-h .x { margin-left: auto; }
+.co-h:has(.steps[hidden]) { border-bottom-color: transparent; } /* confirmação: só o X no topo */
 .co-h {
   position: sticky;
   top: 0;
