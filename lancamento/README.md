@@ -14,6 +14,11 @@ tráfego do Instagram: mobile primeiro, leve e sem dependências. Fica em
 - Todos os caminhos são relativos à própria pasta, então ela funciona em qualquer endereço
   (subpasta ou, no futuro, um subdomínio) — desde que a URL termine em `/`. É por isso que o
   `vercel.json` da raiz tem `trailingSlash: true`.
+- Roda sob a Content-Security-Policy do `vercel.json` da raiz. Os `<script>` embutidos no
+  `index.html` e o `<style>`/`<script>` do `privacidade.html` estão liberados por hash: **se
+  editar um desses blocos, rode `python3 tools/csp-hashes.py --write` na raiz** (senão o bloco
+  para de rodar no ar). Textos, `css/style.css` e os `.js` podem mudar à vontade. Se trocar o
+  backend da lista por outro domínio, inclua o novo endereço em `connect-src` no `vercel.json`.
 
 ## Rodar localmente
 
@@ -67,7 +72,8 @@ para um workflow n8n, que valida o envio e grava cada linha na tabela `leads` do
   Google Sheets etc.): pk7mkt.app.n8n.cloud → workflow "Valora Suisse — Lista de espera
   (lançamento)".
 - **Trocar de backend**: qualquer webhook que aceite esse POST serve — basta colar a nova URL em
-  `waitlistEndpoint`. Em n8n, lembre de manter *Options → Allowed Origins (CORS)* como `*`.
+  `waitlistEndpoint` **e liberar o domínio dela em `connect-src` no `vercel.json`** (a CSP bloqueia
+  qualquer outro destino). Em n8n, lembre de manter *Options → Allowed Origins (CORS)* como `*`.
 
 A confirmação só aparece com resposta 2xx. Se falhar, o cadastro fica guardado no aparelho e é
 reenviado na próxima visita, e a pessoa vê a opção de entrar pelo WhatsApp.
@@ -97,9 +103,9 @@ lancamento/
 ├── css/style.css         estilos (tokens da marca no topo)
 ├── js/config.js          ⚠ tudo que a marca edita
 ├── js/main.js            abertura, contagem, seletor de pedra, lista
-├── PLANO.md              plano original da página
+├── PLANO.md              plano original da página (não vai para o ar)
 └── assets/
-    ├── produto-1..3.jpg  fotos originais
+    ├── produto-1..3.jpg  fotos originais (não vão para o ar)
     ├── img/              fotos otimizadas (AVIF/WebP/JPG, fundo Marfim)
     ├── lacre*.webp       lacre renderizado (inteiro e as duas metades)
     ├── papel-*.webp      textura do envelope

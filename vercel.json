@@ -1,3 +1,43 @@
 {
-  "trailingSlash": true
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'sha256-N3wSoRCTA2zqBtWO9wlNwz0i88I36e1kHojiqEHS4Ak=' 'sha256-GbSkt3sfwE0bSd3CYeYNzNPBgbehrKMsr2r4Xzj/OOY=' 'sha256-Ca8f9zvluFWVBB1NhYnLd7IXdSBW73niukgWL8kd4KI=' 'sha256-br+ewesgmGHgGEwMLJeSJhUVyf6sNBe5CstYH0PB3Vc='; style-src 'self' 'sha256-A/Edbw+Ob5ZPpEE5dimDiefNcD/7tuMqfokOxsoDH8Y='; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self' https://pk7mkt.app.n8n.cloud; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), publickey-credentials-get=(), serial=(), usb=(), xr-spatial-tracking=(), browsing-topics=()"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        }
+      ]
+    },
+    {
+      "source": "/",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ]
 }
