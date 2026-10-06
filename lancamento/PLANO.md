@@ -119,7 +119,7 @@ toque     (ou arrastar para cima, rolar, teclado; automático em 4,5 s)
 │       ╲▓▓▓▓▓▓▓▓▓▓╱       │      │ Zircônia                 │       │ Zircônia cúbica · Mohs…  │
 │         ( lacre V )      │      │ ou moissanite.           │       │ ┌──────────────┊───────┐ │
 │                          │      │ Cada uma com a sua luz.  │       │ │ riviera      ┊ anel ←│ │
-│ Um convite da Valora…    │      │ Abre em 10 de outubro,   │       │ │ no estojo    ┊ (dedo)│ │
+│ Um convite da Valora…    │      │ Abre em 18 de outubro,   │       │ │ no estojo    ┊ (dedo)│ │
 │      Abrir o convite     │      │ às 20h (Brasília)        │       │ └──────────────┊───────┘ │
 │   ╱                  ╲   │      │ [   Entrar na lista    ] │       │ Imagem ilustrativa.      │
 └──────────────────────────┘      │ ──────────────────────── │       │ As duas são criadas em…  │
@@ -204,7 +204,7 @@ verificação adversarial. Principais correções:
   - o consentimento agora bate com a política ("não vendemos nem compartilhamos para
     publicidade"), está no `config.js` e pede confirmação;
   - a pedra só vai no cadastro se a pessoa escolheu uma;
-  - "No dia 10 de outubro, avisamos você no WhatsApp…".
+  - "No dia 18 de outubro, avisamos você no WhatsApp…".
 - **Foto do anel:** sem a lasca verde do envelope no recorte e com o papel levado para o Marfim
   (a pedra protegida).
 - **Rodada de regressão.** Três verificadores retestaram os 34 achados no código corrigido. Os

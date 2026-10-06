@@ -7,7 +7,7 @@ export const CONFIG = {
   // ⚠ CONFIRMAR · data e hora da abertura, SEMPRE com o fuso de Brasília (-03:00).
   // A contagem é a mesma em qualquer aparelho e em qualquer fuso.
   // Se mudar a data, atualize também o texto do index.html (<time>, <title> e og:*).
-  launchISO: '2026-10-10T20:00:00-03:00',
+  launchISO: '2026-10-18T20:00:00-03:00',
   launchDurationMin: 60, // duração do evento salvo na agenda
 
   // ⚠ CONFIRMAR · para onde "Conhecer as peças" leva depois da abertura
