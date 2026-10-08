@@ -13,8 +13,8 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const root = document.documentElement;
 const RM = window.matchMedia('(prefers-reduced-motion: reduce)');
-const TZ = 'America/Sao_Paulo';
-const LAUNCH = Date.parse(CONFIG.launchISO);
+// Dia da abertura, sem horário: [ano, mês 1–12, dia]
+const LAUNCH_DAY = (/^(\d{4})-(\d{2})-(\d{2})$/.exec(CONFIG.launchDate || '') || []).slice(1).map(Number);
 const UA = navigator.userAgent || '';
 const IN_APP = /Instagram|FBAN|FBAV|FB_IAB/i.test(UA);
 // dentro de uma moldura (iframe, prévias): downloads e Web Share costumam ser bloqueados
@@ -70,24 +70,30 @@ function track(event, data = {}) {
 }
 
 /* ---------------------------------------------------------------------
-   Datas · sempre no fuso de Brasília
+   Datas · só o dia (o horário da abertura ainda não foi confirmado)
    --------------------------------------------------------------------- */
 function launchText() {
+  if (LAUNCH_DAY.length !== 3) return null;
   try {
-    const d = new Date(LAUNCH);
-    const day = new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', timeZone: TZ }).format(d);
-    const parts = new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: TZ }).formatToParts(d);
-    const h = Number(parts.find((p) => p.type === 'hour').value);
-    const m = parts.find((p) => p.type === 'minute').value;
-    return { day, full: `${day}, às ${h}h${m === '00' ? '' : m}` };
+    const [y, m, d] = LAUNCH_DAY;
+    return new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d)));
   } catch (e) {
     return null;
   }
 }
 
+// Dias de calendário até a abertura, pelo relógio do aparelho: cada pessoa
+// vê "É hoje" no seu próprio 18 de outubro.
+function daysToLaunch() {
+  if (LAUNCH_DAY.length !== 3) return NaN;
+  const [y, m, d] = LAUNCH_DAY;
+  const now = new Date();
+  return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
+}
+
 function applyConfig() {
   const t = launchText();
-  if (t) $$('.launch-date').forEach((el) => { el.textContent = t.full; el.dateTime = CONFIG.launchISO; });
+  if (t) $$('.launch-date').forEach((el) => { el.textContent = t; el.dateTime = CONFIG.launchDate; });
   const ig = $('#ig-link');
   if (ig && CONFIG.instagram) {
     ig.href = `https://www.instagram.com/${CONFIG.instagram}/`;
@@ -274,63 +280,59 @@ async function openEnvelope(intro, { short, release }) {
 
 /* ---------------------------------------------------------------------
    2 · CONTAGEM REGRESSIVA
-   Recalcula a partir do relógio a cada atualização (nunca "decrementa"),
-   então não deriva quando o navegador do Instagram pausa a aba.
-   Sem segundos até o último dia: muda uma vez por minuto.
+   Só dias, sem horas: o horário da abertura ainda não foi confirmado.
+   Recalcula pelo relógio (nunca "decrementa"): à meia-noite, de hora em
+   hora e sempre que a aba volta a aparecer.
    --------------------------------------------------------------------- */
-const pad = (n) => String(n).padStart(2, '0');
-const UNITS = { d: ['dia', 'dias'], h: ['hora', 'horas'], m: ['minuto', 'minutos'], s: ['segundo', 'segundos'] };
-const plural = (k, n) => UNITS[k][n === 1 ? 0 : 1];
+const days = (n) => (n === 1 ? 'dia' : 'dias');
 
 function countdown() {
   const grid = $('#cd');
-  if (!grid || Number.isNaN(LAUNCH)) return;
-  const nums = {};
-  const labels = {};
-  $$('.cd-num', grid).forEach((n) => { nums[n.dataset.u] = n; });
-  $$('.cd-label', grid).forEach((n) => { labels[n.dataset.l] = n; });
-  const secUnit = $('.cd-unit--s', grid);
+  if (!grid || Number.isNaN(daysToLaunch())) return;
+  const num = $('.cd-num', grid);
+  const label = $('.cd-label', grid);
   const sr = $('#cd-sr');
-  let last = {};
-  let lastSr = '';
+  let last;
   let timer = 0;
 
   const render = () => {
     clearTimeout(timer);
-    const ms = LAUNCH - Date.now();
-    if (ms <= 0) { launched(); return; }
-    const total = Math.floor(ms / 1000);
-    const v = { d: Math.floor(total / 86400), h: Math.floor((total % 86400) / 3600), m: Math.floor((total % 3600) / 60), s: total % 60 };
-    // no último dia: some o "0 dias" e entram os segundos (sem piscar a cada segundo)
-    const withSeconds = v.d === 0;
-    secUnit.hidden = !withSeconds;
-    nums.d.parentElement.hidden = withSeconds;
-    for (const key of Object.keys(v)) {
-      if (v[key] === last[key]) continue;
-      nums[key].textContent = key === 'd' ? String(v[key]) : pad(v[key]);
-      labels[key].textContent = plural(key, v[key]);
-      if (last[key] !== undefined && !RM.matches && key !== 's') {
-        nums[key].classList.remove('tick');
-        void nums[key].offsetWidth; // reinicia só no número que mudou
-        nums[key].classList.add('tick');
+    const n = daysToLaunch();
+    if (n < 0) { launched(); return; }
+    if (n === 0) launchDay();
+    else if (n !== last) {
+      num.textContent = String(n);
+      label.textContent = days(n);
+      if (last !== undefined && !RM.matches) {
+        num.classList.remove('tick');
+        void num.offsetWidth;
+        num.classList.add('tick');
       }
+      sr.textContent = `${n === 1 ? 'Falta' : 'Faltam'} ${n} ${days(n)} para a abertura.`;
     }
-    last = v;
-    const parts = [];
-    if (v.d) parts.push(`${v.d} ${plural('d', v.d)}`);
-    if (v.h || v.d) parts.push(`${v.h} ${plural('h', v.h)}`);
-    if (v.d || v.h || v.m) parts.push(`${v.m} ${plural('m', v.m)}`);
-    else parts.push(`${v.s} ${plural('s', v.s)}`); // último minuto
-    const verb = parts.length === 1 && /^1 /.test(parts[0]) ? 'Falta' : 'Faltam';
-    const text = `${verb} ${parts.join(', ').replace(/, ([^,]*)$/, ' e $1')} para a abertura.`;
-    if (text !== lastSr) { sr.textContent = text; lastSr = text; }
-    const now = Date.now();
-    timer = setTimeout(render, withSeconds ? 1000 - (now % 1000) + 20 : 60000 - (now % 60000) + 20);
+    last = n;
+    const now = new Date();
+    const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 1);
+    timer = setTimeout(render, Math.min(midnight - now, 36e5));
   };
 
   document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); else clearTimeout(timer); });
   window.addEventListener('pageshow', render);
   render();
+}
+
+// No dia: some o número, a página diz "É hoje" e a lista continua aberta.
+function launchDay() {
+  if (root.classList.contains('is-launch-day')) return;
+  root.classList.add('is-launch-day');
+  const grid = $('#cd');
+  if (grid) grid.hidden = true;
+  const title = $('#cd-title');
+  if (title) title.textContent = 'É hoje.';
+  const sr = $('#cd-sr');
+  if (sr) sr.textContent = '';
+  const date = $('#hero-date');
+  if (date) date.textContent = 'A nova coleção Valora Suisse abre hoje.';
 }
 
 function launched() {
@@ -345,7 +347,7 @@ function launched() {
   const open = $('#cd-open');
   if (open) open.hidden = false;
   const date = $('#hero-date');
-  if (date) date.textContent = 'A nova coleção Valora Suisse, em zircônia e moissanite, já está aberta.';
+  if (date) date.textContent = 'A nova coleção Valora Suisse, em moissanite e zircônia, já está aberta.';
   const cta = $('#hero-cta');
   if (cta) { cta.textContent = 'Conhecer as peças'; cta.href = CONFIG.shopURL; }
   const stonesCta = $('.stones-cta');
@@ -361,7 +363,7 @@ function launched() {
    borda). Tocar no nome da pedra faz o mesmo movimento sozinho.
    Tudo em transform: roda no compositor, sem repintar a cada quadro.
    --------------------------------------------------------------------- */
-let currentStone = 'zirconia';
+let currentStone = 'moissanite';
 let stoneChosen = false; // só vira interesse de verdade se a pessoa mexer no seletor
 
 function stones() {
@@ -575,15 +577,67 @@ const CONSENT = CONFIG.consent || {
   email: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu e-mail para publicidade. Para sair, use o link no fim de cada e-mail. ',
 };
 
-// Telefone: separa DDI internacional, tira 55 / 0 / código de operadora
-function phoneDigits(raw) {
+// WhatsApp: país do seletor + número. Quem digita "+41…" ou "0041…" escolhe o
+// país sozinho. `len` = dígitos do número nacional, sem o 0 de discagem.
+const COUNTRIES = {
+  CH: { cc: '41', len: [9, 9], ph: '79 123 45 67' },
+  BR: { cc: '55', len: [11, 11], ph: 'DDD + número' },
+  PT: { cc: '351', len: [9, 9], ph: '912 345 678' },
+  FR: { cc: '33', len: [9, 9], ph: '6 12 34 56 78' },
+  DE: { cc: '49', len: [6, 11], ph: '151 23456789' },
+  IT: { cc: '39', len: [6, 11], ph: '312 345 6789', keepZero: true },
+  AT: { cc: '43', len: [6, 13], ph: '664 1234567' },
+  ES: { cc: '34', len: [9, 9], ph: '612 34 56 78' },
+  GB: { cc: '44', len: [9, 10], ph: '7400 123456' },
+  US: { cc: '1', len: [10, 10], ph: '(201) 555-0123' },
+  XX: { cc: '', len: [8, 15], ph: '+ código do país e número' },
+};
+const BY_CODE = Object.keys(COUNTRIES).filter((k) => COUNTRIES[k].cc).sort((a, b) => COUNTRIES[b].cc.length - COUNTRIES[a].cc.length);
+
+// País sugerido pelo fuso do aparelho (dá para trocar no seletor)
+function defaultCountry() {
+  let tz = '';
+  try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) { /* ok */ }
+  const hit = [
+    [/^Europe\/Zurich$/, 'CH'],
+    [/^America\/(Sao_Paulo|Bahia|Fortaleza|Recife|Belem|Manaus|Cuiaba|Campo_Grande|Porto_Velho|Boa_Vista|Rio_Branco|Araguaina|Maceio|Santarem|Noronha|Eirunepe)$/, 'BR'],
+    [/^(Europe\/Lisbon|Atlantic\/(Madeira|Azores))$/, 'PT'],
+    [/^Europe\/Paris$/, 'FR'],
+    [/^Europe\/Berlin$/, 'DE'],
+    [/^Europe\/Rome$/, 'IT'],
+    [/^Europe\/Vienna$/, 'AT'],
+    [/^(Europe\/Madrid|Atlantic\/Canary)$/, 'ES'],
+    [/^Europe\/London$/, 'GB'],
+    [/^(America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit)|Pacific\/Honolulu)$/, 'US'],
+  ].find(([re]) => re.test(tz));
+  if (hit) return hit[1];
+  return /^pt-BR/i.test(navigator.language || '') ? 'BR' : 'CH';
+}
+
+function parsePhone(raw, selected) {
   const v = String(raw).trim();
-  let d = v.replace(/\D/g, '');
-  const plus = v.startsWith('+');
-  if (plus && !d.startsWith('55')) return { intl: true, d };
-  if (plus || (d.length >= 12 && d.startsWith('55'))) d = d.slice(2);
-  if (d.startsWith('0')) d = d.length >= 13 ? d.slice(-11) : d.replace(/^0+/, '');
-  return { intl: false, d: d.slice(0, 11) };
+  let digits = v.replace(/\D/g, '');
+  const intl = v.startsWith('+') || digits.startsWith('00');
+  let country = COUNTRIES[selected] ? selected : 'CH';
+  if (intl) {
+    if (!v.startsWith('+')) digits = digits.slice(2);
+    const k = BY_CODE.find((c) => digits.startsWith(COUNTRIES[c].cc));
+    if (!k) return { country: 'XX', cc: '', d: digits, intl };
+    country = k;
+    digits = digits.slice(COUNTRIES[k].cc.length);
+  }
+  const c = COUNTRIES[country];
+  if (country === 'XX') return { country, cc: '', d: digits, intl }; // número já com o código do país
+  if (country === 'BR') { // tira 55 sem "+", 0 e código de operadora
+    let d = digits;
+    if (!intl && d.length >= 12 && d.startsWith('55')) d = d.slice(2);
+    if (d.startsWith('0')) d = d.length >= 13 ? d.slice(-11) : d.replace(/^0+/, '');
+    return { country, cc: c.cc, d: d.slice(0, 11), intl };
+  }
+  let d = digits;
+  if (!intl && d.length > c.len[1] && d.startsWith(c.cc)) d = d.slice(c.cc.length); // código sem "+"
+  if (!c.keepZero) d = d.replace(/^0/, ''); // 0 de discagem nacional
+  return { country, cc: c.cc, d, intl };
 }
 function formatBR(d) {
   if (!d) return '';
@@ -591,14 +645,32 @@ function formatBR(d) {
   if (d.length <= 7) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
   return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7, 11)}`;
 }
-function validatePhone(raw) {
-  const { intl, d } = phoneDigits(raw);
-  if (!d) return 'Informe seu WhatsApp com DDD.';
-  if (intl) return d.length >= 8 && d.length <= 15 ? '' : 'Confira o número com o código do país.';
-  if (d.length < 11) return 'Confira o número: são 11 dígitos com o DDD.';
-  if (!DDD.has(Number(d.slice(0, 2)))) return 'Confira o DDD.';
-  if (d[2] !== '9') return 'Confira o número: celulares têm 9 depois do DDD.';
-  return '';
+function formatNational(country, d) {
+  if (country === 'BR') return formatBR(d);
+  if (country === 'CH') return [d.slice(0, 2), d.slice(2, 5), d.slice(5, 7), d.slice(7, 9), d.slice(9)].filter(Boolean).join(' ');
+  return d;
+}
+function phoneContact(p) {
+  return p.country === 'XX' ? `+${p.d}` : `+${p.cc}${p.d}`;
+}
+function phoneDisplay(p) {
+  if (p.country === 'BR') return formatBR(p.d);
+  if (p.country === 'XX') return `+${p.d}`;
+  return `+${p.cc} ${formatNational(p.country, p.d)}`;
+}
+function validatePhone(raw, selected) {
+  const { country, d } = parsePhone(raw, selected);
+  const c = COUNTRIES[country];
+  if (!d) return country === 'BR' ? 'Informe seu WhatsApp com DDD.' : 'Informe seu WhatsApp.';
+  if (country === 'BR') {
+    if (d.length < 11) return 'Confira o número: são 11 dígitos com o DDD.';
+    if (!DDD.has(Number(d.slice(0, 2)))) return 'Confira o DDD.';
+    if (d[2] !== '9') return 'Confira o número: celulares têm 9 depois do DDD.';
+    return '';
+  }
+  if (country === 'CH') return d.length === 9 ? '' : 'Confira o número (ex.: 079 123 45 67).';
+  if (country === 'XX') return d.length >= 8 && d.length <= 15 ? '' : 'Escreva o número com o código do país (ex.: +44 7400 123456).';
+  return d.length >= c.len[0] && d.length <= c.len[1] ? '' : 'Confira o número.';
 }
 function validateEmail(raw) {
   const v = String(raw).trim();
@@ -668,18 +740,16 @@ function waLink(text) {
 
 function calendarLink() {
   const useGoogle = IN_APP || IN_FRAME || /Android/i.test(UA);
-  if (!useGoogle) return { href: 'assets/lancamento.ics', download: true };
-  const f = (d) => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
-  const start = new Date(LAUNCH);
-  const end = new Date(LAUNCH + CONFIG.launchDurationMin * 60000);
+  if (!useGoogle || LAUNCH_DAY.length !== 3) return { href: 'assets/lancamento.ics', download: true };
+  const [y, m, d] = LAUNCH_DAY;
+  const ymd = (dt) => dt.toISOString().slice(0, 10).replace(/-/g, '');
   const url = location.href.split('#')[0].split('?')[0];
   const t = launchText();
   const q = new URLSearchParams({
     action: 'TEMPLATE',
     text: 'Abertura da nova coleção Valora Suisse',
-    dates: `${f(start)}/${f(end)}`,
-    details: `${t ? t.full : ''} (horário de Brasília). ${url}`,
-    ctz: TZ,
+    dates: `${ymd(new Date(Date.UTC(y, m - 1, d)))}/${ymd(new Date(Date.UTC(y, m - 1, d + 1)))}`, // dia inteiro
+    details: `${t ? `${t}. ` : ''}${url}`,
   });
   return { href: `https://calendar.google.com/calendar/render?${q.toString()}`, download: false };
 }
@@ -690,6 +760,7 @@ function waitlist() {
   form.hidden = false;
   const name = $('#wl-name');
   const phone = $('#wl-phone');
+  const cc = $('#wl-cc');
   const email = $('#wl-email');
   const fPhone = $('#field-whatsapp');
   const fEmail = $('#field-email');
@@ -707,7 +778,7 @@ function waitlist() {
   let touched = false;
 
   const input = () => (channel === 'email' ? email : phone);
-  const validate = () => validateName(name.value) || (channel === 'email' ? validateEmail(email.value) : validatePhone(phone.value));
+  const validate = () => validateName(name.value) || (channel === 'email' ? validateEmail(email.value) : validatePhone(phone.value, cc.value));
   const badField = () => (validateName(name.value) ? name : input());
 
   const setError = (msg, withWhatsApp) => {
@@ -751,17 +822,31 @@ function waitlist() {
   };
   sw.addEventListener('click', () => setChannel(channel === 'email' ? 'whatsapp' : 'email', true));
 
-  // máscara que preserva a posição do cursor (conta os dígitos antes dele)
+  // País: sugerido pelo fuso do aparelho; o placeholder mostra o formato local
+  const setCountry = (k) => {
+    cc.value = k;
+    phone.placeholder = COUNTRIES[k].ph;
+  };
+  setCountry(defaultCountry());
+  cc.addEventListener('change', () => {
+    setCountry(cc.value);
+    const p = parsePhone(phone.value, cc.value);
+    if (!p.intl && p.d && (p.country === 'BR' || p.country === 'CH')) phone.value = formatNational(p.country, p.d);
+    if (touched) setError(validate());
+  });
+
+  // máscara (Brasil e Suíça) que preserva a posição do cursor (conta os dígitos antes dele)
   phone.addEventListener('input', (ev) => {
     const raw = phone.value;
-    const { intl, d } = phoneDigits(raw);
+    const p = parsePhone(raw, cc.value);
+    if (p.intl && p.country !== cc.value) setCountry(p.country); // digitou +41, +55…
     const deleting = ev.inputType && ev.inputType.startsWith('delete');
-    if (!intl && !deleting && !/^\s*[+0]/.test(raw)) {
+    if (!p.intl && !deleting && !/^\s*[+0]/.test(raw) && (p.country === 'BR' || p.country === 'CH')) {
       const caret = phone.selectionStart == null ? raw.length : phone.selectionStart;
       const rawDigits = raw.replace(/\D/g, '');
-      const stripped = Math.max(0, rawDigits.length - d.length); // DDI 55, zero inicial ou excesso
+      const stripped = Math.max(0, rawDigits.length - p.d.length); // código do país, zero inicial ou excesso
       const before = Math.max(0, raw.slice(0, caret).replace(/\D/g, '').length - stripped);
-      const out = formatBR(d);
+      const out = formatNational(p.country, p.d);
       if (out !== raw) {
         phone.value = out;
         let pos = 0;
@@ -773,8 +858,9 @@ function waitlist() {
     if (touched) setError(validate());
   });
   phone.addEventListener('blur', () => {
-    const { intl, d } = phoneDigits(phone.value);
-    if (!intl) phone.value = formatBR(d);
+    const p = parsePhone(phone.value, cc.value);
+    if (!p.d || p.country === 'XX') return;
+    if (p.intl || p.country === 'BR' || p.country === 'CH') phone.value = formatNational(p.country, p.d);
   });
   email.addEventListener('input', () => { if (touched) setError(validate()); });
   name.addEventListener('input', () => { if (touched) setError(validate()); });
@@ -787,7 +873,7 @@ function waitlist() {
     strong.textContent = display;
     strong.classList.toggle('is-phone', ch !== 'email'); // telefone numa linha só; e-mail quebra se precisar
     $('#done-text').replaceChildren(
-      `${t ? `No dia ${t.day}` : 'No dia da abertura'}, avisamos você ${ch === 'email' ? 'no e-mail' : 'no WhatsApp'} `,
+      `${t ? `No dia ${t}` : 'No dia da abertura'}, avisamos você ${ch === 'email' ? 'no e-mail' : 'no WhatsApp'} `,
       strong,
       '.',
     );
@@ -839,9 +925,9 @@ function waitlist() {
       contact = email.value.trim().toLowerCase();
       display = contact;
     } else {
-      const { intl, d } = phoneDigits(phone.value);
-      contact = intl ? `+${d}` : `+55${d}`;
-      display = intl ? `+${d}` : formatBR(d);
+      const p = parsePhone(phone.value, cc.value);
+      contact = phoneContact(p);
+      display = phoneDisplay(p);
     }
     // armadilha anti-robô preenchida: finge sucesso e não envia nada
     if (form.elements.website.value) { showDone({ channel: ch, display, isNew: true }); return; }
@@ -900,7 +986,7 @@ function waitlist() {
   // Compartilhar: é um link de verdade para o WhatsApp (funciona em qualquer navegador);
   // onde o Web Share existir de fato, abre a folha de compartilhar do aparelho.
   const share = $('#done-share');
-  const SHARE_TEXT = 'Um convite da Valora Suisse: a nova coleção, em zircônia e moissanite.';
+  const SHARE_TEXT = 'Um convite da Valora Suisse: a nova coleção, em moissanite e zircônia.';
   const shareUrl = () => {
     const url = new URL(location.href.split('#')[0]);
     url.search = '';
@@ -945,7 +1031,7 @@ function waitlist() {
   // cadastro que ficou na fila e foi reenviado agora: a pessoa passa a "estar na lista"
   flushOutbox((p) => {
     if (joined) return;
-    const disp = p.channel === 'email' ? p.contact : (String(p.contact).startsWith('+55') ? formatBR(String(p.contact).slice(3)) : p.contact);
+    const disp = p.channel === 'email' ? p.contact : phoneDisplay(parsePhone(p.contact, 'XX'));
     store.set(JOIN_KEY, JSON.stringify({ channel: p.channel, display: disp, stone: p.stone, ts: Date.now() }));
     showDone({ channel: p.channel, display: disp, isNew: false });
   });

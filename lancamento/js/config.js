@@ -4,11 +4,13 @@
    ===================================================================== */
 
 export const CONFIG = {
-  // ⚠ CONFIRMAR · data e hora da abertura, SEMPRE com o fuso de Brasília (-03:00).
-  // A contagem é a mesma em qualquer aparelho e em qualquer fuso.
-  // Se mudar a data, atualize também o texto do index.html (<time>, <title> e og:*).
-  launchISO: '2026-10-18T20:00:00-03:00',
-  launchDurationMin: 60, // duração do evento salvo na agenda
+  // Dia da abertura (AAAA-MM-DD). Sem horário: a marca ainda não confirmou.
+  // A contagem mostra só os dias; no dia, a página diz "É hoje" e, do dia
+  // seguinte em diante, troca para "a coleção está aberta". A agenda salva
+  // um evento de dia inteiro.
+  // Se mudar a data, atualize também: index.html (<time>, <title> e og:*),
+  // assets/lancamento.ics e a imagem assets/og-image.jpg.
+  launchDate: '2026-10-18',
 
   // ⚠ CONFIRMAR · para onde "Conhecer as peças" leva depois da abertura
   shopURL: 'https://www.instagram.com/valorasuisse/',

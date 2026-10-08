@@ -7,16 +7,16 @@
   <meta name="theme-color" content="#032D1F" />
   <meta name="format-detection" content="telephone=no" />
   <title>Valora Suisse · Nova coleção em 18 de outubro</title>
-  <meta name="description" content="A nova coleção Valora Suisse, em zircônia e moissanite. Entre na lista e receba o aviso da abertura, em 18 de outubro." />
+  <meta name="description" content="A nova coleção Valora Suisse, em moissanite e zircônia. Entre na lista e receba o aviso da abertura, em 18 de outubro." />
 
   <!-- Prévia do link (Instagram, WhatsApp): as prévias não leem caminho relativo. -->
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:site_name" content="Valora Suisse" />
   <meta property="og:title" content="Nova coleção Valora Suisse" />
-  <meta property="og:description" content="Zircônia e moissanite. Entre na lista e receba o aviso da abertura, em 18 de outubro." />
+  <meta property="og:description" content="Moissanite e zircônia. Entre na lista e receba o aviso da abertura, em 18 de outubro." />
   <meta property="og:url" content="https://valorasuisse.com/lancamento/" />
-  <meta property="og:image" content="https://valorasuisse.com/lancamento/assets/og-image.jpg?v=18out" />
+  <meta property="og:image" content="https://valorasuisse.com/lancamento/assets/og-image.jpg?v=3" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -202,9 +202,9 @@
     </a>
 
     <div class="hero-copy">
-      <h1 id="hero-title" tabindex="-1">Zircônia<br /> ou moissanite.</h1>
+      <h1 id="hero-title" tabindex="-1">Moissanite<br /> ou zircônia.</h1>
       <p class="hero-sub">Cada uma com a sua luz.</p>
-      <p class="hero-date" id="hero-date">A nova coleção Valora Suisse abre em <time class="launch-date" datetime="2026-10-18T20:00:00-03:00">18 de outubro, às 20h</time> (horário de Brasília).</p>
+      <p class="hero-date" id="hero-date">A nova coleção Valora Suisse abre em <time class="launch-date" datetime="2026-10-18">18 de outubro</time>.</p>
       <a class="btn btn-primary hero-cta" id="hero-cta" href="#lista" data-cta="hero">Entrar na lista</a>
     </div>
   </header>
@@ -215,20 +215,17 @@
     <p class="sr-only" id="cd-sr"></p>
     <div class="cd-grid" id="cd" aria-hidden="true">
       <div class="cd-unit"><span class="cd-num" data-u="d">—</span><span class="cd-label" data-l="d">dias</span></div>
-      <div class="cd-unit"><span class="cd-num" data-u="h">—</span><span class="cd-label" data-l="h">horas</span></div>
-      <div class="cd-unit"><span class="cd-num" data-u="m">—</span><span class="cd-label" data-l="m">minutos</span></div>
-      <div class="cd-unit cd-unit--s" hidden><span class="cd-num" data-u="s">—</span><span class="cd-label" data-l="s">segundos</span></div>
     </div>
     <p class="cd-open" id="cd-open" hidden><a href="#" id="cd-shop">Conhecer as peças</a></p>
   </section>
 
   <!-- ESCOLHA SUA PEDRA -->
-  <section class="stones" id="pedras" data-active="zirconia" aria-labelledby="stones-legend">
+  <section class="stones" id="pedras" data-active="moissanite" aria-labelledby="stones-legend">
     <fieldset class="stone-pick">
       <legend class="stone-legend" id="stones-legend">Escolha sua pedra</legend>
       <div class="stone-options">
-        <label class="stone-opt"><input type="radio" name="pedra" value="zirconia" checked /><span>Zircônia</span></label>
-        <label class="stone-opt"><input type="radio" name="pedra" value="moissanite" /><span>Moissanite</span></label>
+        <label class="stone-opt"><input type="radio" name="pedra" value="moissanite" checked /><span>Moissanite</span></label>
+        <label class="stone-opt"><input type="radio" name="pedra" value="zirconia" /><span>Zircônia</span></label>
       </div>
     </fieldset>
 
@@ -264,7 +261,7 @@
     </div>
 
     <p class="stone-caption" id="stone-caption">Imagem ilustrativa.</p>
-    <p class="stone-note">Zircônia e moissanite: as duas são pedras criadas em laboratório.</p>
+    <p class="stone-note">Moissanite e zircônia: as duas são pedras criadas em laboratório.</p>
     <a class="btn btn-ghost stones-cta" href="#lista" data-cta="pedra">Receber o aviso da abertura</a>
   </section>
 
@@ -285,8 +282,25 @@
           </div>
           <div class="field" id="field-whatsapp">
             <label class="field-label" for="wl-phone">Seu WhatsApp</label>
-            <input class="field-input" id="wl-phone" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel"
-                   placeholder="DDD + número" enterkeyhint="send" aria-describedby="wl-error wl-consent" />
+            <div class="phone-row">
+              <span class="cc">
+                <select class="field-input cc-select" id="wl-cc" name="country" aria-label="País do número">
+                  <option value="CH">🇨🇭 +41</option>
+                  <option value="BR">🇧🇷 +55</option>
+                  <option value="PT">🇵🇹 +351</option>
+                  <option value="FR">🇫🇷 +33</option>
+                  <option value="DE">🇩🇪 +49</option>
+                  <option value="IT">🇮🇹 +39</option>
+                  <option value="AT">🇦🇹 +43</option>
+                  <option value="ES">🇪🇸 +34</option>
+                  <option value="GB">🇬🇧 +44</option>
+                  <option value="US">🇺🇸 +1</option>
+                  <option value="XX">Outro</option>
+                </select>
+              </span>
+              <input class="field-input" id="wl-phone" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel"
+                     placeholder="79 123 45 67" enterkeyhint="send" aria-describedby="wl-error wl-consent" />
+            </div>
           </div>
           <div class="field" id="field-email" hidden>
             <label class="field-label" for="wl-email">Seu e-mail</label>

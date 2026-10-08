@@ -1,6 +1,6 @@
 # Valora Suisse · Convite de lançamento
 
-Página de pré-lançamento da nova coleção (zircônia e moissanite), feita para o
+Página de pré-lançamento da nova coleção (moissanite e zircônia), feita para o
 tráfego do Instagram: mobile primeiro, leve e sem dependências. Fica em
 `valorasuisse.com/lancamento/`; a raiz do domínio é o site da marca (ver o
 [README da raiz](../README.md)).
@@ -43,8 +43,12 @@ A abertura completa aparece na 1ª visita; quem volta em até 7 dias vê uma ver
 
 Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFIRMAR`):
 
-1. **Data e hora da abertura** (`launchISO`, sempre com `-03:00`). Se mudar, atualize também
-   o texto do `index.html` (`<title>`, `og:*`, `<time>`) e o arquivo `assets/lancamento.ics`.
+1. **Dia da abertura** (`launchDate`, hoje `2026-10-18`). Não há horário: a marca ainda não
+   confirmou. A contagem mostra só os dias (pelo calendário de cada aparelho); no dia, a página
+   diz "É hoje" e, do dia seguinte em diante, "a coleção está aberta". A agenda salva um evento
+   de dia inteiro. Se mudar a data, atualize também o `index.html` (`<title>`, `og:*`, `<time>`),
+   o `assets/lancamento.ics` e a imagem `assets/og-image.jpg` (e troque o `?v=` do `og:image`
+   para as redes buscarem a nova).
 2. **Qual pedra está em cada foto** (`stones.*.pieceConfirmed`). Enquanto for `false`, a legenda
    do seletor diz só "Imagem ilustrativa." (a página não afirma nada sobre a composição da peça).
 3. **WhatsApp da marca** (`whatsappBrand`) — habilita o botão "Confirmar pelo WhatsApp".
@@ -61,8 +65,13 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
 
 ## Lista de espera · backend em produção
 
+O campo de WhatsApp tem um seletor de país (Suíça, Brasil, Portugal, França, Alemanha, Itália,
+Áustria, Espanha, Reino Unido, EUA e "Outro"). O país vem sugerido pelo fuso do aparelho e
+quem digita `+41…` ou `0041…` tem o país escolhido sozinho. Números suíços valem com ou sem o 0
+(`079 123 45 67` ou `79 123 45 67`); os brasileiros seguem a regra de DDD + 9.
+
 `js/main.js → submitLead()` envia um `POST` `application/x-www-form-urlencoded` (sem preflight
-de CORS) com: `channel`, `contact` (E.164 ou e-mail), `name`, `stone`, `consent`, `consent_text`,
+de CORS) com: `channel`, `contact` (E.164, como `+41791234567`, ou e-mail), `name`, `stone`, `consent`, `consent_text`,
 `consent_version`, `page`, `referrer`, `created_at` e `utm_*`. `CONFIG.waitlistEndpoint` aponta
 para um workflow n8n, que valida o envio e grava cada linha na tabela `leads` do projeto Supabase
 "valora-suisse" (RLS: a chave pública só pode inserir, nunca ler).
