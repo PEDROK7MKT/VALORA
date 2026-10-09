@@ -4,6 +4,7 @@
    os outros continuam funcionando (ver `safely` no fim do arquivo).
    ===================================================================== */
 import { CONFIG } from './config.js';
+import { I18N, LANGS, HTML_LANG, LOCALE, STORAGE_KEY, detectLang } from './i18n.js';
 
 // o JS principal assumiu: desliga a rede de segurança do index.html
 window.__mainOk = true;
@@ -31,6 +32,41 @@ const store = {
   set(k, v) { try { window.localStorage.setItem(k, v); } catch (e) { /* segue sem salvar */ } },
   del(k) { try { window.localStorage.removeItem(k); } catch (e) { /* idem */ } },
 };
+
+/* ---------------------------------------------------------------------
+   Idioma · FR (padrão), PT, EN, ES — textos em js/i18n.js
+   A escolha fica guardada no aparelho com a mesma chave do site principal.
+   --------------------------------------------------------------------- */
+let LANG = detectLang(store);
+function t(key, vars) {
+  const dict = I18N[LANG] || I18N.fr;
+  let s = dict[key] !== undefined ? dict[key] : (I18N.fr[key] !== undefined ? I18N.fr[key] : key);
+  if (vars) s = s.replace(/\{(\w+)\}/g, (m, v) => (vars[v] !== undefined ? vars[v] : m));
+  return s;
+}
+function applyI18n() {
+  $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+  $$('[data-i18n-alt]').forEach((el) => { el.alt = t(el.dataset.i18nAlt); });
+  $$('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+  $$('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+}
+function setLang(next, persist) {
+  LANG = LANGS.includes(next) ? next : 'fr';
+  if (persist) store.set(STORAGE_KEY, LANG);
+  root.lang = HTML_LANG[LANG];
+  applyI18n();
+  $$('.lang-switch button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === LANG)));
+  $$('a[href^="privacidade.html"]').forEach((a) => { a.href = `privacidade.html?lang=${LANG}`; });
+  // cada bloco (data, contagem, pedras, lista, compartilhar) refaz os próprios textos
+  document.dispatchEvent(new CustomEvent('valora:lang'));
+}
+function initLang() {
+  setLang(LANG, false);
+  document.addEventListener('click', (e) => {
+    const b = e.target.closest('.lang-switch button');
+    if (b) setLang(b.dataset.lang, true);
+  });
+}
 
 // "tique" tátil curtinho onde existe (Android); no iOS não faz nada
 const haptic = () => { try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) { /* sem suporte */ } };
@@ -76,7 +112,7 @@ function launchText() {
   if (LAUNCH_DAY.length !== 3) return null;
   try {
     const [y, m, d] = LAUNCH_DAY;
-    return new Intl.DateTimeFormat('pt-BR', { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d)));
+    return new Intl.DateTimeFormat(LOCALE[LANG], { day: 'numeric', month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(y, m - 1, d)));
   } catch (e) {
     return null;
   }
@@ -91,9 +127,17 @@ function daysToLaunch() {
   return Math.round((Date.UTC(y, m - 1, d) - Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())) / 864e5);
 }
 
+function applyDates() {
+  const day = launchText();
+  if (day) $$('.launch-date').forEach((el) => { el.textContent = day; el.dateTime = CONFIG.launchDate; });
+  document.title = day ? t('doc_title', { date: day }) : 'Valora Suisse';
+  const meta = $('meta[name="description"]');
+  if (meta && day) meta.setAttribute('content', t('doc_desc', { date: day }));
+}
+
 function applyConfig() {
-  const t = launchText();
-  if (t) $$('.launch-date').forEach((el) => { el.textContent = t; el.dateTime = CONFIG.launchDate; });
+  applyDates();
+  document.addEventListener('valora:lang', applyDates);
   const ig = $('#ig-link');
   if (ig && CONFIG.instagram) {
     ig.href = `https://www.instagram.com/${CONFIG.instagram}/`;
@@ -284,7 +328,8 @@ async function openEnvelope(intro, { short, release }) {
    Recalcula pelo relógio (nunca "decrementa"): à meia-noite, de hora em
    hora e sempre que a aba volta a aparecer.
    --------------------------------------------------------------------- */
-const days = (n) => (n === 1 ? 'dia' : 'dias');
+const days = (n) => t(n === 1 ? 'day' : 'days');
+let launchState = 'before'; // 'before' | 'today' | 'open'
 
 function countdown() {
   const grid = $('#cd');
@@ -295,20 +340,20 @@ function countdown() {
   let last;
   let timer = 0;
 
-  const render = () => {
+  const render = (force) => {
     clearTimeout(timer);
     const n = daysToLaunch();
     if (n < 0) { launched(); return; }
     if (n === 0) launchDay();
-    else if (n !== last) {
+    else if (n !== last || force === true) {
       num.textContent = String(n);
       label.textContent = days(n);
-      if (last !== undefined && !RM.matches) {
+      if (last !== undefined && n !== last && !RM.matches) {
         num.classList.remove('tick');
         void num.offsetWidth;
         num.classList.add('tick');
       }
-      sr.textContent = `${n === 1 ? 'Falta' : 'Faltam'} ${n} ${days(n)} para a abertura.`;
+      sr.textContent = n === 1 ? t('cd_sr_one') : t('cd_sr_many', { n });
     }
     last = n;
     const now = new Date();
@@ -317,41 +362,52 @@ function countdown() {
   };
 
   document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); else clearTimeout(timer); });
-  window.addEventListener('pageshow', render);
+  window.addEventListener('pageshow', () => render());
+  document.addEventListener('valora:lang', () => { render(true); applyLaunchTexts(); });
   render();
+}
+
+// Textos que mudam no dia e depois da abertura (refeitos também ao trocar de idioma)
+function applyLaunchTexts() {
+  if (launchState === 'before') return;
+  const title = $('#cd-title');
+  const date = $('#hero-date');
+  if (launchState === 'today') {
+    if (title) title.textContent = t('cd_today');
+    if (date) date.textContent = t('date_today');
+    return;
+  }
+  if (title) title.textContent = t('cd_open');
+  if (date) date.textContent = t('date_open');
+  const cta = $('#hero-cta');
+  if (cta) { cta.textContent = t('cta_pieces'); cta.href = CONFIG.shopURL; }
+  const stonesCta = $('.stones-cta');
+  if (stonesCta) { stonesCta.textContent = t('cta_pieces'); stonesCta.href = CONFIG.shopURL; }
 }
 
 // No dia: some o número, a página diz "É hoje" e a lista continua aberta.
 function launchDay() {
   if (root.classList.contains('is-launch-day')) return;
   root.classList.add('is-launch-day');
+  launchState = 'today';
   const grid = $('#cd');
   if (grid) grid.hidden = true;
-  const title = $('#cd-title');
-  if (title) title.textContent = 'É hoje.';
   const sr = $('#cd-sr');
   if (sr) sr.textContent = '';
-  const date = $('#hero-date');
-  if (date) date.textContent = 'A nova coleção Valora Suisse abre hoje.';
+  applyLaunchTexts();
 }
 
 function launched() {
   if (root.classList.contains('is-launched')) return;
   root.classList.add('is-launched');
+  launchState = 'open';
   const grid = $('#cd');
   if (grid) grid.hidden = true;
-  const title = $('#cd-title');
-  if (title) title.textContent = 'A coleção está aberta.';
   const sr = $('#cd-sr');
   if (sr) sr.textContent = '';
   const open = $('#cd-open');
   if (open) open.hidden = false;
-  const date = $('#hero-date');
-  if (date) date.textContent = 'A nova coleção Valora Suisse, em moissanite e zircônia, já está aberta.';
-  const cta = $('#hero-cta');
-  if (cta) { cta.textContent = 'Conhecer as peças'; cta.href = CONFIG.shopURL; }
-  const stonesCta = $('.stones-cta');
-  if (stonesCta) { stonesCta.textContent = 'Conhecer as peças'; stonesCta.href = CONFIG.shopURL; }
+  applyLaunchTexts();
   const list = $('#lista');
   if (list) list.hidden = true;
 }
@@ -387,7 +443,9 @@ function stones() {
 
   const setCaption = (key) => {
     const s = CONFIG.stones[key];
-    caption.textContent = s && s.pieceConfirmed ? `Na foto: ${s.piece} em ${s.name.toLowerCase()}.` : 'Imagem ilustrativa.';
+    caption.textContent = s && s.pieceConfirmed
+      ? t('caption_piece', { piece: t(`piece_${key}`), stone: t(`stone_${key}`).toLowerCase() })
+      : t('caption_illustrative');
   };
   const commitText = (key) => {
     section.dataset.active = key;
@@ -395,6 +453,8 @@ function stones() {
     setCaption(key);
     radios.forEach((r) => { r.checked = r.value === key; });
   };
+  setCaption(current);
+  document.addEventListener('valora:lang', () => setCaption(currentStone));
 
   const apply = (p) => {
     const { from, to, dir } = trans;
@@ -571,17 +631,18 @@ const DDD = new Set([11, 12, 13, 14, 15, 16, 17, 18, 19, 21, 22, 24, 27, 28, 31,
   41, 42, 43, 44, 45, 46, 47, 48, 49, 51, 53, 54, 55, 61, 62, 63, 64, 65, 66, 67, 68, 69, 71, 73, 74, 75,
   77, 79, 81, 82, 83, 84, 85, 86, 87, 88, 89, 91, 92, 93, 94, 95, 96, 97, 98, 99]);
 
-// texto padrão caso o config.js em uso seja de uma versão sem `consent`
-const CONSENT = CONFIG.consent || {
-  whatsapp: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar pelo WhatsApp mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu número para publicidade. Para sair, é só responder SAIR. ',
-  email: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu e-mail para publicidade. Para sair, use o link no fim de cada e-mail. ',
+// Texto de consentimento no idioma da página (config.js → consent.fr / .pt / .en / .es)
+const consentText = (channel) => {
+  const c = CONFIG.consent || {};
+  const byLang = c[LANG] || c.fr || {};
+  return byLang[channel] || '';
 };
 
 // WhatsApp: país do seletor + número. Quem digita "+41…" ou "0041…" escolhe o
 // país sozinho. `len` = dígitos do número nacional, sem o 0 de discagem.
 const COUNTRIES = {
   CH: { cc: '41', len: [9, 9], ph: '79 123 45 67' },
-  BR: { cc: '55', len: [11, 11], ph: 'DDD + número' },
+  BR: { cc: '55', len: [11, 11], ph: '(11) 91234-5678' },
   PT: { cc: '351', len: [9, 9], ph: '912 345 678' },
   FR: { cc: '33', len: [9, 9], ph: '6 12 34 56 78' },
   DE: { cc: '49', len: [6, 11], ph: '151 23456789' },
@@ -590,7 +651,7 @@ const COUNTRIES = {
   ES: { cc: '34', len: [9, 9], ph: '612 34 56 78' },
   GB: { cc: '44', len: [9, 10], ph: '7400 123456' },
   US: { cc: '1', len: [10, 10], ph: '(201) 555-0123' },
-  XX: { cc: '', len: [8, 15], ph: '+ código do país e número' },
+  XX: { cc: '', len: [8, 15], ph: '' }, // vem do idioma (ph_other)
 };
 const BY_CODE = Object.keys(COUNTRIES).filter((k) => COUNTRIES[k].cc).sort((a, b) => COUNTRIES[b].cc.length - COUNTRIES[a].cc.length);
 
@@ -661,26 +722,26 @@ function phoneDisplay(p) {
 function validatePhone(raw, selected) {
   const { country, d } = parsePhone(raw, selected);
   const c = COUNTRIES[country];
-  if (!d) return country === 'BR' ? 'Informe seu WhatsApp com DDD.' : 'Informe seu WhatsApp.';
+  if (!d) return country === 'BR' ? t('phone_empty_br') : t('phone_empty');
   if (country === 'BR') {
-    if (d.length < 11) return 'Confira o número: são 11 dígitos com o DDD.';
-    if (!DDD.has(Number(d.slice(0, 2)))) return 'Confira o DDD.';
-    if (d[2] !== '9') return 'Confira o número: celulares têm 9 depois do DDD.';
+    if (d.length < 11) return t('phone_br_len');
+    if (!DDD.has(Number(d.slice(0, 2)))) return t('phone_br_ddd');
+    if (d[2] !== '9') return t('phone_br_9');
     return '';
   }
-  if (country === 'CH') return d.length === 9 ? '' : 'Confira o número (ex.: 079 123 45 67).';
-  if (country === 'XX') return d.length >= 8 && d.length <= 15 ? '' : 'Escreva o número com o código do país (ex.: +44 7400 123456).';
-  return d.length >= c.len[0] && d.length <= c.len[1] ? '' : 'Confira o número.';
+  if (country === 'CH') return d.length === 9 ? '' : t('phone_ch');
+  if (country === 'XX') return d.length >= 8 && d.length <= 15 ? '' : t('phone_other');
+  return d.length >= c.len[0] && d.length <= c.len[1] ? '' : t('phone_bad');
 }
 function validateEmail(raw) {
   const v = String(raw).trim();
-  if (!v) return 'Informe seu e-mail.';
-  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Confira o e-mail: parece faltar algo.';
+  if (!v) return t('email_empty');
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : t('email_bad');
 }
 function validateName(raw) {
   const v = String(raw).trim();
-  if (!v) return 'Informe seu nome.';
-  return v.length >= 2 ? '' : 'Confira o nome.';
+  if (!v) return t('name_empty');
+  return v.length >= 2 ? '' : t('name_short');
 }
 
 function utm() {
@@ -740,16 +801,16 @@ function waLink(text) {
 
 function calendarLink() {
   const useGoogle = IN_APP || IN_FRAME || /Android/i.test(UA);
-  if (!useGoogle || LAUNCH_DAY.length !== 3) return { href: 'assets/lancamento.ics', download: true };
+  if (!useGoogle || LAUNCH_DAY.length !== 3) return { href: `assets/lancamento-${LANG}.ics`, download: true };
   const [y, m, d] = LAUNCH_DAY;
   const ymd = (dt) => dt.toISOString().slice(0, 10).replace(/-/g, '');
   const url = location.href.split('#')[0].split('?')[0];
-  const t = launchText();
+  const day = launchText();
   const q = new URLSearchParams({
     action: 'TEMPLATE',
-    text: 'Abertura da nova coleção Valora Suisse',
+    text: t('cal_title'),
     dates: `${ymd(new Date(Date.UTC(y, m - 1, d)))}/${ymd(new Date(Date.UTC(y, m - 1, d + 1)))}`, // dia inteiro
-    details: `${t ? `${t}. ` : ''}${url}`,
+    details: `${day ? `${day}. ` : ''}${url}`,
   });
   return { href: `https://calendar.google.com/calendar/render?${q.toString()}`, download: false };
 }
@@ -785,10 +846,10 @@ function waitlist() {
     err.replaceChildren(msg || '');
     if (msg && withWhatsApp && CONFIG.whatsappBrand) {
       const a = document.createElement('a');
-      a.href = waLink('Olá, Valora Suisse! Quero entrar na lista da nova coleção.');
+      a.href = waLink(t('wa_join'));
       a.target = '_blank';
       a.rel = 'noopener';
-      a.textContent = 'Entrar pelo WhatsApp';
+      a.textContent = t('join_by_whatsapp');
       err.append(' ', a, '.');
     }
     err.hidden = !msg;
@@ -801,9 +862,9 @@ function waitlist() {
 
   const renderConsent = () => {
     const a = document.createElement('a');
-    a.href = 'privacidade.html';
-    a.textContent = 'Política de privacidade';
-    consent.replaceChildren(CONSENT[channel], a, '.');
+    a.href = `privacidade.html?lang=${LANG}`;
+    a.textContent = t('privacy');
+    consent.replaceChildren(consentText(channel), a, '.');
   };
 
   const setChannel = (next, focus) => {
@@ -811,10 +872,8 @@ function waitlist() {
     const isEmail = channel === 'email';
     fPhone.hidden = isEmail;
     fEmail.hidden = !isEmail;
-    text.textContent = isEmail
-      ? 'Deixe seu e-mail e avisamos você no dia da abertura.'
-      : 'Deixe seu WhatsApp e avisamos você no dia da abertura.';
-    sw.textContent = isEmail ? 'Prefiro receber pelo WhatsApp' : 'Prefiro receber por e-mail';
+    text.textContent = t(isEmail ? 'wl_text_email' : 'wl_text_whatsapp');
+    sw.textContent = t(isEmail ? 'switch_to_whatsapp' : 'switch_to_email');
     touched = false;
     setError('');
     renderConsent();
@@ -825,7 +884,7 @@ function waitlist() {
   // País: sugerido pelo fuso do aparelho; o placeholder mostra o formato local
   const setCountry = (k) => {
     cc.value = k;
-    phone.placeholder = COUNTRIES[k].ph;
+    phone.placeholder = k === 'XX' ? t('ph_other') : COUNTRIES[k].ph;
   };
   setCountry(defaultCountry());
   cc.addEventListener('change', () => {
@@ -834,6 +893,18 @@ function waitlist() {
     if (!p.intl && p.d && (p.country === 'BR' || p.country === 'CH')) phone.value = formatNational(p.country, p.d);
     if (touched) setError(validate());
   });
+
+  // Troca de idioma: refaz os textos sem apagar o que a pessoa já digitou
+  const refreshTexts = () => {
+    text.textContent = t(channel === 'email' ? 'wl_text_email' : 'wl_text_whatsapp');
+    sw.textContent = t(channel === 'email' ? 'switch_to_whatsapp' : 'switch_to_email');
+    renderConsent();
+    phone.placeholder = cc.value === 'XX' ? t('ph_other') : COUNTRIES[cc.value].ph;
+    if (!btn.disabled) btnLabel.textContent = t('cta_join');
+    if (!err.hidden && touched) setError(validate());
+    renderDone();
+  };
+  document.addEventListener('valora:lang', refreshTexts);
 
   // máscara (Brasil e Suíça) que preserva a posição do cursor (conta os dígitos antes dele)
   phone.addEventListener('input', (ev) => {
@@ -865,24 +936,24 @@ function waitlist() {
   email.addEventListener('input', () => { if (touched) setError(validate()); });
   name.addEventListener('input', () => { if (touched) setError(validate()); });
 
-  const showDone = ({ channel: ch, display, isNew }) => {
-    joined = true;
-    const t = launchText();
-    $('#done-title').textContent = isNew ? 'Você está na lista.' : 'Você continua na lista.';
+  let doneState = null; // { channel, display, isNew } da confirmação na tela
+  const doneSentence = (ch) => {
+    const day = launchText();
+    return `${day ? t('done_lead', { date: day }) : t('done_lead_nodate')} ${t(ch === 'email' ? 'done_by_email' : 'done_by_whatsapp')}`;
+  };
+  const renderDone = () => {
+    if (!doneState) return;
+    const { channel: ch, display, isNew } = doneState;
+    $('#done-title').textContent = t(isNew ? 'done_new' : 'done_again');
     const strong = document.createElement('strong');
     strong.textContent = display;
     strong.classList.toggle('is-phone', ch !== 'email'); // telefone numa linha só; e-mail quebra se precisar
-    $('#done-text').replaceChildren(
-      `${t ? `No dia ${t}` : 'No dia da abertura'}, avisamos você ${ch === 'email' ? 'no e-mail' : 'no WhatsApp'} `,
-      strong,
-      '.',
-    );
-    $('#done-fix').textContent = ch === 'email' ? 'Corrigir e-mail' : 'Corrigir número';
+    $('#done-text').replaceChildren(`${doneSentence(ch)} `, strong, '.');
+    $('#done-fix').textContent = t(ch === 'email' ? 'fix_email' : 'fix_whatsapp');
 
     const wa = $('#done-wa');
     if (CONFIG.whatsappBrand && ch !== 'email') {
-      const s = stoneChosen ? CONFIG.stones[currentStone] : null;
-      wa.href = waLink(`Olá, Valora Suisse! Entrei na lista da nova coleção e quero receber o aviso da abertura.${s ? ` Pedra de interesse: ${s.name}.` : ''}`);
+      wa.href = waLink(t('wa_confirm') + (stoneChosen ? t('wa_stone', { stone: t(`stone_${currentStone}`) }) : ''));
       wa.hidden = false;
     } else {
       wa.hidden = true;
@@ -890,7 +961,13 @@ function waitlist() {
     const cal = calendarLink();
     const calA = $('#done-cal');
     calA.href = cal.href;
-    if (cal.download) { calA.setAttribute('download', 'valora-suisse-abertura.ics'); calA.removeAttribute('target'); } else { calA.removeAttribute('download'); calA.target = '_blank'; }
+    if (cal.download) { calA.setAttribute('download', 'valora-suisse.ics'); calA.removeAttribute('target'); } else { calA.removeAttribute('download'); calA.target = '_blank'; }
+  };
+
+  const showDone = ({ channel: ch, display, isNew }) => {
+    joined = true;
+    doneState = { channel: ch, display, isNew };
+    renderDone();
 
     formWrap.hidden = true;
     done.hidden = false;
@@ -900,7 +977,7 @@ function waitlist() {
       void invite.offsetWidth;
       if (!RM.matches) invite.classList.add('is-stamped');
       setTimeout(haptic, 380);
-      status.textContent = `Você está na lista. Avisamos você ${ch === 'email' ? 'no e-mail' : 'no WhatsApp'} ${display}.`;
+      status.textContent = `${t('done_new')} ${doneSentence(ch)} ${display}.`;
       $('#done-title').focus({ preventScroll: true });
     }
     document.dispatchEvent(new CustomEvent('valora:joined'));
@@ -948,7 +1025,7 @@ function waitlist() {
     btn.classList.add('is-loading');
     btn.setAttribute('aria-busy', 'true');
     btn.disabled = true;
-    btnLabel.textContent = 'Enviando';
+    btnLabel.textContent = t('sending');
     try {
       await submitLead(payload);
       store.del(OUTBOX_KEY); // o que foi confirmado não pode ser reenviado depois
@@ -958,7 +1035,7 @@ function waitlist() {
     } catch (error) {
       store.set(OUTBOX_KEY, JSON.stringify(payload));
       track('lead_error', { canal: ch });
-      const fail = 'Não conseguimos registrar agora. Tente de novo em instantes.';
+      const fail = t('fail');
       setError(fail, true);
       status.textContent = fail;
       input().focus(); // o botão desabilitado derrubou o foco; volta para o campo
@@ -966,7 +1043,7 @@ function waitlist() {
       btn.classList.remove('is-loading');
       btn.removeAttribute('aria-busy');
       btn.disabled = false;
-      btnLabel.textContent = 'Entrar na lista';
+      btnLabel.textContent = t('cta_join');
     }
   });
 
@@ -974,6 +1051,7 @@ function waitlist() {
     let saved = null;
     try { saved = JSON.parse(store.get(JOIN_KEY) || 'null'); } catch (e) { saved = null; }
     joined = false;
+    doneState = null;
     done.hidden = true;
     done.classList.remove('is-new');
     formWrap.hidden = false;
@@ -986,20 +1064,22 @@ function waitlist() {
   // Compartilhar: é um link de verdade para o WhatsApp (funciona em qualquer navegador);
   // onde o Web Share existir de fato, abre a folha de compartilhar do aparelho.
   const share = $('#done-share');
-  const SHARE_TEXT = 'Um convite da Valora Suisse: a nova coleção, em moissanite e zircônia.';
+
   const shareUrl = () => {
     const url = new URL(location.href.split('#')[0]);
     url.search = '';
     url.searchParams.set('utm_source', 'share');
     return url.toString();
   };
-  share.href = `https://wa.me/?text=${encodeURIComponent(`${SHARE_TEXT} ${shareUrl()}`)}`;
+  const setShareHref = () => { share.href = `https://wa.me/?text=${encodeURIComponent(`${t('share_text')} ${shareUrl()}`)}`; };
+  setShareHref();
+  document.addEventListener('valora:lang', setShareHref);
   share.addEventListener('click', async (e) => {
     track('share', {});
     if (!navigator.share || IN_FRAME) return; // segue o link
     e.preventDefault();
     try {
-      await navigator.share({ title: 'Valora Suisse', text: SHARE_TEXT, url: shareUrl() });
+      await navigator.share({ title: 'Valora Suisse', text: t('share_text'), url: shareUrl() });
     } catch (err) {
       if (err && err.name !== 'AbortError') window.location.href = share.href;
     }
@@ -1021,6 +1101,7 @@ function waitlist() {
   }));
 
   setChannel('whatsapp', false);
+  refreshTexts();
 
   // já está na lista (mesmo aparelho): mostra o convite selado direto
   try {
@@ -1055,6 +1136,7 @@ function softImages() {
    --------------------------------------------------------------------- */
 const safely = (name, fn) => { try { return fn(); } catch (err) { console.error(`[Valora] ${name}:`, err); return undefined; } };
 
+safely('lang', initLang);
 safely('intro', () => runIntro().catch((err) => {
   console.error('[Valora] intro:', err);
   root.classList.remove('intro-on');

@@ -20,6 +20,20 @@ tráfego do Instagram: mobile primeiro, leve e sem dependências. Fica em
   para de rodar no ar). Textos, `css/style.css` e os `.js` podem mudar à vontade. Se trocar o
   backend da lista por outro domínio, inclua o novo endereço em `connect-src` no `vercel.json`.
 
+## Idiomas
+
+A página está em **francês (padrão), português, inglês e espanhol**, como o site principal.
+
+- O idioma vem, nesta ordem, de `?lang=fr|pt|en|es` no link, da escolha guardada no aparelho
+  (a mesma chave do site principal: quem escolhe ES aqui abre o site em ES) ou do idioma do
+  aparelho. Qualquer outro idioma (alemão, italiano…) abre em **francês**.
+- Botões FR · PT · EN · ES no canto da foto (celular), no topo da coluna de texto (computador)
+  e no rodapé. A política de privacidade tem as 4 versões e abre no mesmo idioma.
+- Textos da página: `js/i18n.js`. Consentimento (texto legal): `js/config.js` → `consent`.
+  A agenda tem um arquivo por idioma (`assets/lancamento-fr|pt|en|es.ics`).
+- A prévia do link (Instagram/WhatsApp) é uma só por endereço: está em francês. Para um público
+  específico, use o link com o idioma, por exemplo `…/lancamento/?lang=pt`.
+
 ## Rodar localmente
 
 ```bash
@@ -47,7 +61,7 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
    confirmou. A contagem mostra só os dias (pelo calendário de cada aparelho); no dia, a página
    diz "É hoje" e, do dia seguinte em diante, "a coleção está aberta". A agenda salva um evento
    de dia inteiro. Se mudar a data, atualize também o `index.html` (`<title>`, `og:*`, `<time>`),
-   o `assets/lancamento.ics` e a imagem `assets/og-image.jpg` (e troque o `?v=` do `og:image`
+   os `assets/lancamento-*.ics` e a imagem `assets/og-image.jpg` (e troque o `?v=` do `og:image`
    para as redes buscarem a nova).
 2. **Qual pedra está em cada foto** (`stones.*.pieceConfirmed`). Enquanto for `false`, a legenda
    do seletor diz só "Imagem ilustrativa." (a página não afirma nada sobre a composição da peça).
@@ -102,16 +116,19 @@ Links sugeridos (sempre com `/lancamento/` — a raiz do domínio é o site, nã
 
 - bio: `https://valorasuisse.com/lancamento/?utm_source=instagram&utm_medium=bio`
 - stories: `https://valorasuisse.com/lancamento/?utm_source=instagram&utm_medium=story&utm_content=AAAAMMDD#lista`
+- forçar um idioma: acrescente `&lang=pt` (ou `fr`, `en`, `es`) a qualquer um deles.
 
 ## Estrutura
 
 ```
 lancamento/
 ├── index.html            página
-├── privacidade.html      política de privacidade (preencher)
+├── privacidade.html      política de privacidade em 4 idiomas (preencher)
 ├── css/style.css         estilos (tokens da marca no topo)
 ├── js/config.js          ⚠ tudo que a marca edita
+├── js/i18n.js            textos em FR · PT · EN · ES e detecção do idioma
 ├── js/main.js            abertura, contagem, seletor de pedra, lista
+├── js/privacidade.js     mostra a política no idioma da pessoa
 ├── PLANO.md              plano original da página (não vai para o ar)
 └── assets/
     ├── produto-1..3.jpg  fotos originais (não vão para o ar)
@@ -120,5 +137,5 @@ lancamento/
     ├── papel-*.webp      textura do envelope
     ├── fonts/            Cormorant Garamond + Montserrat (subset latin)
     ├── og-image.jpg      prévia de link 1200×630
-    └── lancamento.ics    evento de agenda
+    └── lancamento-*.ics  evento de agenda (um por idioma)
 ```

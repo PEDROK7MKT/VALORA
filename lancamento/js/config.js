@@ -45,22 +45,37 @@ export const CONFIG = {
   // quando existir (Google Tag Manager).
   analyticsEndpoint: '',
 
-  // ⚠ CONFIRMAR · texto de consentimento mostrado acima do botão (LGPD).
+  // ⚠ CONFIRMAR · texto de consentimento mostrado acima do botão, em cada idioma.
   // Precisa bater com a política de privacidade (privacidade.html) e com o que a
-  // marca realmente faz: o "responder SAIR" e o "link no fim de cada e-mail" só
-  // podem ficar se existir mesmo esse jeito de sair da lista.
-  // Mudou o texto? Mude também a versão (vai junto com cada cadastro, como prova).
-  consentVersion: '2026-09-27b',
+  // marca realmente faz: "responder STOP/SAIR/BAJA" e o "link no fim de cada e-mail"
+  // só podem ficar se existir mesmo esse jeito de sair da lista.
+  // O texto exato que a pessoa viu vai junto com cada cadastro (consent_text).
+  // Mudou o texto? Mude também a versão.
+  consentVersion: '2026-10-09',
   consent: {
-    whatsapp: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar pelo WhatsApp mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu número para publicidade. Para sair, é só responder SAIR. ',
-    email: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu e-mail para publicidade. Para sair, use o link no fim de cada e-mail. ',
+    fr: {
+      whatsapp: 'En rejoignant la liste, vous autorisez Valora Suisse à vous envoyer sur WhatsApp des messages concernant le lancement de cette collection. Nous ne vendons ni ne partageons votre numéro à des fins publicitaires. Pour vous désinscrire, il suffit de répondre STOP. ',
+      email: 'En rejoignant la liste, vous autorisez Valora Suisse à vous envoyer par e-mail des messages concernant le lancement de cette collection. Nous ne vendons ni ne partageons votre e-mail à des fins publicitaires. Pour vous désinscrire, utilisez le lien en bas de chaque e-mail. ',
+    },
+    pt: {
+      whatsapp: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar pelo WhatsApp mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu número para publicidade. Para sair, é só responder SAIR. ',
+      email: 'Ao entrar na lista, você autoriza a Valora Suisse a enviar por e-mail mensagens sobre o lançamento desta coleção. Não vendemos nem compartilhamos seu e-mail para publicidade. Para sair, use o link no fim de cada e-mail. ',
+    },
+    en: {
+      whatsapp: 'By joining the list, you allow Valora Suisse to send you WhatsApp messages about the launch of this collection. We never sell or share your number for advertising. To unsubscribe, just reply STOP. ',
+      email: 'By joining the list, you allow Valora Suisse to email you about the launch of this collection. We never sell or share your email for advertising. To unsubscribe, use the link at the bottom of any email. ',
+    },
+    es: {
+      whatsapp: 'Al unirte a la lista, autorizas a Valora Suisse a enviarte por WhatsApp mensajes sobre el lanzamiento de esta colección. No vendemos ni compartimos tu número con fines publicitarios. Para darte de baja, solo responde BAJA. ',
+      email: 'Al unirte a la lista, autorizas a Valora Suisse a enviarte por e-mail mensajes sobre el lanzamiento de esta colección. No vendemos ni compartimos tu e-mail con fines publicitarios. Para darte de baja, usa el enlace al final de cada e-mail. ',
+    },
   },
 
-  // Pedras · textos exatos do brief. `piece` e `pieceConfirmed`:
-  // ⚠ CONFIRMAR qual pedra está em cada foto. Enquanto `pieceConfirmed` for
-  // false, a legenda mostra só "Imagem ilustrativa."
+  // Pedras · ⚠ CONFIRMAR qual pedra está em cada foto. Enquanto `pieceConfirmed`
+  // for false, a legenda mostra só "Imagem ilustrativa." (os nomes das pedras e
+  // das peças, nos 4 idiomas, ficam em js/i18n.js).
   stones: {
-    zirconia: { name: 'Zircônia', piece: 'Pulseira riviera', pieceConfirmed: false },
-    moissanite: { name: 'Moissanite', piece: 'Anel solitário', pieceConfirmed: false },
+    moissanite: { pieceConfirmed: false }, // na foto: anel solitário
+    zirconia: { pieceConfirmed: false }, // na foto: pulseira riviera
   },
 };

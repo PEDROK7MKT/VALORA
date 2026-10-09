@@ -1,0 +1,21 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Valora Suisse//Abertura da colecao//FR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:abertura-20261010@valorasuisse
+DTSTAMP:20261009T120000Z
+SEQUENCE:3
+DTSTART;VALUE=DATE:20261018
+DTEND;VALUE=DATE:20261019
+TRANSP:TRANSPARENT
+SUMMARY:Ouverture de la nouvelle collection Valora Suisse
+DESCRIPTION:La nouvelle collection Valora Suisse sera dévoilée le 18 octobre.
+BEGIN:VALARM
+TRIGGER:PT9H
+ACTION:DISPLAY
+DESCRIPTION:La nouvelle collection Valora Suisse est dévoilée aujourd’hui
+END:VALARM
+END:VEVENT
+END:VCALENDAR

@@ -5,7 +5,7 @@ Um domínio, duas páginas:
 | Endereço | Conteúdo |
 |---|---|
 | `valorasuisse.com` | Site da marca, versão de demonstração: vídeo no hero, coleção, A Maison, certificado e contato. Fica na raiz (`index.html` + `assets/`). |
-| `valorasuisse.com/lancamento` | Convite de pré-lançamento da nova coleção (moissanite e zircônia), com contagem e lista de espera. Ver [`lancamento/README.md`](lancamento/README.md). |
+| `valorasuisse.com/lancamento` | Convite de pré-lançamento da nova coleção (moissanite e zircônia), em FR · PT · EN · ES, com contagem e lista de espera. Ver [`lancamento/README.md`](lancamento/README.md). |
 
 Tudo é HTML/CSS/JS estático, sem build.
 
