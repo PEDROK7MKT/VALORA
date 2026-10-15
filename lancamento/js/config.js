@@ -40,6 +40,12 @@ export const CONFIG = {
   // ------------------------------------------------------------------
   waitlistEndpoint: 'https://pk7mkt.app.n8n.cloud/webhook/valora-lead',
 
+  // Lista fechada em 15/10/2026: a página mostra só o agradecimento e os
+  // botões deixam de chamar para a inscrição. O webhook continua ativo, então
+  // um cadastro que tinha falhado antes ainda é reenviado na próxima visita.
+  // Para reabrir: true (o resto volta sozinho).
+  waitlistOpen: false,
+
   // Eventos de medição (opcional). Se preenchido, cada evento vai por
   // navigator.sendBeacon como JSON. Também são empurrados em window.dataLayer
   // quando existir (Google Tag Manager).

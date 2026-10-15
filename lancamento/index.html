@@ -7,7 +7,7 @@
   <meta name="theme-color" content="#032D1F" />
   <meta name="format-detection" content="telephone=no" />
   <title>Valora Suisse · Nouvelle collection le 18 octobre</title>
-  <meta name="description" content="La nouvelle collection Valora Suisse, en moissanite et zircone. Inscrivez-vous sur la liste et recevez l’annonce de l’ouverture, le 18 octobre." />
+  <meta name="description" content="La nouvelle collection Valora Suisse, en moissanite et zircone. Ouverture le 18 octobre." />
 
   <!-- Prévia do link (Instagram, WhatsApp): as prévias não leem caminho relativo.
        Uma URL só tem uma prévia: fica em francês, o idioma padrão da marca. -->
@@ -18,7 +18,7 @@
   <meta property="og:locale:alternate" content="es_ES" />
   <meta property="og:site_name" content="Valora Suisse" />
   <meta property="og:title" content="Nouvelle collection Valora Suisse" />
-  <meta property="og:description" content="Moissanite et zircone. Inscrivez-vous sur la liste et recevez l’annonce de l’ouverture, le 18 octobre." />
+  <meta property="og:description" content="Moissanite et zircone. Ouverture le 18 octobre." />
   <meta property="og:url" content="https://valorasuisse.com/lancamento/" />
   <meta property="og:image" content="https://valorasuisse.com/lancamento/assets/og-image.jpg?v=4" />
   <meta property="og:image:width" content="1200" />
@@ -216,7 +216,7 @@
       <h1 id="hero-title" tabindex="-1"><span data-i18n="h1a">Moissanite</span><br /> <span data-i18n="h1b">ou zircone.</span></h1>
       <p class="hero-sub" data-i18n="hero_sub">Chacune a sa propre lumière.</p>
       <p class="hero-date" id="hero-date"><span data-i18n="date_pre">La nouvelle collection Valora Suisse sera dévoilée le</span> <time class="launch-date" datetime="2026-10-18">18 octobre</time>.</p>
-      <a class="btn btn-primary hero-cta" id="hero-cta" href="#lista" data-cta="hero" data-i18n="cta_join">Rejoindre la liste</a>
+      <a class="btn btn-primary hero-cta" id="hero-cta" href="#pedras" data-cta="hero" data-i18n="cta_stones">Découvrir les pierres</a>
     </div>
   </header>
 
@@ -273,13 +273,23 @@
 
     <p class="stone-caption" id="stone-caption">Image d’illustration.</p>
     <p class="stone-note" data-i18n="stone_note">Moissanite et zircone&nbsp;: deux pierres créées en laboratoire.</p>
-    <a class="btn btn-ghost stones-cta" href="#lista" data-cta="pedra" data-i18n="stones_cta">Recevoir l’annonce de l’ouverture</a>
+    <a class="btn btn-ghost stones-cta" href="#lista" data-cta="pedra" data-i18n="stones_cta" hidden>Recevoir l’annonce de l’ouverture</a>
   </section>
 
   <!-- LISTA DE CONVIDADOS -->
-  <section class="waitlist" id="lista" aria-labelledby="wl-title">
+  <section class="waitlist" id="lista" aria-labelledby="closed-title">
     <div class="invite" id="invite">
-      <div class="invite-form" id="invite-form">
+      <!-- lista fechada (CONFIG.waitlistOpen = false): só o agradecimento -->
+      <div class="invite-done invite-closed" id="invite-closed">
+        <div class="done-seal" aria-hidden="true">
+          <img src="assets/lacre-sm.webp" alt="" width="340" height="340" loading="lazy" decoding="async" />
+        </div>
+        <h2 id="closed-title" data-i18n="closed_title">La liste est close.</h2>
+        <p class="done-text" data-i18n="closed_text">Merci à toutes les personnes inscrites.</p>
+        <p class="done-bye" data-i18n="closed_bye">Rendez-vous à l’ouverture.</p>
+      </div>
+
+      <div class="invite-form" id="invite-form" hidden>
         <h2 id="wl-title" data-i18n="wl_title">Liste des invités</h2>
         <p class="wl-text" id="wl-text">Laissez votre WhatsApp, nous vous préviendrons le jour de l’ouverture.</p>
 

@@ -79,6 +79,12 @@ Tudo que é editável está em **`js/config.js`** (itens marcados com `⚠ CONFI
 
 ## Lista de espera · backend em produção
 
+**Lista fechada em 15/10/2026** (`CONFIG.waitlistOpen: false`). A seção mostra só o
+agradecimento ("A lista está fechada", nos 4 idiomas), o botão do topo vira "Conhecer as pedras"
+e o botão abaixo das pedras some. O webhook continua ativo: um cadastro que tinha falhado antes
+ainda é reenviado na próxima visita da pessoa. Para reabrir, troque para `true` (formulário e
+botões voltam sozinhos).
+
 O campo de WhatsApp tem um seletor de país (Suíça, Brasil, Portugal, França, Alemanha, Itália,
 Áustria, Espanha, Reino Unido, EUA e "Outro"). O país vem sugerido pelo fuso do aparelho e
 quem digita `+41…` ou `0041…` tem o país escolhido sozinho. Números suíços valem com ou sem o 0

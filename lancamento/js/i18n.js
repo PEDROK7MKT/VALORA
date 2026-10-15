@@ -16,7 +16,7 @@ const NB = ' '; // espaço inquebrável (francês: antes de : ! ?)
 export const I18N = {
   fr: {
     doc_title: 'Valora Suisse · Nouvelle collection le {date}',
-    doc_desc: 'La nouvelle collection Valora Suisse, en moissanite et zircone. Inscrivez-vous sur la liste et recevez l’annonce de l’ouverture, le {date}.',
+    doc_desc: 'La nouvelle collection Valora Suisse, en moissanite et zircone. Ouverture le {date}.',
     lang_label: 'Langue',
     intro_line: 'Une invitation de Valora Suisse',
     seal_label: 'Ouvrir l’invitation',
@@ -29,6 +29,10 @@ export const I18N = {
     date_open: 'La nouvelle collection Valora Suisse, en moissanite et zircone, est désormais disponible.',
     cta_join: 'Rejoindre la liste',
     cta_pieces: 'Découvrir les pièces',
+    cta_stones: 'Découvrir les pierres',
+    closed_title: 'La liste est close.',
+    closed_text: 'Merci à toutes les personnes inscrites.',
+    closed_bye: 'Rendez-vous à l’ouverture.',
     cd_title: 'Jusqu’à l’ouverture',
     cd_today: 'C’est aujourd’hui.',
     cd_open: 'La collection est ouverte.',
@@ -116,7 +120,7 @@ export const I18N = {
 
   pt: {
     doc_title: 'Valora Suisse · Nova coleção em {date}',
-    doc_desc: 'A nova coleção Valora Suisse, em moissanite e zircônia. Entre na lista e receba o aviso da abertura, em {date}.',
+    doc_desc: 'A nova coleção Valora Suisse, em moissanite e zircônia. Abertura em {date}.',
     lang_label: 'Idioma',
     intro_line: 'Um convite da Valora Suisse',
     seal_label: 'Abrir o convite',
@@ -129,6 +133,10 @@ export const I18N = {
     date_open: 'A nova coleção Valora Suisse, em moissanite e zircônia, já está aberta.',
     cta_join: 'Entrar na lista',
     cta_pieces: 'Conhecer as peças',
+    cta_stones: 'Conhecer as pedras',
+    closed_title: 'A lista está fechada.',
+    closed_text: 'Agradecemos a todos que se inscreveram.',
+    closed_bye: 'Nos vemos na abertura.',
     cd_title: 'Até a abertura',
     cd_today: 'É hoje.',
     cd_open: 'A coleção está aberta.',
@@ -215,7 +223,7 @@ export const I18N = {
 
   en: {
     doc_title: 'Valora Suisse · New collection on {date}',
-    doc_desc: 'The new Valora Suisse collection, in moissanite and zirconia. Join the list and be notified when it opens on {date}.',
+    doc_desc: 'The new Valora Suisse collection, in moissanite and zirconia. Opening on {date}.',
     lang_label: 'Language',
     intro_line: 'An invitation from Valora Suisse',
     seal_label: 'Open the invitation',
@@ -228,6 +236,10 @@ export const I18N = {
     date_open: 'The new Valora Suisse collection, in moissanite and zirconia, is now open.',
     cta_join: 'Join the list',
     cta_pieces: 'Discover the pieces',
+    cta_stones: 'Discover the stones',
+    closed_title: 'The list is now closed.',
+    closed_text: 'Thank you to everyone who signed up.',
+    closed_bye: 'See you at the opening.',
     cd_title: 'Until the opening',
     cd_today: 'It’s today.',
     cd_open: 'The collection is open.',
@@ -314,7 +326,7 @@ export const I18N = {
 
   es: {
     doc_title: 'Valora Suisse · Nueva colección el {date}',
-    doc_desc: 'La nueva colección Valora Suisse, en moissanita y circonita. Únete a la lista y recibe el aviso de la apertura, el {date}.',
+    doc_desc: 'La nueva colección Valora Suisse, en moissanita y circonita. Apertura el {date}.',
     lang_label: 'Idioma',
     intro_line: 'Una invitación de Valora Suisse',
     seal_label: 'Abrir la invitación',
@@ -327,6 +339,10 @@ export const I18N = {
     date_open: 'La nueva colección Valora Suisse, en moissanita y circonita, ya está disponible.',
     cta_join: 'Unirme a la lista',
     cta_pieces: 'Descubrir las piezas',
+    cta_stones: 'Descubrir las piedras',
+    closed_title: 'La lista está cerrada.',
+    closed_text: 'Gracias a todas las personas que se inscribieron.',
+    closed_bye: 'Nos vemos en la apertura.',
     cd_title: 'Hasta la apertura',
     cd_today: 'Es hoy.',
     cd_open: 'La colección está abierta.',

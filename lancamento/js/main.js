@@ -382,7 +382,7 @@ function applyLaunchTexts() {
   const cta = $('#hero-cta');
   if (cta) { cta.textContent = t('cta_pieces'); cta.href = CONFIG.shopURL; }
   const stonesCta = $('.stones-cta');
-  if (stonesCta) { stonesCta.textContent = t('cta_pieces'); stonesCta.href = CONFIG.shopURL; }
+  if (stonesCta) { stonesCta.textContent = t('cta_pieces'); stonesCta.href = CONFIG.shopURL; stonesCta.hidden = false; }
 }
 
 // No dia: some o número, a página diz "É hoje" e a lista continua aberta.
@@ -818,6 +818,20 @@ function calendarLink() {
 function waitlist() {
   const form = $('#wl-form');
   if (!form) return;
+  // Lista fechada: o index.html já mostra só o agradecimento. Um cadastro que
+  // tinha falhado antes do fechamento ainda é reenviado, sem mudar a tela.
+  if (CONFIG.waitlistOpen === false) { flushOutbox(); return; }
+
+  // Lista aberta: volta o formulário e os botões que levam até ele
+  $('#invite-closed').hidden = true;
+  $('#invite-form').hidden = false;
+  $('#lista').setAttribute('aria-labelledby', 'wl-title');
+  if (launchState !== 'open') {
+    const hero = $('#hero-cta');
+    if (hero) { hero.dataset.i18n = 'cta_join'; hero.textContent = t('cta_join'); hero.href = '#lista'; }
+    const stonesCta = $('.stones-cta');
+    if (stonesCta) stonesCta.hidden = false;
+  }
   form.hidden = false;
   const name = $('#wl-name');
   const phone = $('#wl-phone');
