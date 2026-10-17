@@ -1,0 +1,41 @@
+{%- capture ck -%}{%- render 'valora-coll-key', handle: collection.handle -%}{%- endcapture -%}
+{%- assign ck = ck | strip -%}
+
+<section class="psec pcoll" aria-labelledby="c-title">
+  <div class="sec">
+    <nav class="crumbs">
+      <a class="back" href="{{ routes.root_url }}#collection"><span aria-hidden="true">←</span> <span data-i18n="cat_h">La collection</span></a>
+    </nav>
+
+    <div class="psec-h">
+      <h1 id="c-title"{% if ck != blank %} data-i18n="{{ ck }}"{% endif %}>{{ collection.title | escape }}</h1>
+      <small>{{ collection.products_count }} <span data-i18n="{% if collection.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if collection.products_count == 1 %}création{% else %}créations{% endif %}</span></small>
+    </div>
+    {%- if collection.description != blank -%}
+      <div class="sub rte pcoll-desc">{{ collection.description }}</div>
+    {%- endif -%}
+
+    {%- paginate collection.products by 24 -%}
+      {%- if collection.products.size > 0 -%}
+        <div class="grid5 grid5--page">
+          {%- for product in collection.products -%}
+            {%- render 'valora-product-card', product: product -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <p class="empty" data-i18n="coll_empty">Aucune création pour le moment.</p>
+      {%- endif -%}
+
+      {%- if paginate.pages > 1 -%}
+        {%- render 'valora-pager', paginate: paginate -%}
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Valora — Coleção",
+  "settings": []
+}
+{% endschema %}

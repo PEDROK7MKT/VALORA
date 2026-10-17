@@ -1,0 +1,10 @@
+{%- comment -%} Paginação no estilo do site. Uso: {%- render 'valora-pager', paginate: paginate -%} {%- endcomment -%}
+<nav class="pager" aria-label="Pages" data-i18n-aria="pg_nav">
+  {%- if paginate.previous -%}
+    <a class="btn btn-outline" href="{{ paginate.previous.url }}" rel="prev" data-i18n="pg_prev">Précédent</a>
+  {%- endif -%}
+  <span class="pager-n" data-i18n-fmt="pg_page" data-n="{{ paginate.current_page }}" data-m="{{ paginate.pages }}">Page {{ paginate.current_page }} sur {{ paginate.pages }}</span>
+  {%- if paginate.next -%}
+    <a class="btn btn-outline" href="{{ paginate.next.url }}" rel="next" data-i18n="pg_next">Suivant</a>
+  {%- endif -%}
+</nav>
