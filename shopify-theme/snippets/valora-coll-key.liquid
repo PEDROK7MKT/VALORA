@@ -1,0 +1,12 @@
+{%- comment -%}
+  Chave de tradução (valora.js → I18N) do nome de uma coleção.
+  Uso: {%- capture ck -%}{%- render 'valora-coll-key', handle: collection.handle -%}{%- endcapture -%}
+  Coleção sem chave: sai vazio e a página mostra o título que está na Shopify.
+{%- endcomment -%}
+{%- case handle -%}
+  {%- when 'aneis' -%}nav_bagues
+  {%- when 'colares' -%}nav_colliers
+  {%- when 'brincos' -%}nav_boucles_full
+  {%- when 'pulseiras' -%}nav_bracelets
+  {%- when 'all' -%}cat_h
+{%- endcase -%}

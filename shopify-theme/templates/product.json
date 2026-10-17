@@ -1,0 +1,10 @@
+{
+  "layout": "valora",
+  "sections": {
+    "main": {
+      "type": "valora-product",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
