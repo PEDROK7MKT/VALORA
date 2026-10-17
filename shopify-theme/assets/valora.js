@@ -71,6 +71,18 @@
       d_h: 'Votre sélection est prête', d_p: "Merci d'avoir choisi Valora Suisse. Que ce bijou accompagne vos plus beaux moments.",
       d_s: "Démonstration : aucune commande n'a été enregistrée et aucun e-mail n'a été envoyé. Dans la boutique, vous continueriez ici vers la page de paiement sécurisée de notre prestataire.",
       d_back: 'Retour à la boutique',
+      // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
+      back_coll: "Retour à la collection", btn_add_cart: "Ajouter au panier", sold_out: "Épuisé",
+      v_label: "Option", pd_photos: "Photos de la pièce", pd_more: "Dans la même collection",
+      pd_question: "Une question ? Écrire sur WhatsApp", wa_product: "Bonjour Valora Suisse, j'aimerais des informations sur « {n} ».", pg_nav: "Pages",
+      pg_prev: "Précédent", pg_next: "Suivant", pg_page: "Page {n} sur {m}",
+      coll_empty: "Aucune création pour le moment.", nf_h: "Page introuvable", nf_p: "Le lien est peut-être incorrect, ou la page n'existe plus.",
+      s_h: "Recherche", s_label: "Rechercher", s_ph: "Rechercher une création",
+      s_btn: "Rechercher", s_none: "Aucun résultat pour « {q} ».", s_res1: "résultat",
+      s_resN: "résultats", cart_update: "Mettre à jour", cart_unit: "Prix",
+      cart_total: "Total", pol_nav: "Informations légales", pol_privacy_policy: "Confidentialité",
+      pol_refund_policy: "Retours et remboursements", pol_shipping_policy: "Livraison", pol_terms_of_service: "Conditions générales",
+      pol_terms_of_sale: "Conditions de vente", pol_legal_notice: "Mentions légales", pol_contact_information: "Coordonnées",
     },
     pt: {
       doc_title: 'Valora Suisse — Joias de exceção',
@@ -131,6 +143,18 @@
       d_h: 'Sua seleção está pronta', d_p: 'Obrigado por escolher a Valora Suisse. Que esta joia acompanhe os seus momentos mais especiais.',
       d_s: 'Demonstração: nenhum pedido foi registrado e nenhum e-mail foi enviado. Na loja, você seguiria daqui para a página de pagamento segura do nosso parceiro.',
       d_back: 'Voltar à loja',
+      // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
+      back_coll: "Voltar à coleção", btn_add_cart: "Adicionar ao carrinho", sold_out: "Esgotado",
+      v_label: "Opção", pd_photos: "Fotos da peça", pd_more: "Da mesma coleção",
+      pd_question: "Dúvidas? Fale pelo WhatsApp", wa_product: "Olá, Valora Suisse! Gostaria de informações sobre “{n}”.", pg_nav: "Páginas",
+      pg_prev: "Anterior", pg_next: "Próxima", pg_page: "Página {n} de {m}",
+      coll_empty: "Nenhuma criação por enquanto.", nf_h: "Página não encontrada", nf_p: "O link pode estar errado, ou a página não existe mais.",
+      s_h: "Busca", s_label: "Buscar", s_ph: "Buscar uma criação",
+      s_btn: "Buscar", s_none: "Nenhum resultado para “{q}”.", s_res1: "resultado",
+      s_resN: "resultados", cart_update: "Atualizar", cart_unit: "Preço",
+      cart_total: "Total", pol_nav: "Informações legais", pol_privacy_policy: "Privacidade",
+      pol_refund_policy: "Trocas e devoluções", pol_shipping_policy: "Envio", pol_terms_of_service: "Termos de serviço",
+      pol_terms_of_sale: "Condições de venda", pol_legal_notice: "Aviso legal", pol_contact_information: "Contato",
     },
     en: {
       doc_title: 'Valora Suisse — Exceptional jewellery',
@@ -191,6 +215,18 @@
       d_h: 'Your selection is ready', d_p: 'Thank you for choosing Valora Suisse. May this jewel accompany your most precious moments.',
       d_s: "Demo: no order was recorded and no email was sent. In the shop, you would continue from here to our payment provider's secure page.",
       d_back: 'Back to the shop',
+      // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
+      back_coll: "Back to the collection", btn_add_cart: "Add to cart", sold_out: "Sold out",
+      v_label: "Option", pd_photos: "Photos of the piece", pd_more: "From the same collection",
+      pd_question: "A question? Message us on WhatsApp", wa_product: "Hello Valora Suisse, I would like some information about “{n}”.", pg_nav: "Pages",
+      pg_prev: "Previous", pg_next: "Next", pg_page: "Page {n} of {m}",
+      coll_empty: "No creations yet.", nf_h: "Page not found", nf_p: "The link may be wrong, or the page no longer exists.",
+      s_h: "Search", s_label: "Search", s_ph: "Search for a piece",
+      s_btn: "Search", s_none: "No results for “{q}”.", s_res1: "result",
+      s_resN: "results", cart_update: "Update", cart_unit: "Price",
+      cart_total: "Total", pol_nav: "Legal information", pol_privacy_policy: "Privacy",
+      pol_refund_policy: "Returns and refunds", pol_shipping_policy: "Shipping", pol_terms_of_service: "Terms of service",
+      pol_terms_of_sale: "Terms of sale", pol_legal_notice: "Legal notice", pol_contact_information: "Contact information",
     },
     es: {
       doc_title: 'Valora Suisse — Joyas excepcionales',
@@ -251,6 +287,18 @@
       d_h: 'Tu selección está lista', d_p: 'Gracias por elegir Valora Suisse. Que esta joya acompañe tus momentos más preciados.',
       d_s: 'Demostración: no se ha registrado ningún pedido ni se ha enviado ningún correo. En la tienda, desde aquí pasarías a la página de pago seguro de nuestro proveedor.',
       d_back: 'Volver a la tienda',
+      // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
+      back_coll: "Volver a la colección", btn_add_cart: "Añadir a la cesta", sold_out: "Agotado",
+      v_label: "Opción", pd_photos: "Fotos de la pieza", pd_more: "De la misma colección",
+      pd_question: "¿Una pregunta? Escríbenos por WhatsApp", wa_product: "Hola, Valora Suisse. Me gustaría información sobre «{n}».", pg_nav: "Páginas",
+      pg_prev: "Anterior", pg_next: "Siguiente", pg_page: "Página {n} de {m}",
+      coll_empty: "Ninguna creación por ahora.", nf_h: "Página no encontrada", nf_p: "Puede que el enlace sea incorrecto o que la página ya no exista.",
+      s_h: "Búsqueda", s_label: "Buscar", s_ph: "Buscar una creación",
+      s_btn: "Buscar", s_none: "Ningún resultado para «{q}».", s_res1: "resultado",
+      s_resN: "resultados", cart_update: "Actualizar", cart_unit: "Precio",
+      cart_total: "Total", pol_nav: "Información legal", pol_privacy_policy: "Privacidad",
+      pol_refund_policy: "Cambios y devoluciones", pol_shipping_policy: "Envío", pol_terms_of_service: "Términos del servicio",
+      pol_terms_of_sale: "Condiciones de venta", pol_legal_notice: "Aviso legal", pol_contact_information: "Contacto",
     },
   };
 
@@ -329,7 +377,6 @@
   const saveData = !!(navigator.connection && navigator.connection.saveData);
   let paused = reduceMotion.matches || saveData;
   let heroVisible = true;
-  video.muted = true;
 
   function loadVideo() {
     const want = mqMobile.matches ? 'mobile' : 'desktop';
@@ -348,6 +395,7 @@
     if (p && p.catch) p.catch(() => {});
   }
   function updateMotionLabel() {
+    if (!motionBtn) return;
     motionBtn.dataset.state = paused ? 'paused' : 'playing';
     motionBtn.setAttribute('aria-label', t(paused ? 'motion_play' : 'motion_pause'));
   }
@@ -357,15 +405,19 @@
     if (p) video.pause(); else playVideo();
     updateMotionLabel();
   }
-  motionBtn.addEventListener('click', () => setPaused(!paused));
-  mqMobile.addEventListener('change', () => { if (video.dataset.src) { loadVideo(); playVideo(); } });
-  if ('IntersectionObserver' in window) {
-    new IntersectionObserver((entries) => {
-      heroVisible = entries[0].isIntersecting;
-      if (heroVisible) playVideo(); else video.pause();
-    }).observe(hero);
-  } else {
-    playVideo();
+  // Vídeo e botão de pausa só existem na home; nas outras páginas fica só a fita.
+  if (hero && video && motionBtn) {
+    video.muted = true;
+    motionBtn.addEventListener('click', () => setPaused(!paused));
+    mqMobile.addEventListener('change', () => { if (video.dataset.src) { loadVideo(); playVideo(); } });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        heroVisible = entries[0].isIntersecting;
+        if (heroVisible) playVideo(); else video.pause();
+      }).observe(hero);
+    } else {
+      playVideo();
+    }
   }
   if (paused) ribbons.forEach((s) => { try { s.pauseAnimations(); } catch (e) { /* sem SMIL */ } });
 
@@ -461,9 +513,15 @@
     try { cart = await cartRequest('cart.js'); } catch (e) { /* mantém o último estado */ }
     renderCart(focusSel);
   }
+  // Na página /cart, o que muda pelo carrinho lateral recarrega a página ao fechar o carrinho.
+  let cartDirty = false;
   async function changeLine(key, qty) {
+    cartDirty = true;
     try { cart = await cartRequest('cart/change.js', { id: key, quantity: Math.max(0, qty) }); } catch (e) { await refreshCart(); }
   }
+  dialogs.drawer.addEventListener('close', () => {
+    if (cartDirty && document.body.dataset.template === 'cart') window.location.reload();
+  });
 
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('.add');
@@ -472,17 +530,18 @@
     b.disabled = true;
     try {
       await cartRequest('cart/add.js', { items: [{ id: Number(b.dataset.variant), quantity: 1 }] });
+      cartDirty = true;
       await refreshCart();
       b.classList.add('is-added');
       txt.textContent = t('btn_added');
-      window.setTimeout(() => { b.classList.remove('is-added'); txt.textContent = t('btn_add'); }, 1200);
+      window.setTimeout(() => { b.classList.remove('is-added'); txt.textContent = t(txt.dataset.i18n || 'btn_add'); }, 1200);
       openDialog(dialogs.drawer, b);
       $('cartTitle').focus();
       announce(cartStatus, fmt('s_added', { n: b.dataset.name || '' }));
     } catch (err) {
-      txt.textContent = t('btn_add');
+      txt.textContent = t(txt.dataset.i18n || 'btn_add');
     } finally {
-      b.disabled = false;
+      b.disabled = b.dataset.soldOut === 'true';
     }
   });
 
@@ -526,21 +585,67 @@
   document.querySelectorAll('[data-cents]').forEach((el) => { el.textContent = money(el.dataset.cents); });
   refreshCart();
 
+  /* ===================================================== página de produto: variantes */
+  document.querySelectorAll('[data-variant-select]').forEach((sel) => {
+    const buy = sel.closest('.pd-buy');
+    const add = buy.querySelector('.add');
+    const txt = add.querySelector('span');
+    const price = buy.querySelector('.pd-now');
+    const was = buy.querySelector('.pd-was');
+    const ref = buy.querySelector('.pd-sku');
+    sel.addEventListener('change', () => {
+      const o = sel.selectedOptions[0];
+      add.dataset.variant = o.value;
+      price.dataset.cents = o.dataset.price;
+      price.textContent = money(o.dataset.price);
+      if (was) {
+        const w = Number(o.dataset.was) || 0;
+        was.hidden = !(w > Number(o.dataset.price));
+        was.dataset.cents = String(w);
+        was.textContent = money(w);
+      }
+      if (ref) {
+        ref.hidden = !o.dataset.sku;
+        ref.querySelector('.pd-sku-v').textContent = o.dataset.sku || '';
+      }
+      const soldOut = o.dataset.available !== 'true';
+      add.dataset.soldOut = String(soldOut);
+      add.disabled = soldOut;
+      txt.dataset.i18n = soldOut ? 'sold_out' : 'btn_add_cart';
+      txt.textContent = t(txt.dataset.i18n);
+      // o endereço passa a apontar para a variante escolhida (para compartilhar)
+      try {
+        const u = new URL(window.location.href);
+        u.searchParams.set('variant', o.value);
+        history.replaceState(null, '', u);
+      } catch (e) { /* sem History API */ }
+    });
+  });
+
 
   /* ===================================================== idioma */
+  // Chave sem tradução (ex.: política com nome próprio da loja) mantém o texto vindo do Liquid.
+  const has = (k) => I18N.fr[k] !== undefined;
   function applyI18n() {
-    document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
-    document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    document.querySelectorAll('[data-i18n]').forEach((el) => { if (has(el.dataset.i18n)) el.textContent = t(el.dataset.i18n); });
+    document.querySelectorAll('[data-i18n-aria]').forEach((el) => { if (has(el.dataset.i18nAria)) el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    document.querySelectorAll('[data-i18n-ph]').forEach((el) => { if (has(el.dataset.i18nPh)) el.placeholder = t(el.dataset.i18nPh); });
     document.querySelectorAll('[data-i18n-alt]').forEach((el) => { el.alt = t(el.dataset.i18nAlt); });
-    document.querySelectorAll('[data-wa]').forEach((a) => { a.href = `${WA}?text=${encodeURIComponent(t(`wa_${a.dataset.wa}`))}`; });
+    // textos com variáveis: data-i18n-fmt="pg_page" data-n="2" data-m="3"
+    document.querySelectorAll('[data-i18n-fmt]').forEach((el) => { el.textContent = fmt(el.dataset.i18nFmt, el.dataset); });
+    document.querySelectorAll('[data-wa]').forEach((a) => {
+      a.href = `${WA}?text=${encodeURIComponent(fmt(`wa_${a.dataset.wa}`, { n: a.dataset.waName || '' }))}`;
+    });
   }
   function setLang(l, persist) {
     if (!LANGS.includes(l)) l = 'fr';
     LANG = l;
     document.documentElement.lang = HTML_LANG[l];
-    document.title = t('doc_title');
-    const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute('content', t('doc_desc'));
+    if (document.body.dataset.template === 'index') {
+      document.title = t('doc_title');
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', t('doc_desc'));
+    }
     applyI18n();
     document.querySelectorAll('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
     updateMotionLabel();

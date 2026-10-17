@@ -1,29 +1,65 @@
+{%- liquid
+  # Na home os links são âncoras da própria página; nas outras páginas voltam para a home + âncora.
+  if template.name == 'index'
+    assign home = ''
+    assign logo_href = '#top'
+  else
+    assign home = routes.root_url
+    assign logo_href = routes.root_url
+  endif
+
+  # Título e descrição por página (na home o valora.js troca pelo idioma escolhido)
+  if template.name == 'index'
+    assign seo_title = "Valora Suisse — Bijoux d'exception"
+    assign seo_desc = 'Bijoux qui traversent le temps. Créations en argent, or et moissanite, et pièces sur mesure — signées Valora Suisse.'
+  else
+    assign seo_title = page_title
+    if current_tags
+      assign seo_title = seo_title | append: ' · ' | append: current_tags.first
+    endif
+    if current_page != 1
+      assign seo_title = seo_title | append: ' · ' | append: current_page
+    endif
+    unless seo_title contains 'Valora Suisse'
+      assign seo_title = seo_title | append: ' — Valora Suisse'
+    endunless
+    assign seo_desc = page_description | default: 'Bijoux en argent, or et moissanite, pensés pour traverser le temps. Maison de joaillerie · Suisse.'
+  endif
+
+  assign og_image = 'hero-poster.jpg' | asset_url | prepend: 'https:'
+  if template.name == 'product' and product.featured_image
+    assign og_image = product.featured_image | image_url: width: 1200 | prepend: 'https:'
+  elsif template.name == 'collection' and collection.featured_image
+    assign og_image = collection.featured_image | image_url: width: 1200 | prepend: 'https:'
+  endif
+-%}
 <!doctype html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Valora Suisse — Bijoux d'exception</title>
-<meta name="description" content="Bijoux qui traversent le temps. Créations en argent, or et moissanite, et pièces sur mesure — signées Valora Suisse.">
+<title>{{ seo_title | escape }}</title>
+<meta name="description" content="{{ seo_desc | strip_newlines | escape }}">
 <meta name="theme-color" content="#032D1F">
 <meta name="color-scheme" content="only light">
 <meta name="format-detection" content="telephone=no">
 <link rel="canonical" href="{{ canonical_url }}">
 <link rel="icon" href="{{ 'favicon.svg' | asset_url }}" type="image/svg+xml">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{% if template.name == 'product' %}product{% else %}website{% endif %}">
 <meta property="og:site_name" content="Valora Suisse">
-<meta property="og:title" content="Valora Suisse — Bijoux d'exception">
-<meta property="og:description" content="Bijoux en argent, or et moissanite, pensés pour traverser le temps. Maison de joaillerie · Suisse.">
+<meta property="og:title" content="{{ seo_title | escape }}">
+<meta property="og:description" content="{% if template.name == 'index' %}Bijoux en argent, or et moissanite, pensés pour traverser le temps. Maison de joaillerie · Suisse.{% else %}{{ seo_desc | strip_newlines | escape }}{% endif %}">
 <meta property="og:url" content="{{ canonical_url }}">
-<meta property="og:image" content="https:{{ 'hero-poster.jpg' | asset_url }}">
+<meta property="og:image" content="{{ og_image }}">
 <meta property="og:locale" content="fr_CH">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="{{ 'cormorant-garamond-latin.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ 'montserrat-latin.woff2' | asset_url }}" as="font" type="font/woff2" crossorigin>
 {{ 'valora-site.css' | asset_url | stylesheet_tag }}
+{{ 'valora-pages.css' | asset_url | stylesheet_tag }}
 {{ content_for_header }}
 </head>
-<body>
+<body data-template="{{ template.name }}">
 
 <a class="skip" href="#main" data-i18n="skip">Aller au contenu</a>
 
@@ -40,18 +76,18 @@
 <header class="site-header">
   <div class="hd">
     <button class="menu-btn" id="openMenu" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false" aria-label="Ouvrir le menu" data-i18n-aria="menu_open"><span class="menu-ico" aria-hidden="true"></span></button>
-    <a href="#top" class="brand" aria-label="Valora Suisse">
+    <a href="{{ logo_href }}" class="brand" aria-label="Valora Suisse">
       <svg class="brand-star" aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg>
       <span class="brand-name">Valora</span>
       <span class="brand-sub">Suisse</span>
     </a>
     <nav class="nav" aria-label="Navigation principale" data-i18n-aria="nav_label">
-      <a href="#bagues" data-i18n="nav_bagues">Bagues</a>
-      <a href="#colliers" data-i18n="nav_colliers">Colliers</a>
-      <a href="#boucles" data-i18n="nav_boucles">Boucles</a>
-      <a href="#bracelets" data-i18n="nav_bracelets">Bracelets</a>
-      <a href="#maison" data-i18n="nav_maison">La Maison</a>
-      <a href="#contact" data-i18n="nav_contact">Contact</a>
+      <a href="{{ home }}#bagues" data-i18n="nav_bagues">Bagues</a>
+      <a href="{{ home }}#colliers" data-i18n="nav_colliers">Colliers</a>
+      <a href="{{ home }}#boucles" data-i18n="nav_boucles">Boucles</a>
+      <a href="{{ home }}#bracelets" data-i18n="nav_bracelets">Bracelets</a>
+      <a href="{{ home }}#maison" data-i18n="nav_maison">La Maison</a>
+      <a href="{{ home }}#contact" data-i18n="nav_contact">Contact</a>
     </nav>
     <div class="hd-right">
       <div class="lang" role="group" aria-label="Langue · Idioma · Language">
@@ -92,6 +128,14 @@
       </ul>
     </div>
   </div>
+  {%- if shop.policies.size > 0 -%}
+  <nav class="f-pol" aria-label="Informations légales" data-i18n-aria="pol_nav">
+    {%- for policy in shop.policies -%}
+      {%- assign pol_key = policy.url | split: '/' | last | replace: '-', '_' | prepend: 'pol_' -%}
+      <a href="{{ policy.url }}" data-i18n="{{ pol_key }}">{{ policy.title | escape }}</a>
+    {%- endfor -%}
+  </nav>
+  {%- endif -%}
   <div class="f-bottom">
     <span data-i18n="f_rights">© 2026 Valora Suisse — Tous droits réservés</span>
     <span><span data-i18n="f_by">Conçu par</span> <a href="https://pk7.com.br" target="_blank" rel="noopener noreferrer">PK7<span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a></span>
@@ -110,14 +154,14 @@
     <button class="x" type="button" data-close aria-label="Fermer" data-i18n-aria="close"><svg aria-hidden="true" focusable="false"><use href="#i-close"/></svg></button>
   </div>
   <nav class="mp-nav" aria-label="Navigation principale" data-i18n-aria="nav_label">
-    <a href="#collection" data-i18n="cat_h">La collection</a>
-    <a href="#bagues" data-i18n="nav_bagues">Bagues</a>
-    <a href="#colliers" data-i18n="nav_colliers">Colliers</a>
-    <a href="#boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</a>
-    <a href="#bracelets" data-i18n="nav_bracelets">Bracelets</a>
-    <a href="#maison" data-i18n="nav_maison">La Maison</a>
-    <a href="#sur-mesure" data-i18n="sm_eye">Sur mesure</a>
-    <a href="#contact" data-i18n="nav_contact">Contact</a>
+    <a href="{{ home }}#collection" data-i18n="cat_h">La collection</a>
+    <a href="{{ home }}#bagues" data-i18n="nav_bagues">Bagues</a>
+    <a href="{{ home }}#colliers" data-i18n="nav_colliers">Colliers</a>
+    <a href="{{ home }}#boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</a>
+    <a href="{{ home }}#bracelets" data-i18n="nav_bracelets">Bracelets</a>
+    <a href="{{ home }}#maison" data-i18n="nav_maison">La Maison</a>
+    <a href="{{ home }}#sur-mesure" data-i18n="sm_eye">Sur mesure</a>
+    <a href="{{ home }}#contact" data-i18n="nav_contact">Contact</a>
   </nav>
   <div class="mp-foot">
     <p data-i18n="menu_lang">Langue</p>
