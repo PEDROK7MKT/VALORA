@@ -575,10 +575,27 @@
     }
   });
 
+  // Idiomas publicados na Shopify (Configurações → Idiomas), vindos do Liquid como "fr|/fr,pt-PT|/".
+  // Se o idioma escolhido no site estiver publicado, o checkout abre nele; se não, no idioma padrão da loja.
+  const LOCALES = (document.body.dataset.locales || '').split(',').filter(Boolean).map((s) => {
+    const [iso, root] = s.split('|');
+    return { iso: String(iso).toLowerCase(), root: !root || root === '/' ? '' : root.replace(/\/$/, '') };
+  });
+  const localeRoot = () => {
+    const l = LOCALES.find((x) => x.iso === LANG || x.iso.startsWith(`${LANG}-`));
+    return l ? l.root : null;
+  };
+  function syncCartForm() {
+    const f = document.querySelector('form.cp-form');
+    const r = localeRoot();
+    if (f && r !== null) f.action = `${r}/cart`;
+  }
+
   // Checkout real da Shopify (pagamento seguro no ambiente da própria Shopify).
   $('goCheckout').addEventListener('click', () => {
     if (!cart.items.length) return;
-    window.location.href = `${ROOT}checkout`;
+    const r = localeRoot();
+    window.location.href = r === null ? `${ROOT}checkout` : `${r}/checkout`;
   });
 
   // Preços vindos do Liquid (em centavos) no mesmo formato do carrinho.
@@ -645,11 +662,17 @@
       document.title = t('doc_title');
       const meta = document.querySelector('meta[name="description"]');
       if (meta) meta.setAttribute('content', t('doc_desc'));
+    } else {
+      // Páginas com título traduzível (coleção, carrinho, busca, 404): a aba acompanha o idioma.
+      // Sem isso o título viria no idioma padrão da loja (pt-PT).
+      const h1 = document.querySelector('main h1[data-i18n]');
+      if (h1 && has(h1.dataset.i18n)) document.title = `${t(h1.dataset.i18n)} — Valora Suisse`;
     }
     applyI18n();
     document.querySelectorAll('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
     updateMotionLabel();
     renderCart();
+    syncCartForm();
     if (persist) storage.set('valora:lang', l);
   }
   function initialLang() {
