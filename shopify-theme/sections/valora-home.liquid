@@ -1,0 +1,164 @@
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <video id="heroVideo" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" poster="{{ 'hero-poster.jpg' | asset_url }}" data-desktop-mp4="https://cdn.shopify.com/s/files/1/0960/9566/6557/files/valora-hero-desktop.mp4?v=1792227709" data-desktop-webm="https://cdn.shopify.com/s/files/1/0960/9566/6557/files/valora-hero-desktop.webm?v=1792227709" data-mobile-mp4="https://cdn.shopify.com/s/files/1/0960/9566/6557/files/valora-hero-mobile.mp4?v=1792227709"></video>
+    <div class="hero-in">
+      <p class="hero-eye" data-i18n="hero_eye">Maison de joaillerie · Suisse</p>
+      <h1 id="hero-title" data-i18n="hero_title">Ce qui a de la valeur demeure.</h1>
+      <p class="hero-lead" data-i18n="hero_p">Des bijoux en argent, or et moissanite, pensés pour traverser le temps et accompagner vos plus beaux moments.</p>
+      <div class="hero-ctas">
+        <a href="#collection" class="btn btn-gold" data-i18n="hero_cta1">Découvrir la collection</a>
+        <a href="#sur-mesure" class="btn btn-line" data-i18n="hero_cta2">Créer sur mesure</a>
+      </div>
+    </div>
+    <button class="motion-btn" id="motionToggle" type="button" aria-label="Mettre en pause la vidéo et l'animation">
+      <svg class="i-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg>
+      <svg class="i-play" aria-hidden="true" focusable="false"><use href="#i-play"/></svg>
+    </button>
+  </section>
+
+  <div class="ribbon ribbon--hero" aria-hidden="true"></div>
+
+  <ul class="trust">
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t1">Certificat d'authenticité</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t2">Création sur mesure</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t3">Livraison assurée</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t4">Paiement sécurisé</span></li>
+  </ul>
+
+  <section class="ground--papel" id="maison" aria-labelledby="maison-h">
+    <div class="sec maison-top">
+      <div>
+        <span class="eye" data-i18n="m_eye">La Maison</span>
+        <h2 id="maison-h" data-i18n="m_h">L'univers Valora</h2>
+        <p data-i18n="m_p1">Le nom VALORA vient de l'idée de valeur — non seulement la valeur matérielle d'un bijou, mais la valeur affective, familiale et éternelle qu'il représente.</p>
+        <p data-i18n="m_p2">Le vert profond symbolise la permanence, l'exclusivité et la confiance. L'or incarne l'excellence, la tradition de la haute joaillerie et la préciosité de chaque création.</p>
+        <p data-i18n="m_p3">Des formes élégantes, des espaces généreux et une typographie raffinée reflètent une maison discrète mais mémorable — où le vrai luxe réside dans la qualité, l'authenticité et la permanence.</p>
+      </div>
+      <div class="cover">
+        <img src="{{ 'brand-cover.jpg' | asset_url }}" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover">
+      </div>
+    </div>
+  </section>
+
+  <section class="collection" id="collection" aria-labelledby="collection-h">
+    <div class="sec">
+      <div class="sec-h"><h2 id="collection-h" data-i18n="cat_h">La collection</h2></div>
+      <nav class="cats" aria-labelledby="collection-h">
+        <a href="#bagues" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bagues">Bagues</b><small>{% assign c = collections['aneis'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
+        <a href="#colliers" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_colliers">Colliers</b><small>{% assign c = collections['colares'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
+        <a href="#boucles" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_boucles_full">Boucles d'oreilles</b><small>{% assign c = collections['brincos'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
+        <a href="#bracelets" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bracelets">Bracelets</b><small>{% assign c = collections['pulseiras'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
+      </nav>
+    </div>
+  </section>
+
+  {%- assign c = collections['aneis'] -%}
+  <section class="psec" id="bagues" aria-labelledby="h-bagues">
+    <div class="sec">
+      <div class="psec-h"><h2 id="h-bagues" data-i18n="nav_bagues">Bagues</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
+      <div class="grid5" id="g-bagues">
+        {%- for product in c.products limit: 50 -%}
+          {%- render 'valora-product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- assign c = collections['colares'] -%}
+  <section class="psec" id="colliers" aria-labelledby="h-colliers">
+    <div class="sec">
+      <div class="psec-h"><h2 id="h-colliers" data-i18n="nav_colliers">Colliers</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
+      <div class="grid5" id="g-colliers">
+        {%- for product in c.products limit: 50 -%}
+          {%- render 'valora-product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- assign c = collections['brincos'] -%}
+  <section class="psec" id="boucles" aria-labelledby="h-boucles">
+    <div class="sec">
+      <div class="psec-h"><h2 id="h-boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
+      <div class="grid5" id="g-boucles">
+        {%- for product in c.products limit: 50 -%}
+          {%- render 'valora-product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+  {%- assign c = collections['pulseiras'] -%}
+  <section class="psec" id="bracelets" aria-labelledby="h-bracelets">
+    <div class="sec">
+      <div class="psec-h"><h2 id="h-bracelets" data-i18n="nav_bracelets">Bracelets</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
+      <div class="grid5" id="g-bracelets">
+        {%- for product in c.products limit: 50 -%}
+          {%- render 'valora-product-card', product: product -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </section>
+
+  <section class="strip" id="sur-mesure" aria-labelledby="sm-h">
+    <div class="sec">
+      <div>
+        <span class="eye" data-i18n="sm_eye">Sur mesure</span>
+        <h2 id="sm-h" data-i18n="sm_h">Une pièce unique, comme son histoire</h2>
+      </div>
+      <div>
+        <p data-i18n="sm_p">Chaque création personnalisée commence par une conversation. Du premier croquis au bijou fini, chaque étape est menée avec le soin d'un savoir-faire qui traverse les générations.</p>
+        <a class="btn btn-gold" href="https://wa.me/41764407717" data-wa="bespoke" target="_blank" rel="noopener noreferrer"><span data-i18n="sm_cta">Commencer un projet</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ground--papel" id="ecrin" aria-labelledby="ecrin-h">
+    <div class="sec">
+      <div class="sec-h">
+        <span class="eye" data-i18n="e_eye">L'écrin</span>
+        <h2 id="ecrin-h" data-i18n="e_h">Chaque détail compte</h2>
+      </div>
+      <div class="mosaic">
+        <figure class="mo tall"><img src="{{ 'brand-bag.jpg' | asset_url }}" width="961" height="1019" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e1">Le sac Valora</figcaption></figure>
+        <figure class="mo"><img src="{{ 'brand-box.jpg' | asset_url }}" width="812" height="707" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e2">Écrin &amp; pochette</figcaption></figure>
+        <figure class="mo"><img src="{{ 'brand-seal.jpg' | asset_url }}" width="388" height="345" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e3">Sceau de cire</figcaption></figure>
+        <figure class="mo"><img src="{{ 'brand-envelope.jpg' | asset_url }}" width="806" height="537" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e5">Enveloppe &amp; cachet</figcaption></figure>
+        <figure class="mo wide"><img src="{{ 'brand-tissue.jpg' | asset_url }}" width="774" height="832" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e4">Papier de soie signé</figcaption></figure>
+        <figure class="mo"><img src="{{ 'brand-medal.jpg' | asset_url }}" width="400" height="562" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e8">Médaille gravée</figcaption></figure>
+        <figure class="mo wide"><img src="{{ 'brand-card.jpg' | asset_url }}" width="781" height="624" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e6">Carte « Merci »</figcaption></figure>
+        <figure class="mo wide"><img src="{{ 'brand-ribbon.jpg' | asset_url }}" width="700" height="381" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e7">Ruban satin</figcaption></figure>
+      </div>
+      <ul class="vals">
+        <li class="val"><h3 data-i18n="v1">Design</h3><p data-i18n="v1p">Des créations pensées avec sensibilité et un regard authentique sur chaque détail.</p></li>
+        <li class="val"><h3 data-i18n="v2">Exclusivité</h3><p data-i18n="v2p">Un accompagnement individuel, pour des pièces qui ont une véritable identité.</p></li>
+        <li class="val"><h3 data-i18n="v3">Qualité</h3><p data-i18n="v3p">Matériaux, finition et savoir-faire — l'excellence à chaque étape.</p></li>
+        <li class="val"><h3 data-i18n="v4">Permanence</h3><p data-i18n="v4p">Des bijoux conçus pour traverser le temps et accompagner plusieurs générations.</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="garantie" aria-labelledby="cert-h">
+    <div class="sec cert">
+      <img src="{{ 'brand-certificate.jpg' | asset_url }}" width="1200" height="730" loading="lazy" decoding="async" alt="Certificat d'authenticité Valora Suisse avec son sceau" data-i18n-alt="cert_alt" data-fallback>
+      <div>
+        <span class="eye" data-i18n="c_eye">Garantie</span>
+        <h2 id="cert-h" data-i18n="c_h">Certificat d'authenticité</h2>
+        <p data-i18n="c_p1">Chaque bijou Valora est accompagné d'un certificat qui atteste de son origine, de ses matériaux et du savoir-faire mis dans sa création.</p>
+        <blockquote class="cert-q" data-i18n="c_q">« Valora Suisse certifie que ce bijou a été conçu avec le plus grand soin et réalisé selon les plus hauts standards de qualité, d'élégance et de savoir-faire suisse. »</blockquote>
+        <p data-i18n="c_p2">Ce bijou est garanti contre tout défaut de fabrication dans des conditions normales d'utilisation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="ct-h">
+    <div class="sec">
+      <h2 id="ct-h" data-i18n="ct_h">Une pièce vous attend</h2>
+      <p data-i18n="ct_p">Pour toute demande, information ou création sur mesure, notre équipe vous accompagne avec la même attention que celle portée à chaque bijou.</p>
+      <a class="btn btn-green" href="https://wa.me/41764407717" data-wa="general" target="_blank" rel="noopener noreferrer"><span data-i18n="ct_cta">Écrire sur WhatsApp</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+    </div>
+  </section>
+
+{% schema %}
+{
+  "name": "Valora — Página inicial",
+  "settings": [],
+  "presets": []
+}
+{% endschema %}

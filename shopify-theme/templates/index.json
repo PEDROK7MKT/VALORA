@@ -1,0 +1,12 @@
+{
+  "layout": "valora",
+  "sections": {
+    "main": {
+      "type": "valora-home",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
