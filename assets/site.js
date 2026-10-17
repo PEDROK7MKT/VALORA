@@ -71,6 +71,9 @@
       d_h: 'Votre sélection est prête', d_p: "Merci d'avoir choisi Valora Suisse. Que ce bijou accompagne vos plus beaux moments.",
       d_s: "Démonstration : aucune commande n'a été enregistrée et aucun e-mail n'a été envoyé. Dans la boutique, vous continueriez ici vers la page de paiement sécurisée de notre prestataire.",
       d_back: 'Retour à la boutique',
+      // peças: preço sob consulta e pedido pelo WhatsApp
+      cr1: "création", crN: "créations", price_request: "Prix sur demande",
+      btn_order: "Commander", wa_order: "Bonjour Valora Suisse ! J'aimerais commander cette pièce : {n}\n{u}",
     },
     pt: {
       doc_title: 'Valora Suisse — Joias de exceção',
@@ -131,6 +134,9 @@
       d_h: 'Sua seleção está pronta', d_p: 'Obrigado por escolher a Valora Suisse. Que esta joia acompanhe os seus momentos mais especiais.',
       d_s: 'Demonstração: nenhum pedido foi registrado e nenhum e-mail foi enviado. Na loja, você seguiria daqui para a página de pagamento segura do nosso parceiro.',
       d_back: 'Voltar à loja',
+      // peças: preço sob consulta e pedido pelo WhatsApp
+      cr1: "criação", crN: "criações", price_request: "Preço sob consulta",
+      btn_order: "Encomendar", wa_order: "Olá, Valora Suisse! Quero encomendar esta peça: {n}\n{u}",
     },
     en: {
       doc_title: 'Valora Suisse — Exceptional jewellery',
@@ -191,6 +197,9 @@
       d_h: 'Your selection is ready', d_p: 'Thank you for choosing Valora Suisse. May this jewel accompany your most precious moments.',
       d_s: "Demo: no order was recorded and no email was sent. In the shop, you would continue from here to our payment provider's secure page.",
       d_back: 'Back to the shop',
+      // peças: preço sob consulta e pedido pelo WhatsApp
+      cr1: "creation", crN: "creations", price_request: "Price on request",
+      btn_order: "Order", wa_order: "Hello Valora Suisse! I'd like to order this piece: {n}\n{u}",
     },
     es: {
       doc_title: 'Valora Suisse — Joyas excepcionales',
@@ -251,38 +260,33 @@
       d_h: 'Tu selección está lista', d_p: 'Gracias por elegir Valora Suisse. Que esta joya acompañe tus momentos más preciados.',
       d_s: 'Demostración: no se ha registrado ningún pedido ni se ha enviado ningún correo. En la tienda, desde aquí pasarías a la página de pago seguro de nuestro proveedor.',
       d_back: 'Volver a la tienda',
+      // peças: preço sob consulta e pedido pelo WhatsApp
+      cr1: "creación", crN: "creaciones", price_request: "Precio a consultar",
+      btn_order: "Encargar", wa_order: "¡Hola, Valora Suisse! Quiero encargar esta pieza: {n}\n{u}",
     },
   };
 
-  /* ===================================================== produtos (fictícios, fotos chegando) */
+  /* ===================================================== peças (as mesmas da loja Shopify; fotos em assets/products/sh-xxx-*)
+     Sem preço por enquanto: cada peça abre o pedido no WhatsApp da marca com o link da página dela
+     (pecas/sh-xxx/, gerada por tools/gera-pecas.py). pt = nome que a marca usa no painel/WhatsApp. */
   const P = {
-    bagues: { cat: 'pcat_bague', items: [
-      { name: 'Solitaire', ref: 'SS201', mat: 'mat_argent', spec: 'spec_m15', price: 1190, badge: 'badge_sig', img: 'solitaire', h: 1000, alt: 'alt_solitaire' },
-      { name: 'Iris', ref: 'SS122', mat: 'mat_argent', spec: 'spec_m10', price: 890, badge: 'badge_new' },
-      { name: 'Éternité', ref: 'SS305', mat: 'mat_or', spec: 'spec_zirc', price: 1450 },
-      { name: 'Aurore', ref: 'SS118', mat: 'mat_argent', spec: 'spec_zirc', price: 620 },
-      { name: 'Céleste', ref: 'SS410', mat: 'mat_or', spec: 'spec_m20', price: 2380 },
+    bagues: { cat: 'pcat_bague', pt: 'Anel', items: [
+      { ref: 'SH-387', h: 1200 }, { ref: 'SH-131', h: 1200 }, { ref: 'SH-548', h: 1200 }, { ref: 'SH-287', h: 1067 },
+      { ref: 'SH-780', h: 1067 }, { ref: 'SH-224', h: 1200 }, { ref: 'SH-596', h: 1067 }, { ref: 'SH-913', h: 1067 },
+      { ref: 'SH-636', h: 1067 }, { ref: 'SH-643', h: 1200 }, { ref: 'SH-634', h: 1067 }, { ref: 'SH-872', h: 1067 },
+      { ref: 'SH-669', h: 1067 }, { ref: 'SH-667', h: 1067 }, { ref: 'SH-977', h: 1067 }, { ref: 'SH-437', h: 1067 },
+      { ref: 'SH-702', h: 1067 }, { ref: 'SH-280', h: 1067 }, { ref: 'SH-589', h: 1067 }, { ref: 'SH-625', h: 1067 },
     ] },
-    colliers: { cat: 'pcat_collier', items: [
-      { name: 'Riviera', ref: 'SC101', mat: 'mat_argent', spec: 'spec_moissanites', price: 1650, badge: 'badge_sig' },
-      { name: 'Muse', ref: 'SC220', mat: 'mat_argent', spec: 'spec_pendant', price: 740 },
-      { name: 'Lumière', ref: 'SC315', mat: 'mat_or', spec: 'spec_m10', price: 1980 },
-      { name: 'Étoile', ref: 'SC402', mat: 'mat_argent', spec: 'spec_zirc', price: 540, badge: 'badge_new' },
-      { name: 'Héritage', ref: 'SC509', mat: 'mat_or', spec: 'spec_medal', price: 1280 },
+    colliers: { cat: 'pcat_collier', pt: 'Colar', items: [
+      { ref: 'SH-358', h: 1067 }, { ref: 'SH-422', h: 1067 }, { ref: 'SH-560', h: 1067 }, { ref: 'SH-882', h: 1067 },
+      { ref: 'SH-679', h: 1067 }, { ref: 'SH-239', h: 1067 },
     ] },
-    boucles: { cat: 'pcat_boucles', items: [
-      { name: 'Rosée', ref: 'SB110', mat: 'mat_argent', spec: 'spec_m05', price: 690 },
-      { name: 'Goutte', ref: 'SB205', mat: 'mat_or', spec: 'spec_polish', price: 1120, badge: 'badge_new' },
-      { name: 'Infinie', ref: 'SB318', mat: 'mat_argent', spec: 'spec_zirc', price: 480 },
-      { name: 'Perle', ref: 'SB412', mat: 'mat_argent', spec: 'spec_pearl', price: 830 },
-      { name: 'Signature', ref: 'SB520', mat: 'mat_or', spec: 'spec_m10s', price: 1760, badge: 'badge_sig' },
+    boucles: { cat: 'pcat_boucles', pt: 'Brincos', items: [
+      { ref: 'SH-506', h: 1200 }, { ref: 'SH-663', h: 1200 }, { ref: 'SH-677', h: 1200 }, { ref: 'SH-188', h: 1200 },
+      { ref: 'SH-282', h: 1200 }, { ref: 'SH-827', h: 1067 }, { ref: 'SH-289', h: 1067 }, { ref: 'SH-267', h: 1067 },
     ] },
-    bracelets: { cat: 'pcat_bracelet', items: [
-      { name: 'Ligne', ref: 'SP215', mat: 'mat_argent', spec: 'spec_zirc', price: 560, badge: 'badge_sig', img: 'riviere', h: 1000, alt: 'alt_riviere' },
-      { name: 'Maison', ref: 'SP505', mat: 'mat_argent', spec: 'spec_jonc', price: 780, img: 'jonc', h: 800, alt: 'alt_jonc', pos: 'pos-left' },
-      { name: 'Tennis', ref: 'SP101', mat: 'mat_argent', spec: 'spec_moissanites', price: 1490 },
-      { name: 'Éclat', ref: 'SP309', mat: 'mat_or', spec: 'spec_m08', price: 1340, badge: 'badge_new' },
-      { name: 'Duo', ref: 'SP418', mat: 'mat_argent', spec: 'spec_double', price: 720 },
+    bracelets: { cat: 'pcat_bracelet', pt: 'Pulseira', items: [
+      { ref: 'SH-970', h: 1067 },
     ] },
   };
 
@@ -335,30 +339,29 @@
   });
 
   /* ===================================================== produtos */
+  const SITE = 'https://valorasuisse.com';
+  const pieceSlug = (p) => p.ref.toLowerCase();
   function card(gid, p, i) {
     const nameId = `pn-${gid}-${i}`;
+    const slug = pieceSlug(p);
+    const url = `pecas/${slug}/`;
     const sizes = '(min-width: 1101px) 250px, (min-width: 561px) 38vw, 72vw';
-    let media;
-    if (p.img) {
-      const base = `assets/products/${p.img}`;
-      media = h('picture', null,
-        h('source', { type: 'image/webp', srcset: `${base}-480.webp 480w, ${base}-800.webp 800w`, sizes }),
-        h('img', {
-          src: `${base}-800.jpg`, srcset: `${base}-480.jpg 480w, ${base}-800.jpg 800w`, sizes,
-          width: 800, height: p.h, loading: 'lazy', decoding: 'async', alt: '', 'data-i18n-alt': p.alt, class: p.pos || null,
-        }));
-    } else {
-      media = icon('i-star', 'p-ph');
-    }
+    const base = `assets/products/${slug}`;
+    const media = h('picture', null,
+      h('source', { type: 'image/webp', srcset: `${base}-480.webp 480w, ${base}-800.webp 800w`, sizes }),
+      h('img', {
+        src: `${base}-800.jpg`, srcset: `${base}-480.jpg 480w, ${base}-800.jpg 800w`, sizes,
+        width: 800, height: p.h, loading: 'lazy', decoding: 'async', alt: '',
+      }));
     return h('article', { class: 'prod' },
-      h('div', { class: 'p-img' }, media, p.badge ? h('span', { class: 'badge', 'data-i18n': p.badge }) : null),
-      h('h3', { class: 'p-name', id: nameId }, p.name),
-      h('p', { class: 'p-desc' }, h('span', { 'data-i18n': p.mat }), ' · ', h('span', { 'data-i18n': p.spec })),
-      h('p', { class: 'p-ref' }, h('span', { 'data-i18n': 'ref' }), ` ${p.ref}`),
-      h('div', { class: 'p-foot' },
-        h('span', { class: 'price' }, CHF(p.price)),
-        h('button', { class: 'add', type: 'button', 'data-gid': gid, 'data-i': i, 'aria-describedby': nameId },
-          h('span', { 'data-i18n': 'btn_add' }))));
+      h('div', { class: 'p-img' }, h('a', { href: url, tabindex: '-1', 'aria-hidden': 'true' }, media)),
+      h('h3', { class: 'p-name', id: nameId }, h('a', { href: url }, h('span', { 'data-i18n': P[gid].cat }), ` ${p.ref}`)),
+      h('div', { class: 'p-foot p-foot--ask' },
+        h('span', { class: 'p-ask', 'data-i18n': 'price_request' }),
+        h('a', {
+          class: 'add order', href: WA, target: '_blank', rel: 'noopener noreferrer', 'aria-describedby': nameId,
+          'data-wa': 'order', 'data-wa-name': `${P[gid].pt} ${p.ref}`, 'data-wa-url': `${SITE}/${url}`,
+        }, h('span', { 'data-i18n': 'btn_order' }), h('span', { class: 'sr-only', 'data-i18n': 'newtab' }))));
   }
   Object.entries(P).forEach(([gid, group]) => {
     const grid = $(`g-${gid}`);
@@ -516,7 +519,7 @@
 
   document.addEventListener('click', (e) => {
     const b = e.target.closest('.add');
-    if (!b) return;
+    if (!b || b.classList.contains('order')) return; // .order é link do WhatsApp
     const gid = b.dataset.gid;
     const i = Number(b.dataset.i);
     const key = `${gid}-${i}`;
@@ -595,7 +598,10 @@
     document.querySelectorAll('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
     document.querySelectorAll('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
     document.querySelectorAll('[data-i18n-alt]').forEach((el) => { el.alt = t(el.dataset.i18nAlt); });
-    document.querySelectorAll('[data-wa]').forEach((a) => { a.href = `${WA}?text=${encodeURIComponent(t(`wa_${a.dataset.wa}`))}`; });
+    // WhatsApp: {n} = peça como a marca chama ("Anel SH-387"), {u} = link da página dela (a prévia traz a foto)
+    document.querySelectorAll('[data-wa]').forEach((a) => {
+      a.href = `${WA}?text=${encodeURIComponent(fmt(`wa_${a.dataset.wa}`, { n: a.dataset.waName || '', u: a.dataset.waUrl || '' }).trim())}`;
+    });
   }
   function setLang(l, persist) {
     if (!LANGS.includes(l)) l = 'fr';

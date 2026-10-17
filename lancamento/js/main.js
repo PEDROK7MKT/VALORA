@@ -375,10 +375,11 @@ function applyLaunchTexts() {
   if (launchState === 'today') {
     if (title) title.textContent = t('cd_today');
     if (date) date.textContent = t('date_today');
-    return;
+  } else {
+    if (title) title.textContent = t('cd_open');
+    if (date) date.textContent = t('date_open');
   }
-  if (title) title.textContent = t('cd_open');
-  if (date) date.textContent = t('date_open');
+  // A coleção abre no dia: a partir dele os botões levam às peças (CONFIG.shopURL)
   const cta = $('#hero-cta');
   if (cta) { cta.textContent = t('cta_pieces'); cta.href = CONFIG.shopURL; }
   const stonesCta = $('.stones-cta');

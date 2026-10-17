@@ -4,7 +4,8 @@ Um domínio, duas páginas:
 
 | Endereço | Conteúdo |
 |---|---|
-| `valorasuisse.com` | Site da marca, versão de demonstração: vídeo no hero, coleção, A Maison, certificado e contato. Fica na raiz (`index.html` + `assets/`). |
+| `valorasuisse.com` | Site da marca com as 35 peças da coleção (pedido pelo WhatsApp, sem preço por enquanto): vídeo no hero, coleção, A Maison, certificado e contato. Fica na raiz (`index.html` + `assets/`). |
+| `valorasuisse.com/pecas/sh-xxx/` | Uma página por peça, com a foto nas tags `og:*` (o link mandado no WhatsApp chega com a foto). Geradas por `tools/gera-pecas.py`. |
 | `valorasuisse.com/lancamento` | Convite de pré-lançamento da nova coleção (moissanite e zircônia), em FR · PT · EN · ES, com contagem e lista de espera. Ver [`lancamento/README.md`](lancamento/README.md). |
 
 Tudo é HTML/CSS/JS estático, sem build.
@@ -12,23 +13,34 @@ Tudo é HTML/CSS/JS estático, sem build.
 ## Site (raiz)
 
 Página única, em francês por padrão, com troca de idioma (FR · PT · EN · ES — a escolha fica
-guardada no aparelho; `?lang=pt` força um idioma). Ainda é **demonstração**:
+guardada no aparelho; `?lang=pt` força um idioma). **Site provisório até a loja Shopify entrar
+no domínio** (com preço e checkout):
 
-- os 20 produtos e preços são fictícios; só 3 têm foto (Solitaire, Ligne e Maison, em
-  `assets/products/`). Os demais mostram um espaço reservado com a estrela da marca;
-- carrinho e checkout são só visuais: o checkout avisa que é demonstração, não pede dados de
-  cartão e nada é cobrado, guardado ou enviado;
-- a página leva `noindex` (meta + cabeçalho `X-Robots-Tag`), para o Google não indexar preços de
-  mentira. Quando a loja for de verdade, tire o `<meta name="robots">` do `index.html` e a regra
+- as 35 peças são as mesmas da loja Shopify, com a referência provisória (SH-xxx) de
+  `catalogo/referencias.csv`. O nome na tela é a categoria no idioma escolhido + a referência
+  ("Bague SH-387", "Anel SH-387"…);
+- sem preço: cada peça mostra "Prix sur demande" e o botão **Commander**, que abre o WhatsApp da
+  marca (+41 76 440 77 17) com a mensagem pronta (nome da peça como a marca usa + link da página
+  dela em `pecas/sh-xxx/`, cuja prévia traz a foto);
+- o carrinho/checkout de demonstração continua no código, mas o botão do cabeçalho está oculto
+  (`hidden` no `#openCart`) e nenhuma peça vai para o carrinho;
+- a página leva `noindex` (meta + cabeçalho `X-Robots-Tag`), e as páginas das peças também: o site
+  é provisório. Quando a loja for de verdade, tire o `<meta name="robots">` e a regra
   `"source": "/"` do `vercel.json`.
+
+Trocar ou acrescentar peças: fotos em `assets/products/sh-xxx-{480,800}.{jpg,webp}` e
+`sh-xxx-1200.jpg` (prévia do WhatsApp), item em `P` no `assets/site.js` e em
+`catalogo/pecas.json`, depois `python3 tools/gera-pecas.py` para refazer as páginas `pecas/`.
 
 Arquivos:
 
 - `index.html` — só a estrutura. Nenhum estilo, script ou `onclick` embutido (a CSP bloqueia).
 - `assets/site.css` — estilos; tokens da marca (cores, fontes, espaçamentos) no topo.
-- `assets/site.js` — textos dos 4 idiomas (`I18N`), catálogo (`P`), carrinho, checkout, menu,
-  vídeo. Para trocar um produto ou preço, edite `P`; para ligar uma foto, coloque
-  `nome-480/800.webp/.jpg` em `assets/products/` e preencha `img: 'nome'` no item.
+- `assets/site.js` — textos dos 4 idiomas (`I18N`), catálogo (`P`), menu, vídeo e o carrinho de
+  demonstração (desligado).
+- `assets/piece.js` — idioma e link do WhatsApp das páginas `pecas/` (textos copiados do site.js).
+- `catalogo/` — `referencias.csv` (peça antes "Produto N" → referência, foto do Drive) e
+  `pecas.json` (fonte das páginas `pecas/`).
 - `assets/fonts/` — Cormorant Garamond e Montserrat hospedadas no próprio site (sem Google Fonts).
 
 Acessibilidade: navegação por teclado com "pular para o conteúdo", menu/carrinho/checkout em

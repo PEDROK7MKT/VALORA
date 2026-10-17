@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Valora Suisse — Bijoux d'exception</title>
 <meta name="description" content="Bijoux qui traversent le temps. Créations en argent, or et moissanite, et pièces sur mesure — signées Valora Suisse.">
-<!-- Versão de demonstração (produtos e preços fictícios): fora dos buscadores até a loja real entrar. -->
+<!-- Site provisório (peças sem preço, pedido pelo WhatsApp) até a loja Shopify entrar no domínio: fora dos buscadores. -->
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#032D1F">
 <meta name="color-scheme" content="only light">
@@ -65,7 +65,7 @@
         <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="sr-only"> — English</span></button>
         <button type="button" data-lang="es" lang="es" aria-pressed="false">ES<span class="sr-only"> — Español</span></button>
       </div>
-      <button class="cart-btn" id="openCart" type="button" aria-haspopup="dialog" aria-controls="drawer" aria-expanded="false">
+      <button class="cart-btn" id="openCart" type="button" hidden aria-haspopup="dialog" aria-controls="drawer" aria-expanded="false">
         <svg class="cart-ico" aria-hidden="true" focusable="false"><use href="#i-bag"/></svg>
         <span class="cart-label" data-i18n="cart_btn">Panier</span>
         <span class="cart-count" id="cartCount">0</span><span class="sr-only" data-i18n="cart_items_sr">articles</span>
@@ -121,35 +121,35 @@
     <div class="sec">
       <div class="sec-h"><h2 id="collection-h" data-i18n="cat_h">La collection</h2></div>
       <nav class="cats" aria-labelledby="collection-h">
-        <a href="#bagues" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bagues">Bagues</b><small data-i18n="c5">5 créations</small></a>
-        <a href="#colliers" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_colliers">Colliers</b><small data-i18n="c5">5 créations</small></a>
-        <a href="#boucles" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_boucles_full">Boucles d'oreilles</b><small data-i18n="c5">5 créations</small></a>
-        <a href="#bracelets" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bracelets">Bracelets</b><small data-i18n="c5">5 créations</small></a>
+        <a href="#bagues" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bagues">Bagues</b><small>20 <span data-i18n="crN">créations</span></small></a>
+        <a href="#colliers" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_colliers">Colliers</b><small>6 <span data-i18n="crN">créations</span></small></a>
+        <a href="#boucles" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_boucles_full">Boucles d'oreilles</b><small>8 <span data-i18n="crN">créations</span></small></a>
+        <a href="#bracelets" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bracelets">Bracelets</b><small>1 <span data-i18n="cr1">création</span></small></a>
       </nav>
     </div>
   </section>
 
   <section class="psec" id="bagues" aria-labelledby="h-bagues">
     <div class="sec">
-      <div class="psec-h"><h2 id="h-bagues" data-i18n="nav_bagues">Bagues</h2><small data-i18n="c5">5 créations</small></div>
+      <div class="psec-h"><h2 id="h-bagues" data-i18n="nav_bagues">Bagues</h2><small>20 <span data-i18n="crN">créations</span></small></div>
       <div class="grid5" id="g-bagues"></div>
     </div>
   </section>
   <section class="psec" id="colliers" aria-labelledby="h-colliers">
     <div class="sec">
-      <div class="psec-h"><h2 id="h-colliers" data-i18n="nav_colliers">Colliers</h2><small data-i18n="c5">5 créations</small></div>
+      <div class="psec-h"><h2 id="h-colliers" data-i18n="nav_colliers">Colliers</h2><small>6 <span data-i18n="crN">créations</span></small></div>
       <div class="grid5" id="g-colliers"></div>
     </div>
   </section>
   <section class="psec" id="boucles" aria-labelledby="h-boucles">
     <div class="sec">
-      <div class="psec-h"><h2 id="h-boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</h2><small data-i18n="c5">5 créations</small></div>
+      <div class="psec-h"><h2 id="h-boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</h2><small>8 <span data-i18n="crN">créations</span></small></div>
       <div class="grid5" id="g-boucles"></div>
     </div>
   </section>
   <section class="psec" id="bracelets" aria-labelledby="h-bracelets">
     <div class="sec">
-      <div class="psec-h"><h2 id="h-bracelets" data-i18n="nav_bracelets">Bracelets</h2><small data-i18n="c5">5 créations</small></div>
+      <div class="psec-h"><h2 id="h-bracelets" data-i18n="nav_bracelets">Bracelets</h2><small>1 <span data-i18n="cr1">création</span></small></div>
       <div class="grid5" id="g-bracelets"></div>
     </div>
   </section>

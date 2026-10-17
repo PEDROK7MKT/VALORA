@@ -932,3 +932,85 @@ dialog::backdrop { background: rgba(3, 45, 31, .55); }
   .prod:hover .p-img img { transform: none; }
   .mo:hover img { transform: scale(1.025); }
 }
+
+/* =====================================================================
+   PEÇAS SEM PREÇO · pedido pelo WhatsApp (site provisório até a loja Shopify)
+   Cards da página inicial (assets/site.js) e páginas pecas/<ref>/ (tools/gera-pecas.py)
+   ===================================================================== */
+/* o card segura o texto só para leitor de tela do botão (.sr-only é absoluto): sem isso ele escapa
+   da grade com rolagem lateral e alarga a página no celular */
+.prod { position: relative; }
+.p-img > a { position: absolute; inset: 0; display: block; }
+.p-name a { color: inherit; }
+.p-name a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.p-ask { font-family: var(--serif); font-style: italic; font-size: 1.1rem; line-height: 1.2; color: var(--ouro-txt); }
+.p-foot--ask { flex-wrap: wrap; gap: 8px 10px; }
+.add.order { display: inline-flex; align-items: center; justify-content: center; }
+
+/* página da peça */
+.hd--pc { grid-template-columns: 1fr auto 1fr; }
+.hd--pc > .brand { justify-self: center; }
+.pc-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  justify-self: start;
+  font-size: .78rem;
+  letter-spacing: .04em;
+  color: var(--suave);
+}
+.pc-back:hover { color: var(--verde); }
+.pc-sec { padding-top: clamp(24px, 4vw, 56px); }
+.pc-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+.pc-img { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--poco); }
+.pc-img picture { position: absolute; inset: 0; }
+.pc-img img { width: 100%; height: 100%; object-fit: cover; }
+.pc-info { position: sticky; top: calc(var(--hd-h) + 32px); }
+.pc-title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.3rem, 4.2vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -.005em;
+  color: var(--verde);
+  text-wrap: balance;
+}
+.pc-price { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--linha); font-size: 1.5rem; }
+.pc-order { width: 100%; min-height: 54px; margin-top: 22px; }
+.pc-note { margin-top: 12px; font-size: .8rem; line-height: 1.6; color: var(--suave); }
+.pc-trust {
+  display: grid;
+  gap: 12px;
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid var(--linha);
+  list-style: none;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--verde);
+}
+.pc-trust li { display: flex; align-items: center; gap: 10px; }
+.pc-trust svg { flex: none; width: 9px; height: 9px; color: var(--ouro); }
+.pc-more { background: var(--papel); }
+.pc-more .sec { padding-top: clamp(48px, 6vw, 80px); padding-bottom: clamp(48px, 6vw, 80px); }
+.pc-more .p-ask { margin-top: 8px; font-size: 1rem; }
+.pc-all { font-size: .8rem; color: var(--verde); white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
+.pc-page footer { margin-top: 0; }
+
+@media (max-width: 1100px) {
+  .hd--pc { grid-template-columns: 1fr auto 1fr; }
+}
+@media (max-width: 820px) {
+  .pc-grid { grid-template-columns: 1fr; }
+  .pc-info { position: static; }
+  .pc-img { margin-inline: calc(var(--gutter) * -1); }
+}
+@media (max-width: 560px) {
+  .hd--pc .lang { display: flex; justify-self: end; }
+  .hd--pc .lang button { min-width: 30px; padding: 0 2px; letter-spacing: .08em; }
+  .pc-back-t { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .pc-back { font-size: 1.1rem; padding-right: 8px; }
+}

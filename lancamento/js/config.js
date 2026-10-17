@@ -12,8 +12,9 @@ export const CONFIG = {
   // assets/lancamento.ics e a imagem assets/og-image.jpg.
   launchDate: '2026-10-18',
 
-  // ⚠ CONFIRMAR · para onde "Conhecer as peças" leva depois da abertura
-  shopURL: 'https://www.instagram.com/valorasuisse/',
+  // Para onde "Conhecer as peças" leva a partir do dia da abertura: a coleção no próprio domínio
+  // (peças com pedido pelo WhatsApp até a loja Shopify entrar no domínio).
+  shopURL: '/#collection',
 
   // ⚠ CONFIRMAR · Instagram do rodapé (sem @)
   instagram: 'valorasuisse',
