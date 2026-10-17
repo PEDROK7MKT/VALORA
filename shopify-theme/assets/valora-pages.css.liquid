@@ -134,6 +134,9 @@
 .psec-all { font-size: .8rem; color: var(--verde); white-space: nowrap; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------------------------------------------------------------- peças sem preço: pedido pelo WhatsApp */
+/* o card segura o texto só para leitor de tela do botão (.sr-only é absoluto): sem isso ele escapa
+   da grade com rolagem lateral e alarga a página no celular */
+.prod { position: relative; }
 .p-ask { font-family: var(--serif); font-style: italic; font-size: 1.1rem; line-height: 1.2; color: var(--ouro-txt); }
 .p-foot--ask { flex-wrap: wrap; gap: 8px 10px; }
 .add.order { display: inline-flex; align-items: center; justify-content: center; }
