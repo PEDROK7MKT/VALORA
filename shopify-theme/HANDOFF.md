@@ -101,6 +101,27 @@ mudar a quantidade e remover do carrinho funcionam.
 4. **Nunca** faça push para o tema `189789634941` (o publicado). **Nunca** publique tema sem o Pedro mandar.
 5. **Não mexa no branch `main`.** Ele é o site no ar na Vercel. Trabalhe só no branch `shopify-theme`.
 
+## Andamento (17/10)
+
+Feito e enviado ao tema `189794353533` (conferido por MD5: o que está no tema é igual a este branch):
+
+- Layout fora da home: links e logo voltam para `/` + âncora; título, descrição e og:image por página;
+  o `valora.js` só troca o título na home e não quebra mais fora dela; rodapé com as políticas da loja.
+- Produto (`sections/valora-product.liquid`), coleção (`valora-collection`), página (`valora-page`),
+  404 (`valora-404`), busca (`valora-search`) e carrinho (`valora-cart`), todos com `"layout": "valora"`.
+  CSS dessas páginas em `assets/valora-pages.css.liquid` (o `valora-site.css` continua igual ao do site).
+- Ordem manual das coleções pelo número do produto (Anéis e Brincos reordenados).
+
+Como foi enviado: a rede do ambiente do Claude Code bloqueava `*.myshopify.com`, `accounts.shopify.com`
+e `cdn.shopify.com`, então o CLI não rodou. Os arquivos foram enviados pela Admin API
+(`themeFilesUpsert` com `body.type = URL` apontando para o raw do GitHub no commit exato).
+`themeFilesDelete` é bloqueado nesse caminho: o `assets/valora.css` órfão continua no tema.
+Na listagem da API, `assets/valora-site.css` e `assets/valora-pages.css` aparecem ao lado dos `.css.liquid`:
+são a saída compilada deles, não arquivos órfãos.
+
+Os templates do Horizon que foram substituídos (product, collection, page, 404, search, cart) continuam
+no tema publicado `189789634941`, se for preciso voltar algum.
+
 ## O que falta (em ordem)
 
 1. **Limpeza:** apagar `assets/valora.css` (órfão) do tema.
