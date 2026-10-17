@@ -384,6 +384,9 @@ function applyLaunchTexts() {
   if (cta) { cta.textContent = t('cta_pieces'); cta.href = CONFIG.shopURL; }
   const stonesCta = $('.stones-cta');
   if (stonesCta) { stonesCta.textContent = t('cta_pieces'); stonesCta.href = CONFIG.shopURL; stonesCta.hidden = false; }
+  // Lista fechada: "nos vemos na abertura" vira "a coleção já está aberta" (a troca de idioma segue a nova chave)
+  const bye = $('#invite-closed .done-bye');
+  if (bye) { bye.dataset.i18n = 'closed_bye_open'; bye.textContent = t('closed_bye_open'); }
 }
 
 // No dia: some o número, a página diz "É hoje" e a lista continua aberta.
