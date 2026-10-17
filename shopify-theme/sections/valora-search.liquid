@@ -1,0 +1,48 @@
+<section class="psec srch" aria-labelledby="s-title">
+  <div class="sec">
+    <div class="psec-h">
+      <h1 id="s-title" data-i18n="s_h">Recherche</h1>
+      {%- if search.performed -%}
+        <small>{{ search.results_count }} <span data-i18n="{% if search.results_count == 1 %}s_res1{% else %}s_resN{% endif %}">{% if search.results_count == 1 %}résultat{% else %}résultats{% endif %}</span></small>
+      {%- endif -%}
+    </div>
+
+    <form class="s-form" action="{{ routes.search_url }}" method="get" role="search">
+      <label class="sr-only" for="s-q" data-i18n="s_label">Rechercher</label>
+      <input class="s-input" id="s-q" type="search" name="q" value="{{ search.terms | escape }}" placeholder="Rechercher une création" data-i18n-ph="s_ph" autocomplete="off" enterkeyhint="search">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button class="btn btn-green" type="submit" data-i18n="s_btn">Rechercher</button>
+    </form>
+
+    {%- if search.performed -%}
+      {%- paginate search.results by 24 -%}
+        {%- if search.results_count == 0 -%}
+          <p class="empty" data-i18n-fmt="s_none" data-q="{{ search.terms | escape }}">Aucun résultat pour « {{ search.terms | escape }} ».</p>
+        {%- else -%}
+          {%- capture prods -%}
+            {%- for item in search.results -%}
+              {%- if item.object_type == 'product' -%}{%- render 'valora-product-card', product: item -%}{%- endif -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- capture others -%}
+            {%- for item in search.results -%}
+              {%- unless item.object_type == 'product' -%}<li><a href="{{ item.url }}">{{ item.title | escape }}</a></li>{%- endunless -%}
+            {%- endfor -%}
+          {%- endcapture -%}
+          {%- if prods != blank -%}<div class="grid5 grid5--page">{{ prods }}</div>{%- endif -%}
+          {%- if others != blank -%}<ul class="s-other">{{ others }}</ul>{%- endif -%}
+          {%- if paginate.pages > 1 -%}
+            {%- render 'valora-pager', paginate: paginate -%}
+          {%- endif -%}
+        {%- endif -%}
+      {%- endpaginate -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Valora — Busca",
+  "settings": []
+}
+{% endschema %}

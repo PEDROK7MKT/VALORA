@@ -1,0 +1,10 @@
+{
+  "layout": "valora",
+  "sections": {
+    "main": {
+      "type": "valora-search",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}

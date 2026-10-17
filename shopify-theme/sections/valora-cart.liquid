@@ -1,0 +1,60 @@
+{%- comment -%}
+  Página /cart. Funciona sem JavaScript (formulário padrão da Shopify); o carrinho lateral
+  continua disponível pelo botão do cabeçalho.
+{%- endcomment -%}
+<section class="psec cartp" aria-labelledby="cp-title">
+  <div class="sec">
+    <div class="psec-h">
+      <h1 id="cp-title" data-i18n="cart_title">Votre panier</h1>
+    </div>
+
+    {%- if cart.item_count == 0 -%}
+      <p class="empty" data-i18n="cart_empty">Votre panier est vide.</p>
+      <p class="cp-back"><a class="btn btn-green" href="{{ routes.root_url }}#collection" data-i18n="d_back">Retour à la boutique</a></p>
+    {%- else -%}
+      <form class="cp-form" action="{{ routes.cart_url }}" method="post" novalidate>
+        <ul class="cp-list">
+          {%- for item in cart.items -%}
+            <li class="cp-it">
+              <a class="cp-img" href="{{ item.url }}" tabindex="-1" aria-hidden="true">
+                {%- if item.image -%}
+                  <img src="{{ item.image | image_url: width: 240 }}" width="120" height="150" alt="" loading="lazy" decoding="async">
+                {%- else -%}
+                  <svg class="p-ph" aria-hidden="true" focusable="false"><use href="#i-star"/></svg>
+                {%- endif -%}
+              </a>
+              <div class="cp-info">
+                <a class="p-name" href="{{ item.url }}">{{ item.product.title | escape }}</a>
+                {%- unless item.product.has_only_default_variant -%}<p class="p-ref">{{ item.variant.title | escape }}</p>{%- endunless -%}
+                <span class="price cp-unit" data-cents="{{ item.final_price }}">{{ item.final_price | money }}</span>
+              </div>
+              <div class="cp-qty">
+                <label class="sr-only" for="cp-q-{{ forloop.index }}"><span data-i18n="qty_label">Quantité</span> — {{ item.product.title | escape }}</label>
+                <input class="cp-q" id="cp-q-{{ forloop.index }}" type="number" name="updates[]" value="{{ item.quantity }}" min="0" inputmode="numeric">
+                <a class="rm" href="{{ item.url_to_remove }}"><span data-i18n="cart_rm">Retirer</span><span class="sr-only"> — {{ item.product.title | escape }}</span></a>
+              </div>
+              <span class="price cp-line" data-cents="{{ item.final_line_price }}">{{ item.final_line_price | money }}</span>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        <div class="cp-sum">
+          <div class="tot"><span data-i18n="cart_sub">Sous-total</span><span class="price" data-cents="{{ cart.total_price }}">{{ cart.total_price | money }}</span></div>
+          {%- comment -%} "Atualizar" vem antes: Enter num campo de quantidade envia o primeiro botão {%- endcomment -%}
+          <div class="cp-actions">
+            <button class="btn btn-outline" type="submit" name="update" data-i18n="cart_update">Mettre à jour</button>
+            <button class="btn btn-green" type="submit" name="checkout" data-i18n="cart_go">Passer à la caisse</button>
+          </div>
+          <p class="dr-note" data-i18n="cart_note">Livraison et taxes calculées à l'étape suivante</p>
+        </div>
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Valora — Carrinho",
+  "settings": []
+}
+{% endschema %}
