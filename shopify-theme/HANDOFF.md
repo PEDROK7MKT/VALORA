@@ -122,6 +122,22 @@ são a saída compilada deles, não arquivos órfãos.
 Os templates do Horizon que foram substituídos (product, collection, page, 404, search, cart) continuam
 no tema publicado `189789634941`, se for preciso voltar algum.
 
+### Fechamento (17/10, depois da rede liberada)
+
+- `shopify theme pull` completo feito e commitado; o branch é idêntico ao tema `189794353533`.
+- `assets/valora.css` órfão apagado (`theme push --only`).
+- Conferido no preview real (`shopify theme dev`) em 1440, 768 e 390 px: home (igual ao valorasuisse.com),
+  produto, coleções, busca, /cart e 404, sem erro de JavaScript do tema e sem rolagem lateral.
+  Adicionar ao carrinho e chegar ao checkout da Shopify funciona pelo carrinho lateral e pelo /cart.
+- Título da aba acompanha o idioma; o checkout vai no idioma escolhido quando ele estiver publicado na Shopify.
+
+CLI neste ambiente (proxy): `SHOPIFY_HTTPS_PROXY=$HTTPS_PROXY`, `NODE_USE_ENV_PROXY=1` e um `xdg-open` falso
+no PATH para o login por código. O `theme dev` pede a senha da loja (`--store-password`).
+
+Pendências fora do código: nomes, preços e descrições dos produtos (hoje "Produto N", CHF 0 e
+"Imagem: …"); publicar FR/EN/ES em Configurações → Idiomas (hoje só pt-PT, então o checkout sai em
+português); políticas de reembolso/termos (hoje só a de privacidade existe).
+
 ## O que falta (em ordem)
 
 1. **Limpeza:** apagar `assets/valora.css` (órfão) do tema.
