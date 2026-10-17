@@ -2,6 +2,19 @@
   assign v = product.selected_or_first_available_variant
   assign img = product.featured_image
   assign pid = 'pn-' | append: product.id
+
+  # Nome provisório "Anel SH-387": a referência já está no nome, então a linha "Réf." some
+  assign words = product.title | split: ' '
+  assign provisional = false
+  if words.size == 2 and words[1] contains 'SH-'
+    assign provisional = true
+  endif
+
+  # Sem preço (CHF 0): "Prix sur demande" e o pedido vai para o WhatsApp da marca com o link da peça
+  assign on_request = false
+  if product.price_max == 0
+    assign on_request = true
+  endif
 -%}
 <article class="prod">
   <div class="p-img">
@@ -17,12 +30,19 @@
       {%- endif -%}
     </a>
   </div>
-  <h3 class="p-name" id="{{ pid }}"><a href="{{ product.url }}">{{ product.title }}</a></h3>
-  {%- if v.sku != blank -%}<p class="p-ref"><span data-i18n="ref">Réf.</span> {{ v.sku }}</p>{%- endif -%}
-  <div class="p-foot">
-    <span class="price" data-cents="{{ product.price }}">{{ product.price | money }}</span>
-    <button class="add" type="button" data-variant="{{ v.id }}" data-name="{{ product.title | escape }}" aria-describedby="{{ pid }}"{% unless product.available %} disabled{% endunless %}>
-      <span data-i18n="btn_add">Ajouter</span>
-    </button>
-  </div>
+  <h3 class="p-name" id="{{ pid }}"><a href="{{ product.url }}">{%- render 'valora-product-name', product: product -%}</a></h3>
+  {%- if v.sku != blank and provisional == false -%}<p class="p-ref"><span data-i18n="ref">Réf.</span> {{ v.sku | escape }}</p>{%- endif -%}
+  {%- if on_request -%}
+    <div class="p-foot p-foot--ask">
+      <span class="p-ask" data-i18n="price_request">Prix sur demande</span>
+      <a class="add order" href="https://wa.me/41764407717" data-wa="order" data-wa-name="{{ product.title | escape }}" data-wa-url="{{ shop.url }}{{ product.url }}" target="_blank" rel="noopener noreferrer" aria-describedby="{{ pid }}"><span data-i18n="btn_order">Commander</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+    </div>
+  {%- else -%}
+    <div class="p-foot">
+      <span class="price" data-cents="{{ product.price }}">{{ product.price | money }}</span>
+      <button class="add" type="button" data-variant="{{ v.id }}" data-name="{{ product.title | escape }}" aria-describedby="{{ pid }}"{% unless product.available %} disabled{% endunless %}>
+        <span data-i18n="btn_add">Ajouter</span>
+      </button>
+    </div>
+  {%- endif -%}
 </article>

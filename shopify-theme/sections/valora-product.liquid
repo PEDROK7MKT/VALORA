@@ -15,6 +15,17 @@
     assign coll = product.collections.first
   endif
 
+  # Nome provisório "Anel SH-387" (a referência já está no nome) e peça sem preço (pedido pelo WhatsApp)
+  assign words = product.title | split: ' '
+  assign provisional = false
+  if words.size == 2 and words[1] contains 'SH-'
+    assign provisional = true
+  endif
+  assign on_request = false
+  if product.price_max == 0
+    assign on_request = true
+  endif
+
   assign media_count = 0
   for media in product.media
     if media.media_type == 'image' or media.media_type == 'video' or media.media_type == 'external_video'
@@ -54,10 +65,17 @@
 
       <div class="pd-info">
         {%- if ck != blank -%}<span class="eye" data-i18n="{{ ck }}">{{ coll.title | escape }}</span>{%- endif -%}
-        <h1 class="pd-title" id="pd-title">{{ product.title | escape }}</h1>
+        <h1 class="pd-title" id="pd-title">{%- render 'valora-product-name', product: product -%}</h1>
 
+        {%- if on_request -%}
         <div class="pd-buy">
-          <p class="p-ref pd-sku"{% if v.sku == blank %} hidden{% endif %}><span data-i18n="ref">Réf.</span> <span class="pd-sku-v">{{ v.sku | escape }}</span></p>
+          <p class="pd-price"><span class="p-ask" data-i18n="price_request">Prix sur demande</span></p>
+          <a class="btn btn-green pd-order" href="https://wa.me/41764407717" data-wa="order" data-wa-name="{{ product.title | escape }}" data-wa-url="{{ shop.url }}{{ product.url }}" target="_blank" rel="noopener noreferrer"><span data-i18n="btn_order_wa">Commander sur WhatsApp</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+          <p class="pd-note" data-i18n="wa_note">Prix, taille et disponibilité confirmés avec vous sur WhatsApp.</p>
+        </div>
+        {%- else -%}
+        <div class="pd-buy">
+          <p class="p-ref pd-sku"{% if v.sku == blank or provisional %} hidden{% endif %}><span data-i18n="ref">Réf.</span> <span class="pd-sku-v">{{ v.sku | escape }}</span></p>
           <p class="pd-price">
             <span class="price pd-now" data-cents="{{ v.price }}">{{ v.price | money }}</span>
             <s class="pd-was" data-cents="{{ v.compare_at_price | default: 0 }}"{% unless v.compare_at_price > v.price %} hidden{% endunless %}>{{ v.compare_at_price | money }}</s>
@@ -81,8 +99,9 @@
               <span data-i18n="sold_out">Épuisé</span>
             {%- endif -%}
           </button>
-          <a class="btn btn-outline pd-wa" href="https://wa.me/41764407717" data-wa="product" data-wa-name="{{ product.title | escape }}" target="_blank" rel="noopener noreferrer"><span data-i18n="pd_question">Une question ? Écrire sur WhatsApp</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+          <a class="btn btn-outline pd-wa" href="https://wa.me/41764407717" data-wa="product" data-wa-name="{{ product.title | escape }}" data-wa-url="{{ shop.url }}{{ product.url }}" target="_blank" rel="noopener noreferrer"><span data-i18n="pd_question">Une question ? Écrire sur WhatsApp</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
         </div>
+        {%- endif -%}
 
         {%- if product.description != blank -%}
           <div class="pd-desc rte">{{ product.description }}</div>
@@ -118,7 +137,10 @@
   </section>
 {%- endif -%}
 
+{%- comment -%} Dados para o Google só com preço de verdade (com CHF 0 ele mostraria "grátis") {%- endcomment -%}
+{%- unless on_request -%}
 <script type="application/ld+json">{{ product | structured_data }}</script>
+{%- endunless -%}
 
 {% schema %}
 {

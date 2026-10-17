@@ -71,6 +71,10 @@
       d_h: 'Votre sélection est prête', d_p: "Merci d'avoir choisi Valora Suisse. Que ce bijou accompagne vos plus beaux moments.",
       d_s: "Démonstration : aucune commande n'a été enregistrée et aucun e-mail n'a été envoyé. Dans la boutique, vous continueriez ici vers la page de paiement sécurisée de notre prestataire.",
       d_back: 'Retour à la boutique',
+      // peças sem preço: pedido pelo WhatsApp
+      price_request: "Prix sur demande", btn_order: "Commander",
+      btn_order_wa: "Commander sur WhatsApp", wa_note: "Prix, taille et disponibilité confirmés avec vous sur WhatsApp.",
+      wa_order: "Bonjour Valora Suisse ! J'aimerais commander cette pièce : {n}\n{u}",
       // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
       back_coll: "Retour à la collection", btn_add_cart: "Ajouter au panier", sold_out: "Épuisé",
       v_label: "Option", pd_photos: "Photos de la pièce", pd_more: "Dans la même collection",
@@ -143,6 +147,10 @@
       d_h: 'Sua seleção está pronta', d_p: 'Obrigado por escolher a Valora Suisse. Que esta joia acompanhe os seus momentos mais especiais.',
       d_s: 'Demonstração: nenhum pedido foi registrado e nenhum e-mail foi enviado. Na loja, você seguiria daqui para a página de pagamento segura do nosso parceiro.',
       d_back: 'Voltar à loja',
+      // peças sem preço: pedido pelo WhatsApp
+      price_request: "Preço sob consulta", btn_order: "Encomendar",
+      btn_order_wa: "Encomendar pelo WhatsApp", wa_note: "Preço, tamanho e disponibilidade confirmados com você pelo WhatsApp.",
+      wa_order: "Olá, Valora Suisse! Quero encomendar esta peça: {n}\n{u}",
       // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
       back_coll: "Voltar à coleção", btn_add_cart: "Adicionar ao carrinho", sold_out: "Esgotado",
       v_label: "Opção", pd_photos: "Fotos da peça", pd_more: "Da mesma coleção",
@@ -215,6 +223,10 @@
       d_h: 'Your selection is ready', d_p: 'Thank you for choosing Valora Suisse. May this jewel accompany your most precious moments.',
       d_s: "Demo: no order was recorded and no email was sent. In the shop, you would continue from here to our payment provider's secure page.",
       d_back: 'Back to the shop',
+      // peças sem preço: pedido pelo WhatsApp
+      price_request: "Price on request", btn_order: "Order",
+      btn_order_wa: "Order on WhatsApp", wa_note: "Price, size and availability confirmed with you on WhatsApp.",
+      wa_order: "Hello Valora Suisse! I'd like to order this piece: {n}\n{u}",
       // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
       back_coll: "Back to the collection", btn_add_cart: "Add to cart", sold_out: "Sold out",
       v_label: "Option", pd_photos: "Photos of the piece", pd_more: "From the same collection",
@@ -287,6 +299,10 @@
       d_h: 'Tu selección está lista', d_p: 'Gracias por elegir Valora Suisse. Que esta joya acompañe tus momentos más preciados.',
       d_s: 'Demostración: no se ha registrado ningún pedido ni se ha enviado ningún correo. En la tienda, desde aquí pasarías a la página de pago seguro de nuestro proveedor.',
       d_back: 'Volver a la tienda',
+      // peças sem preço: pedido pelo WhatsApp
+      price_request: "Precio a consultar", btn_order: "Encargar",
+      btn_order_wa: "Encargar por WhatsApp", wa_note: "Precio, talla y disponibilidad se confirman contigo por WhatsApp.",
+      wa_order: "¡Hola, Valora Suisse! Quiero encargar esta pieza: {n}\n{u}",
       // páginas da loja (produto, coleção, busca, carrinho, 404, políticas)
       back_coll: "Volver a la colección", btn_add_cart: "Añadir a la cesta", sold_out: "Agotado",
       v_label: "Opción", pd_photos: "Fotos de la pieza", pd_more: "De la misma colección",
@@ -525,7 +541,7 @@
 
   document.addEventListener('click', async (e) => {
     const b = e.target.closest('.add');
-    if (!b || b.disabled) return;
+    if (!b || b.disabled || b.classList.contains('order')) return; // .order é link do WhatsApp
     const txt = b.querySelector('span');
     b.disabled = true;
     try {
@@ -650,25 +666,28 @@
     document.querySelectorAll('[data-i18n-alt]').forEach((el) => { el.alt = t(el.dataset.i18nAlt); });
     // textos com variáveis: data-i18n-fmt="pg_page" data-n="2" data-m="3"
     document.querySelectorAll('[data-i18n-fmt]').forEach((el) => { el.textContent = fmt(el.dataset.i18nFmt, el.dataset); });
+    // WhatsApp com o nome da peça ({n}) e o link dela ({u}): a conversa já abre com a prévia e a foto
     document.querySelectorAll('[data-wa]').forEach((a) => {
-      a.href = `${WA}?text=${encodeURIComponent(fmt(`wa_${a.dataset.wa}`, { n: a.dataset.waName || '' }))}`;
+      a.href = `${WA}?text=${encodeURIComponent(fmt(`wa_${a.dataset.wa}`, { n: a.dataset.waName || '', u: a.dataset.waUrl || '' }).trim())}`;
     });
   }
   function setLang(l, persist) {
     if (!LANGS.includes(l)) l = 'fr';
     LANG = l;
     document.documentElement.lang = HTML_LANG[l];
+    applyI18n();
     if (document.body.dataset.template === 'index') {
       document.title = t('doc_title');
       const meta = document.querySelector('meta[name="description"]');
       if (meta) meta.setAttribute('content', t('doc_desc'));
     } else {
-      // Páginas com título traduzível (coleção, carrinho, busca, 404): a aba acompanha o idioma.
-      // Sem isso o título viria no idioma padrão da loja (pt-PT).
-      const h1 = document.querySelector('main h1[data-i18n]');
-      if (h1 && has(h1.dataset.i18n)) document.title = `${t(h1.dataset.i18n)} — Valora Suisse`;
+      // Páginas com título traduzível (coleção, carrinho, busca, 404, peça com nome provisório):
+      // a aba acompanha o idioma. Sem isso o título viria no idioma padrão da loja (pt-PT).
+      const h1 = document.querySelector('main h1');
+      if (h1 && (h1.matches('[data-i18n]') || h1.querySelector('[data-i18n]'))) {
+        document.title = `${h1.textContent.replace(/\s+/g, ' ').trim()} — Valora Suisse`;
+      }
     }
-    applyI18n();
     document.querySelectorAll('.lang button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === l)));
     updateMotionLabel();
     renderCart();

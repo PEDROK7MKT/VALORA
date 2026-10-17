@@ -1,0 +1,28 @@
+{%- comment -%}
+  Nome da peça na tela.
+  Enquanto o nome na Shopify for provisório ("Anel SH-387" = categoria + referência), mostra a
+  categoria no idioma escolhido + a referência ("Bague SH-387", "Ring SH-387"...).
+  Quando a peça ganhar um nome de verdade, o nome aparece como está na Shopify.
+  Uso: {%- render 'valora-product-name', product: product -%}
+{%- endcomment -%}
+{%- liquid
+  assign words = product.title | split: ' '
+  assign cat_key = ''
+  if words.size == 2 and words[1] contains 'SH-'
+    case words[0]
+      when 'Anel'
+        assign cat_key = 'pcat_bague'
+        assign cat_fr = 'Bague'
+      when 'Colar'
+        assign cat_key = 'pcat_collier'
+        assign cat_fr = 'Collier'
+      when 'Brincos'
+        assign cat_key = 'pcat_boucles'
+        assign cat_fr = "Boucles d'oreilles"
+      when 'Pulseira'
+        assign cat_key = 'pcat_bracelet'
+        assign cat_fr = 'Bracelet'
+    endcase
+  endif
+-%}
+{%- if cat_key != blank -%}<span data-i18n="{{ cat_key }}">{{ cat_fr }}</span> {{ words[1] | escape }}{%- else -%}{{ product.title | escape }}{%- endif -%}
