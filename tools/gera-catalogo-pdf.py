@@ -34,12 +34,14 @@ def main(out):
     for r in rows:
         ref = r['referencia']
         slug = ref.lower()
+        # colares: o mesmo recorte no pingente usado no site
+        foto = f'assets/products/{slug}-c-480.jpg' if os.path.exists(os.path.join(ROOT, f'assets/products/{slug}-c-480.jpg')) else f'assets/products/{slug}-480.jpg'
         cards.append(f'''
       <article class="card">
-        <a class="ph" href="https://{SITE}/pecas/{slug}/"><img src="{a(f'assets/products/{slug}-480.jpg')}" alt=""></a>
+        <a class="ph" href="https://{SITE}/pecas/{slug}/"><img src="{a(foto)}" alt=""></a>
         <div class="meta">
-          <p class="ref">{e(ref)}</p>
           <p class="cat">{e(CAT[r['categoria']])}</p>
+          <p class="ref">{e(r['nome_na_loja'])}</p>
           <a class="url" href="https://{SITE}/pecas/{slug}/">{SITE}/pecas/{slug}</a>
           <p class="drive">Drive: {e(r['foto_no_drive'])}</p>
         </div>
@@ -113,8 +115,8 @@ ol.steps li::before {{ content: counter(s); width: 5.5mm; height: 5.5mm; border-
 .card .ph {{ display: block; aspect-ratio: 4 / 5; overflow: hidden; background: #EFE6D6; border-radius: 2px; }}
 .card img {{ width: 100%; height: 100%; object-fit: cover; display: block; }}
 .card .meta {{ padding-top: 2mm; }}
-.card .ref {{ font-family: 'Cormorant Garamond', serif; font-size: 17pt; font-weight: 600; color: var(--verde); line-height: 1; }}
-.card .cat {{ font-size: 7.2pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ouro-txt); margin-top: 1mm; font-weight: 600; }}
+.card .ref {{ font-family: 'Cormorant Garamond', serif; font-size: 15.5pt; font-weight: 600; color: var(--verde); line-height: 1.05; margin-top: .6mm; }}
+.card .cat {{ font-size: 6.6pt; letter-spacing: .14em; text-transform: uppercase; color: var(--ouro-txt); font-weight: 600; }}
 .card .url {{ display: block; font-size: 6.6pt; color: #0B6E99; margin-top: .8mm; }}
 .card .drive {{ font-size: 6pt; color: var(--suave); }}
 </style>
@@ -135,7 +137,7 @@ ol.steps li::before {{ content: counter(s); width: 5.5mm; height: 5.5mm; border-
         <li><span>Em geral o WhatsApp mostra a <b>foto da peça</b> junto com o link. Se a foto não aparecer, toque no link (abre a página da peça) ou procure a referência neste catálogo: as peças estão em <b>ordem de número</b>, de SH-131 a SH-977.</span></li>
         <li><span>Responda confirmando <b>preço, tamanho</b> (nos anéis) e <b>disponibilidade</b>, e combine pagamento e entrega diretamente na conversa. Há respostas prontas na próxima página.</span></li>
       </ol>
-      <p class="note">No site, as peças aparecem com o nome traduzido (ex.: “Bague SH-387” em francês) e com “Prix sur demande”. A referência é a mesma em todos os idiomas e na loja Shopify.</p>
+      <p class="note">No site, cada peça aparece com o tipo traduzido para o idioma do cliente (ex.: “Bague” em francês) e a referência SH-___, com “Preço sob consulta”. A referência é a mesma em todos os idiomas e na loja Shopify. Logo acima das peças, o site explica aos clientes como comprar em 3 passos.</p>
     </div>
 
     <div class="box">
@@ -172,7 +174,7 @@ ol.steps li::before {{ content: counter(s); width: 5.5mm; height: 5.5mm; border-
         <li>Os clientes da lista de convidados já podem ser avisados com o link do site.</li>
       </ul>
     </div>
-    <div class="foot"><span>Valora Suisse · Guia de pedidos pelo WhatsApp</span><span>Atualizado em 17/10/2026</span></div>
+    <div class="foot"><span>Valora Suisse · Guia de pedidos pelo WhatsApp</span><span>Lançamento · 18/10/2026</span></div>
   </section>
 {catalog_pages}
 </body>
