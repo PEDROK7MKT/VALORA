@@ -52,7 +52,7 @@
       cert_alt: "Certificat d'authenticité Valora Suisse avec son sceau",
       ct_h: 'Une pièce vous attend',
       ct_p: 'Pour toute demande, information ou création sur mesure, notre équipe vous accompagne avec la même attention que celle portée à chaque bijou.',
-      ct_cta: 'Écrire sur WhatsApp', newtab: '(nouvel onglet)',
+      ct_cta: 'Écrire sur WhatsApp', newtab: '(nouvel onglet)', wa_aria: 'Écrire sur WhatsApp (nouvel onglet)',
       wa_general: "Bonjour Valora Suisse, j'aimerais avoir des informations.",
       wa_bespoke: "Bonjour Valora Suisse, j'aimerais créer une pièce sur mesure.",
       f_tag: 'Ce qui a de la valeur demeure.', f_loc: 'Suisse', f_rights: '© 2026 Valora Suisse — Tous droits réservés', f_by: 'Conçu par',
@@ -115,7 +115,7 @@
       cert_alt: 'Certificado de autenticidade Valora Suisse com o selo',
       ct_h: 'Uma peça espera por você',
       ct_p: 'Para qualquer pedido, informação ou criação sob medida, nossa equipe acompanha você com o mesmo cuidado dedicado a cada joia.',
-      ct_cta: 'Falar no WhatsApp', newtab: '(abre em nova aba)',
+      ct_cta: 'Falar no WhatsApp', newtab: '(abre em nova aba)', wa_aria: 'Falar no WhatsApp (abre em nova aba)',
       wa_general: 'Olá, Valora Suisse! Gostaria de mais informações.',
       wa_bespoke: 'Olá, Valora Suisse! Gostaria de criar uma peça sob medida.',
       f_tag: 'O que tem valor permanece.', f_loc: 'Suíça', f_rights: '© 2026 Valora Suisse — Todos os direitos reservados', f_by: 'Criado por',
@@ -178,7 +178,7 @@
       cert_alt: 'Valora Suisse certificate of authenticity with its seal',
       ct_h: 'A piece awaits you',
       ct_p: 'For any request, information or bespoke creation, our team accompanies you with the same attention given to every jewel.',
-      ct_cta: 'Write on WhatsApp', newtab: '(opens in a new tab)',
+      ct_cta: 'Write on WhatsApp', newtab: '(opens in a new tab)', wa_aria: 'Write on WhatsApp (opens in a new tab)',
       wa_general: 'Hello Valora Suisse, I would like some information.',
       wa_bespoke: 'Hello Valora Suisse, I would like to create a bespoke piece.',
       f_tag: 'What has value endures.', f_loc: 'Switzerland', f_rights: '© 2026 Valora Suisse — All rights reserved', f_by: 'Designed by',
@@ -241,7 +241,7 @@
       cert_alt: 'Certificado de autenticidad Valora Suisse con su sello',
       ct_h: 'Una pieza te espera',
       ct_p: 'Para cualquier consulta, información o creación a medida, nuestro equipo te acompaña con la misma atención dedicada a cada joya.',
-      ct_cta: 'Escribir por WhatsApp', newtab: '(se abre en una pestaña nueva)',
+      ct_cta: 'Escribir por WhatsApp', newtab: '(se abre en una pestaña nueva)', wa_aria: 'Escribir por WhatsApp (se abre en una pestaña nueva)',
       wa_general: 'Hola, Valora Suisse. Me gustaría recibir información.',
       wa_bespoke: 'Hola, Valora Suisse. Me gustaría crear una pieza a medida.',
       f_tag: 'Lo que tiene valor permanece.', f_loc: 'Suiza', f_rights: '© 2026 Valora Suisse — Todos los derechos reservados', f_by: 'Creado por',
@@ -345,7 +345,7 @@
     const nameId = `pn-${gid}-${i}`;
     const slug = pieceSlug(p);
     const url = `pecas/${slug}/`;
-    const sizes = '(min-width: 1101px) 250px, (min-width: 561px) 38vw, 72vw';
+    const sizes = '(min-width: 1101px) 250px, (min-width: 821px) 38vw, (min-width: 561px) 31vw, 47vw';
     const base = `assets/products/${slug}`;
     const media = h('picture', null,
       h('source', { type: 'image/webp', srcset: `${base}-480.webp 480w, ${base}-800.webp 800w`, sizes }),
@@ -353,9 +353,9 @@
         src: `${base}-800.jpg`, srcset: `${base}-480.jpg 480w, ${base}-800.jpg 800w`, sizes,
         width: 800, height: p.h, loading: 'lazy', decoding: 'async', alt: '',
       }));
-    return h('article', { class: 'prod' },
+    return h('article', { class: 'prod', 'data-g': gid },
       h('div', { class: 'p-img' }, h('a', { href: url, tabindex: '-1', 'aria-hidden': 'true' }, media)),
-      h('h3', { class: 'p-name', id: nameId }, h('a', { href: url }, h('span', { 'data-i18n': P[gid].cat }), ` ${p.ref}`)),
+      h('h3', { class: 'p-name', id: nameId }, h('a', { href: url }, h('span', { class: 'p-cat', 'data-i18n': P[gid].cat }), ' ', h('span', { class: 'p-sku' }, p.ref))),
       h('div', { class: 'p-foot p-foot--ask' },
         h('span', { class: 'p-ask', 'data-i18n': 'price_request' }),
         h('a', {
@@ -367,6 +367,31 @@
     const grid = $(`g-${gid}`);
     if (grid) grid.replaceChildren(...group.items.map((p, i) => card(gid, p, i)));
   });
+
+  /* ===================================================== abas de categoria (celular) */
+  const chips = $('chips');
+  if (chips && 'IntersectionObserver' in window) {
+    const links = [...chips.querySelectorAll('a')];
+    const secs = links.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const seen = new Set();
+    const mark = () => {
+      const cur = secs.filter((s) => seen.has(s)).pop();
+      links.forEach((a) => {
+        const on = !!cur && a.getAttribute('href') === `#${cur.id}`;
+        if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        // a aba ativa fica à vista na barra (só rola a barra, nunca a página)
+        if (on && chips.scrollWidth > chips.clientWidth) {
+          chips.scrollTo({ left: a.offsetLeft - (chips.clientWidth - a.offsetWidth) / 2, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+        }
+      });
+    };
+    // conta como "na tela" a seção que cruza a faixa logo abaixo das abas
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => { if (en.isIntersecting) seen.add(en.target); else seen.delete(en.target); });
+      mark();
+    }, { rootMargin: '-140px 0px -55% 0px' });
+    secs.forEach((s) => io.observe(s));
+  }
 
   /* ===================================================== fita de cetim */
   const RIB = (id) => `<svg viewBox="-600 0 3600 132" aria-hidden="true" focusable="false">

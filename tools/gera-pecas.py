@@ -42,10 +42,10 @@ def mini_card(p):
     g = GRUPOS[p['grupo']]
     slug = p['ref'].lower()
     return (
-        '<article class="prod">'
+        f'<article class="prod" data-g="{p["grupo"]}">'
         f'<div class="p-img"><a href="/pecas/{slug}/" tabindex="-1" aria-hidden="true">'
         f'{picture(slug, p["h800"], "(min-width: 1101px) 250px, (min-width: 561px) 38vw, 72vw")}</a></div>'
-        f'<h3 class="p-name"><a href="/pecas/{slug}/"><span data-i18n="{g[2]}">{e(g[3])}</span> {e(p["ref"])}</a></h3>'
+        f'<h3 class="p-name"><a href="/pecas/{slug}/"><span class="p-cat" data-i18n="{g[2]}">{e(g[3])}</span> <span class="p-sku">{e(p["ref"])}</span></a></h3>'
         '<p class="p-ask" data-i18n="price_request">Prix sur demande</p>'
         '</article>'
     )
@@ -102,6 +102,7 @@ def page(p, todas, footer):
 <svg class="sprite" aria-hidden="true" focusable="false">
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 0C12.9 7.6 16.4 11.1 24 12C16.4 12.9 12.9 16.4 12 24C11.1 16.4 7.6 12.9 0 12C7.6 11.1 11.1 7.6 12 0Z" fill="currentColor"/></symbol>
   <symbol id="i-star-line" viewBox="0 0 24 24"><path d="M12 1.5C12.8 7.9 16.1 11.2 22.5 12C16.1 12.8 12.8 16.1 12 22.5C11.2 16.1 7.9 12.8 1.5 12C7.9 11.2 11.2 7.9 12 1.5Z" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linejoin="round"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.3a8.7 8.7 0 0 0-7.5 13.1l-1.2 4.3 4.4-1.2A8.7 8.7 0 1 0 12 3.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.2 8c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.2.1.4 0 .6l-.4.6c-.1.2-.1.3 0 .5.4.7 1 1.3 1.6 1.7.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .5-.2 1.1-.7 1.4-.5.4-1.3.5-2.3.1-1.6-.6-3.1-2-3.9-3.5-.5-1-.6-1.9-.2-2.6z" fill="currentColor"/></symbol>
 </svg>
 
 <header class="site-header">
@@ -127,7 +128,7 @@ def page(p, todas, footer):
   <section class="pc" aria-labelledby="pc-title">
     <div class="sec pc-sec">
       <div class="pc-grid">
-        <figure class="pc-img">{picture(slug, p['h800'], '(min-width: 821px) 50vw, 100vw', eager=True)}</figure>
+        <figure class="pc-img" data-g="{p['grupo']}">{picture(slug, p['h800'], '(min-width: 821px) 50vw, 100vw', eager=True)}</figure>
         <div class="pc-info">
           <span class="eye" data-i18n="{g[0]}">{e(g[1])}</span>
           <h1 class="pc-title" id="pc-title"><span data-i18n="{g[2]}">{e(g[3])}</span> {e(p['ref'])}</h1>
@@ -163,7 +164,9 @@ def page(p, todas, footer):
 def main():
     todas = json.load(open(os.path.join(ROOT, 'catalogo/pecas.json'), encoding='utf-8'))
     idx = open(os.path.join(ROOT, 'index.html'), encoding='utf-8').read()
-    footer = idx[idx.index('<footer>'):idx.index('</footer>') + len('</footer>')]
+    footer = idx[idx.index('<footer'):idx.index('</footer>') + len('</footer>')]
+    # os links do rodapé apontam para seções da página inicial
+    footer = footer.replace('<a href="#top"', '<a href="/"').replace('<a href="#', '<a href="/#')
     destino = os.path.join(ROOT, 'pecas')
     if os.path.isdir(destino):
         shutil.rmtree(destino)

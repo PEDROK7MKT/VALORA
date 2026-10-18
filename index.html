@@ -39,6 +39,7 @@
   <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
   <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z" fill="currentColor"/></symbol>
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7z" fill="currentColor"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24"><path d="M12 3.3a8.7 8.7 0 0 0-7.5 13.1l-1.2 4.3 4.4-1.2A8.7 8.7 0 1 0 12 3.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M9.2 8c.2-.4.4-.4.6-.4h.5c.2 0 .4 0 .5.4l.7 1.7c.1.2.1.4 0 .6l-.4.6c-.1.2-.1.3 0 .5.4.7 1 1.3 1.6 1.7.2.1.4.1.5 0l.6-.6c.2-.2.4-.2.6-.1l1.6.8c.2.1.3.3.3.5 0 .5-.2 1.1-.7 1.4-.5.4-1.3.5-2.3.1-1.6-.6-3.1-2-3.9-3.5-.5-1-.6-1.9-.2-2.6z" fill="currentColor"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7.5 11V8a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="5" y="11" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></symbol>
 </svg>
 
@@ -59,6 +60,7 @@
       <a href="#contact" data-i18n="nav_contact">Contact</a>
     </nav>
     <div class="hd-right">
+      <a class="hd-wa" href="https://wa.me/41764407717" data-wa="general" target="_blank" rel="noopener noreferrer" aria-label="Écrire sur WhatsApp (nouvel onglet)" data-i18n-aria="wa_aria"><svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg></a>
       <div class="lang" role="group" aria-label="Langue · Idioma · Language">
         <button type="button" data-lang="fr" lang="fr" aria-pressed="true">FR<span class="sr-only"> — Français</span></button>
         <button type="button" data-lang="pt" lang="pt-BR" aria-pressed="false">PT<span class="sr-only"> — Português</span></button>
@@ -95,28 +97,7 @@
 
   <div class="ribbon ribbon--hero" aria-hidden="true"></div>
 
-  <ul class="trust">
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t1">Certificat d'authenticité</span></li>
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t2">Création sur mesure</span></li>
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t3">Livraison assurée</span></li>
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t4">Paiement sécurisé</span></li>
-  </ul>
-
-  <section class="ground--papel" id="maison" aria-labelledby="maison-h">
-    <div class="sec maison-top">
-      <div>
-        <span class="eye" data-i18n="m_eye">La Maison</span>
-        <h2 id="maison-h" data-i18n="m_h">L'univers Valora</h2>
-        <p data-i18n="m_p1">Le nom VALORA vient de l'idée de valeur — non seulement la valeur matérielle d'un bijou, mais la valeur affective, familiale et éternelle qu'il représente.</p>
-        <p data-i18n="m_p2">Le vert profond symbolise la permanence, l'exclusivité et la confiance. L'or incarne l'excellence, la tradition de la haute joaillerie et la préciosité de chaque création.</p>
-        <p data-i18n="m_p3">Des formes élégantes, des espaces généreux et une typographie raffinée reflètent une maison discrète mais mémorable — où le vrai luxe réside dans la qualité, l'authenticité et la permanence.</p>
-      </div>
-      <div class="cover">
-        <img src="assets/brand-cover.jpg" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover">
-      </div>
-    </div>
-  </section>
-
+  <div class="shop">
   <section class="collection" id="collection" aria-labelledby="collection-h">
     <div class="sec">
       <div class="sec-h"><h2 id="collection-h" data-i18n="cat_h">La collection</h2></div>
@@ -128,6 +109,14 @@
       </nav>
     </div>
   </section>
+
+  <!-- Abas de categoria: só no celular, ficam presas abaixo do cabeçalho enquanto as peças passam -->
+  <nav class="chips" id="chips" aria-labelledby="collection-h">
+    <a href="#bagues" class="chip"><span data-i18n="nav_bagues">Bagues</span><small>20</small></a>
+    <a href="#colliers" class="chip"><span data-i18n="nav_colliers">Colliers</span><small>6</small></a>
+    <a href="#boucles" class="chip"><span data-i18n="nav_boucles">Boucles</span><small>8</small></a>
+    <a href="#bracelets" class="chip"><span data-i18n="nav_bracelets">Bracelets</span><small>1</small></a>
+  </nav>
 
   <section class="psec" id="bagues" aria-labelledby="h-bagues">
     <div class="sec">
@@ -151,6 +140,29 @@
     <div class="sec">
       <div class="psec-h"><h2 id="h-bracelets" data-i18n="nav_bracelets">Bracelets</h2><small>1 <span data-i18n="cr1">création</span></small></div>
       <div class="grid5" id="g-bracelets"></div>
+    </div>
+  </section>
+  </div>
+
+  <ul class="trust">
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t1">Certificat d'authenticité</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t2">Création sur mesure</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t3">Livraison assurée</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t4">Paiement sécurisé</span></li>
+  </ul>
+
+  <section class="ground--papel" id="maison" aria-labelledby="maison-h">
+    <div class="sec maison-top">
+      <div>
+        <span class="eye" data-i18n="m_eye">La Maison</span>
+        <h2 id="maison-h" data-i18n="m_h">L'univers Valora</h2>
+        <p data-i18n="m_p1">Le nom VALORA vient de l'idée de valeur — non seulement la valeur matérielle d'un bijou, mais la valeur affective, familiale et éternelle qu'il représente.</p>
+        <p data-i18n="m_p2">Le vert profond symbolise la permanence, l'exclusivité et la confiance. L'or incarne l'excellence, la tradition de la haute joaillerie et la préciosité de chaque création.</p>
+        <p data-i18n="m_p3">Des formes élégantes, des espaces généreux et une typographie raffinée reflètent une maison discrète mais mémorable — où le vrai luxe réside dans la qualité, l'authenticité et la permanence.</p>
+      </div>
+      <div class="cover">
+        <img src="assets/brand-cover.jpg" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover">
+      </div>
     </div>
   </section>
 
@@ -215,28 +227,48 @@
 
 </main>
 
-<div class="ribbon" aria-hidden="true"></div>
-
-<footer>
-  <div class="cards">
-    <div class="bc bc-front">
-      <p class="bc-logo foil">VALORA<small>SUISSE</small></p>
-      <p class="bc-tag" data-i18n="f_tag">Ce qui a de la valeur demeure.</p>
+<footer class="ft">
+  <div class="ft-in">
+    <div class="ft-brand">
+      <a href="#top" class="ft-logo" aria-label="Valora Suisse">
+        <svg class="ft-star" aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg>
+        <span class="ft-name">VALORA</span>
+        <span class="ft-sub">SUISSE</span>
+      </a>
+      <p class="ft-tag" data-i18n="f_tag">Ce qui a de la valeur demeure.</p>
     </div>
-    <div class="bc bc-back">
-      <p class="bc-logo sm foil" aria-hidden="true">VALORA<small>SUISSE</small></p>
-      <div class="bc-line" aria-hidden="true"></div>
-      <ul class="bc-info">
-        <li><a href="tel:+41764407717"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.6a2 2 0 0 1-.5 2.1L8.1 9.7a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.8.3 1.7.5 2.6.7a2 2 0 0 1 1.7 2z"/></svg>+41 76 440 77 17</a></li>
+    <nav class="ft-col" aria-labelledby="ft-h1">
+      <p class="ft-h" id="ft-h1" data-i18n="cat_h">La collection</p>
+      <a href="#bagues" data-i18n="nav_bagues">Bagues</a>
+      <a href="#colliers" data-i18n="nav_colliers">Colliers</a>
+      <a href="#boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</a>
+      <a href="#bracelets" data-i18n="nav_bracelets">Bracelets</a>
+    </nav>
+    <nav class="ft-col" aria-labelledby="ft-h2">
+      <p class="ft-h" id="ft-h2" data-i18n="nav_maison">La Maison</p>
+      <a href="#maison" data-i18n="m_h">L'univers Valora</a>
+      <a href="#sur-mesure" data-i18n="sm_eye">Sur mesure</a>
+      <a href="#ecrin" data-i18n="e_eye">L'écrin</a>
+      <a href="#garantie" data-i18n="c_eye">Garantie</a>
+    </nav>
+    <div class="ft-col ft-contact">
+      <p class="ft-h" data-i18n="nav_contact">Contact</p>
+      <ul>
+        <li><a href="https://wa.me/41764407717" data-wa="general" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg>+41 76 440 77 17<span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a></li>
         <li><a href="mailto:info@valorasuisse.com"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>info@valorasuisse.com</a></li>
         <li><a href="https://instagram.com/valorasuisse" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg>@valorasuisse<span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a></li>
-        <li><span class="bc-loc"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22s7-7.5 7-12a7 7 0 0 0-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-i18n="f_loc">Suisse</span></span></li>
+        <li><span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 22s7-7.5 7-12a7 7 0 0 0-14 0c0 4.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span data-i18n="f_loc">Suisse</span></span></li>
       </ul>
     </div>
   </div>
-  <div class="f-bottom">
-    <span data-i18n="f_rights">© 2026 Valora Suisse — Tous droits réservés</span>
-    <span><span data-i18n="f_by">Conçu par</span> <a href="https://pk7.com.br" target="_blank" rel="noopener noreferrer">PK7<span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a></span>
+  <div class="ft-bottom">
+    <div class="lang" role="group" aria-label="Langue · Idioma · Language">
+      <button type="button" data-lang="fr" lang="fr" aria-pressed="true">FR<span class="sr-only"> — Français</span></button>
+      <button type="button" data-lang="pt" lang="pt-BR" aria-pressed="false">PT<span class="sr-only"> — Português</span></button>
+      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="sr-only"> — English</span></button>
+      <button type="button" data-lang="es" lang="es" aria-pressed="false">ES<span class="sr-only"> — Español</span></button>
+    </div>
+    <p><span data-i18n="f_rights">© 2026 Valora Suisse — Tous droits réservés</span> · <span data-i18n="f_by">Conçu par</span> <a href="https://pk7.com.br" target="_blank" rel="noopener noreferrer">PK7<span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a></p>
   </div>
 </footer>
 
