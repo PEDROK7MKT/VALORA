@@ -1271,3 +1271,56 @@ dialog::backdrop { background: rgba(3, 45, 31, .55); }
   .hero::after { background: linear-gradient(to bottom, rgba(3, 45, 31, 0) calc(100vw - 96px), var(--verde) 100vw); }
   .hero-eye { color: var(--ouro-claro); }
 }
+
+/* =====================================================================
+   MENU LATERAL: categorias com foto, links secundários e WhatsApp em destaque
+   ===================================================================== */
+.menu-panel { width: min(400px, 90vw); }
+.mp-nav { padding: 6px var(--gutter) 18px; }
+.mp-label { margin: 16px 0 4px; font-size: .64rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ouro-txt); }
+.mp-nav a.mp-cat {
+  display: grid;
+  grid-template-columns: 56px 1fr 10px;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 2px 10px 0;
+  font-family: var(--sans);
+  font-size: 1rem;
+}
+.mp-cat picture { display: block; width: 56px; height: 56px; }
+.mp-cat img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: #ECECEA; box-shadow: 0 0 0 1px rgba(207, 163, 92, .55); }
+.mp-cat b { display: block; font-family: var(--serif); font-weight: 500; font-size: 1.45rem; line-height: 1.1; color: var(--verde); }
+.mp-cat small { font-size: .72rem; color: var(--suave); }
+.mp-cat::after { content: ''; width: 8px; height: 8px; border-top: 1.5px solid var(--ouro-txt); border-right: 1.5px solid var(--ouro-txt); transform: rotate(45deg); }
+.mp-nav a.mp-all {
+  align-self: flex-start;
+  padding: 14px 0 0;
+  border: 0;
+  font-family: var(--sans);
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--verde);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.mp-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; margin-top: 18px; padding-top: 6px; border-top: 1px solid var(--linha); }
+.mp-nav .mp-links a {
+  display: flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0;
+  border-bottom: 1px solid var(--linha);
+  font-family: var(--sans);
+  font-size: .78rem;
+  font-weight: 500;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--grafite);
+}
+.mp-foot { padding-top: 16px; }
+.mp-wa { width: 100%; gap: 10px; min-height: 52px; margin-bottom: 16px; }
+.mp-wa svg { width: 20px; height: 20px; color: var(--ouro-claro); }
+.mp-lang { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.mp-lang p { margin: 0; }
+.mp-foot .lang { gap: 6px; }
+.mp-foot .lang button { min-width: 44px; min-height: 40px; }

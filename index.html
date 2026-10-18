@@ -27,7 +27,7 @@
 <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/hero-ring-800.jpg" as="image" media="(max-width: 767px)">
-<link rel="stylesheet" href="assets/site.css?v=5">
+<link rel="stylesheet" href="assets/site.css?v=7">
 </head>
 <body>
 
@@ -298,22 +298,29 @@
     <button class="x" type="button" data-close aria-label="Fermer" data-i18n-aria="close"><svg aria-hidden="true" focusable="false"><use href="#i-close"/></svg></button>
   </div>
   <nav class="mp-nav" aria-label="Navigation principale" data-i18n-aria="nav_label">
-    <a href="#collection" data-i18n="cat_h">La collection</a>
-    <a href="#bagues" data-i18n="nav_bagues">Bagues</a>
-    <a href="#colliers" data-i18n="nav_colliers">Colliers</a>
-    <a href="#boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</a>
-    <a href="#bracelets" data-i18n="nav_bracelets">Bracelets</a>
-    <a href="#maison" data-i18n="nav_maison">La Maison</a>
-    <a href="#sur-mesure" data-i18n="sm_eye">Sur mesure</a>
-    <a href="#contact" data-i18n="nav_contact">Contact</a>
+    <p class="mp-label" data-i18n="cat_h">La collection</p>
+    <a href="#bagues" class="mp-cat"><picture><source type="image/webp" srcset="assets/cat-bagues-240.webp"><img src="assets/cat-bagues-240.jpg" width="56" height="56" loading="lazy" decoding="async" alt=""></picture><span><b data-i18n="nav_bagues">Bagues</b><small>20 <span data-i18n="crN">créations</span></small></span></a>
+    <a href="#colliers" class="mp-cat"><picture><source type="image/webp" srcset="assets/cat-colliers-240.webp"><img src="assets/cat-colliers-240.jpg" width="56" height="56" loading="lazy" decoding="async" alt=""></picture><span><b data-i18n="nav_colliers">Colliers</b><small>6 <span data-i18n="crN">créations</span></small></span></a>
+    <a href="#boucles" class="mp-cat"><picture><source type="image/webp" srcset="assets/cat-boucles-240.webp"><img src="assets/cat-boucles-240.jpg" width="56" height="56" loading="lazy" decoding="async" alt=""></picture><span><b data-i18n="nav_boucles_full">Boucles d'oreilles</b><small>8 <span data-i18n="crN">créations</span></small></span></a>
+    <a href="#bracelets" class="mp-cat"><picture><source type="image/webp" srcset="assets/cat-bracelets-240.webp"><img src="assets/cat-bracelets-240.jpg" width="56" height="56" loading="lazy" decoding="async" alt=""></picture><span><b data-i18n="nav_bracelets">Bracelets</b><small>1 <span data-i18n="cr1">création</span></small></span></a>
+    <a href="#collection" class="mp-all" data-i18n="see_all">Voir toute la collection</a>
+    <div class="mp-links">
+      <a href="#maison" data-i18n="nav_maison">La Maison</a>
+      <a href="#sur-mesure" data-i18n="sm_eye">Sur mesure</a>
+      <a href="#garantie" data-i18n="c_eye">Garantie</a>
+      <a href="#contact" data-i18n="nav_contact">Contact</a>
+    </div>
   </nav>
   <div class="mp-foot">
-    <p data-i18n="menu_lang">Langue</p>
-    <div class="lang" role="group" aria-label="Langue · Idioma · Language">
-      <button type="button" data-lang="fr" lang="fr" aria-pressed="true">FR<span class="sr-only"> — Français</span></button>
-      <button type="button" data-lang="pt" lang="pt-BR" aria-pressed="false">PT<span class="sr-only"> — Português</span></button>
-      <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="sr-only"> — English</span></button>
-      <button type="button" data-lang="es" lang="es" aria-pressed="false">ES<span class="sr-only"> — Español</span></button>
+    <a class="btn btn-green mp-wa" href="https://wa.me/41764407717" data-wa="general" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg><span data-i18n="ct_cta">Écrire sur WhatsApp</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+    <div class="mp-lang">
+      <p data-i18n="menu_lang">Langue</p>
+      <div class="lang" role="group" aria-label="Langue · Idioma · Language">
+        <button type="button" data-lang="fr" lang="fr" aria-pressed="true">FR<span class="sr-only"> — Français</span></button>
+        <button type="button" data-lang="pt" lang="pt-BR" aria-pressed="false">PT<span class="sr-only"> — Português</span></button>
+        <button type="button" data-lang="en" lang="en" aria-pressed="false">EN<span class="sr-only"> — English</span></button>
+        <button type="button" data-lang="es" lang="es" aria-pressed="false">ES<span class="sr-only"> — Español</span></button>
+      </div>
     </div>
   </div>
 </dialog>
@@ -411,6 +418,6 @@
   </div>
 </dialog>
 
-<script src="assets/site.js?v=6"></script>
+<script src="assets/site.js?v=7"></script>
 </body>
 </html>

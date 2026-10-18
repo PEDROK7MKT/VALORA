@@ -15,7 +15,7 @@
     fr: {
       doc_title: "Valora Suisse — Bijoux d'exception",
       doc_desc: 'Bijoux qui traversent le temps. Créations en argent, or et moissanite, et pièces sur mesure — signées Valora Suisse.',
-      skip: 'Aller au contenu', nav_label: 'Navigation principale', menu_open: 'Ouvrir le menu', menu_title: 'Menu', menu_lang: 'Langue', close: 'Fermer',
+      skip: 'Aller au contenu', nav_label: 'Navigation principale', menu_open: 'Ouvrir le menu', menu_title: 'Menu', menu_lang: 'Langue', see_all: 'Voir toute la collection', close: 'Fermer',
       nav_bagues: 'Bagues', nav_colliers: 'Colliers', nav_boucles: 'Boucles', nav_boucles_full: "Boucles d'oreilles", nav_bracelets: 'Bracelets', nav_maison: 'La Maison', nav_contact: 'Contact',
       cart_btn: 'Panier', cart_items_sr: 'articles',
       motion_pause: "Mettre en pause la vidéo et l'animation", motion_play: "Relancer la vidéo et l'animation",
@@ -78,7 +78,7 @@
     pt: {
       doc_title: 'Valora Suisse — Joias de exceção',
       doc_desc: 'Joias que atravessam o tempo. Criações em prata, ouro e moissanite, e peças sob medida — assinadas Valora Suisse.',
-      skip: 'Ir para o conteúdo', nav_label: 'Navegação principal', menu_open: 'Abrir o menu', menu_title: 'Menu', menu_lang: 'Idioma', close: 'Fechar',
+      skip: 'Ir para o conteúdo', nav_label: 'Navegação principal', menu_open: 'Abrir o menu', menu_title: 'Menu', menu_lang: 'Idioma', close: 'Fechar', see_all: 'Ver toda a coleção',
       nav_bagues: 'Anéis', nav_colliers: 'Colares', nav_boucles: 'Brincos', nav_boucles_full: 'Brincos', nav_bracelets: 'Pulseiras', nav_maison: 'A Marca', nav_contact: 'Contato',
       cart_btn: 'Carrinho', cart_items_sr: 'itens',
       motion_pause: 'Pausar o vídeo e a animação', motion_play: 'Retomar o vídeo e a animação',
@@ -141,7 +141,7 @@
     en: {
       doc_title: 'Valora Suisse — Exceptional jewellery',
       doc_desc: 'Jewellery that endures. Creations in silver, gold and moissanite, and bespoke pieces — signed Valora Suisse.',
-      skip: 'Skip to content', nav_label: 'Main navigation', menu_open: 'Open menu', menu_title: 'Menu', menu_lang: 'Language', close: 'Close',
+      skip: 'Skip to content', nav_label: 'Main navigation', menu_open: 'Open menu', menu_title: 'Menu', menu_lang: 'Language', see_all: 'See the whole collection', close: 'Close',
       nav_bagues: 'Rings', nav_colliers: 'Necklaces', nav_boucles: 'Earrings', nav_boucles_full: 'Earrings', nav_bracelets: 'Bracelets', nav_maison: 'The House', nav_contact: 'Contact',
       cart_btn: 'Cart', cart_items_sr: 'items',
       motion_pause: 'Pause the video and animation', motion_play: 'Play the video and animation',
@@ -204,7 +204,7 @@
     es: {
       doc_title: 'Valora Suisse — Joyas excepcionales',
       doc_desc: 'Joyas que atraviesan el tiempo. Creaciones en plata, oro y moissanita, y piezas a medida — firmadas por Valora Suisse.',
-      skip: 'Saltar al contenido', nav_label: 'Navegación principal', menu_open: 'Abrir el menú', menu_title: 'Menú', menu_lang: 'Idioma', close: 'Cerrar',
+      skip: 'Saltar al contenido', nav_label: 'Navegación principal', menu_open: 'Abrir el menú', menu_title: 'Menú', menu_lang: 'Idioma', close: 'Cerrar', see_all: 'Ver toda la colección',
       nav_bagues: 'Anillos', nav_colliers: 'Collares', nav_boucles: 'Pendientes', nav_boucles_full: 'Pendientes', nav_bracelets: 'Pulseras', nav_maison: 'La Marca', nav_contact: 'Contacto',
       cart_btn: 'Cesta', cart_items_sr: 'artículos',
       motion_pause: 'Pausar el vídeo y la animación', motion_play: 'Reanudar el vídeo y la animación',
