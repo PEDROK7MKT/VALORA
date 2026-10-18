@@ -961,7 +961,6 @@ dialog::backdrop { background: rgba(3, 45, 31, .55); }
   .collection .sec { padding-top: 28px; padding-bottom: 14px; }
   .collection .sec-h { margin-bottom: 0; }
   .collection h2 { font-size: 2rem; }
-  .cats { display: none; }
   .chips {
     position: sticky;
     top: var(--hd-h);
@@ -1159,3 +1158,55 @@ dialog::backdrop { background: rgba(3, 45, 31, .55); }
 .pc-img[data-g="boucles"] img { scale: 1.12; transform-origin: 50% 46%; }
 /* carrossel do tablet deitado: a sombra do card não é cortada no topo */
 @media (min-width: 821px) and (max-width: 1100px) { .grid5 { padding-top: 4px; } }
+
+/* =====================================================================
+   CATEGORIAS COM FOTO, ÍCONES E LEVEZA NO CELULAR
+   ===================================================================== */
+/* categorias: foto real de uma peça de cada grupo */
+.cats { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 2vw, 24px); background: none; border: 0; }
+.cat { display: grid; justify-items: start; gap: 2px; padding: 0; background: none; }
+.cat:hover { background: none; }
+.cat-img { display: block; width: 100%; aspect-ratio: 1; margin-bottom: 12px; overflow: hidden; background: #ECECEA; box-shadow: 0 0 0 1px rgba(56, 73, 55, .1); }
+.cat-img img { width: 100%; height: 100%; object-fit: cover; transition: scale .8s var(--ease); }
+.cat:hover .cat-img img { scale: 1.04; }
+.cat b { font-size: clamp(1.25rem, 1.8vw, 1.65rem); }
+
+/* ícone da categoria ao lado do título de cada grupo */
+.psec-h { align-items: center; justify-content: flex-start; }
+.psec-ico { flex: none; width: 26px; height: 26px; color: var(--ouro-txt); }
+.psec-h small { margin-left: auto; }
+
+/* selos: ícone de verdade e texto normal (sem caixa alta espaçada) */
+.trust { font-size: .8rem; font-weight: 500; letter-spacing: .01em; text-transform: none; }
+.trust li { gap: 10px; }
+.trust svg { width: 22px; height: 22px; color: var(--ouro-txt); }
+
+@media (max-width: 820px) {
+  /* rolagem leve no iPhone: sem desfoque atrás do cabeçalho e das abas, fita sem sombra, sem vídeo */
+  .site-header, .chips { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--marfim); }
+  .ribbon svg { filter: none; }
+  .hero video, .motion-btn { display: none; }
+  .prod { transition: none; box-shadow: 0 0 0 1px rgba(56, 73, 55, .12), 0 8px 16px -12px rgba(3, 45, 31, .3); }
+  .prod:hover { box-shadow: 0 0 0 1px rgba(56, 73, 55, .12), 0 8px 16px -12px rgba(3, 45, 31, .3); }
+
+  /* categorias em círculos, como numa loja */
+  .cats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+  .cat { flex-direction: column; justify-items: center; align-items: center; padding: 0; gap: 0; text-align: center; }
+  .cat-img { width: 100%; max-width: 92px; border-radius: 50%; margin-bottom: 8px; box-shadow: 0 0 0 1px rgba(207, 163, 92, .55); }
+  .cat b { font-size: 1.05rem; line-height: 1.15; }
+  .cat small { font-size: .66rem; }
+  .collection .sec { padding-bottom: 22px; }
+
+  /* selos: 2 x 2, ícone à esquerda */
+  .trust { display: grid; grid-template-columns: 1fr 1fr; justify-items: start; gap: 16px 14px; text-align: left; font-size: .76rem; line-height: 1.35; }
+  .trust li { flex-direction: row; gap: 10px; }
+  .trust svg { width: 22px; height: 22px; }
+
+  /* sem a lista de "valores" (texto genérico) no celular */
+  .vals { display: none; }
+  .psec-ico { width: 22px; height: 22px; }
+}
+@media (max-width: 380px) {
+  .cat b { font-size: .95rem; }
+  .cat small { display: none; }
+}

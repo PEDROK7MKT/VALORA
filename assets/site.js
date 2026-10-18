@@ -416,7 +416,9 @@
   const motionBtn = $('motionToggle');
   const mqMobile = window.matchMedia('(max-width: 767px)');
   const saveData = !!(navigator.connection && navigator.connection.saveData);
-  let paused = reduceMotion.matches || saveData;
+  // Celular e tablet: topo com a imagem parada e fita sem animação (rolagem leve no iPhone)
+  const lite = window.matchMedia('(max-width: 820px)').matches;
+  let paused = reduceMotion.matches || saveData || lite;
   let heroVisible = true;
   video.muted = true;
 

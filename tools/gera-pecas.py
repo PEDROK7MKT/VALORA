@@ -93,7 +93,7 @@ def page(p, todas, footer):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/site.css?v=4">
 </head>
 <body class="pc-page">
 
@@ -155,7 +155,7 @@ def page(p, todas, footer):
 
 {footer}
 
-<script src="/assets/piece.js"></script>
+<script src="/assets/piece.js?v=4"></script>
 </body>
 </html>
 '''
