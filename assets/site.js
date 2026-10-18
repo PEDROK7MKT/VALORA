@@ -52,7 +52,7 @@
       cert_alt: "Certificat d'authenticité Valora Suisse avec son sceau",
       ct_h: 'Une pièce vous attend',
       ct_p: 'Pour toute demande, information ou création sur mesure, notre équipe vous accompagne avec la même attention que celle portée à chaque bijou.',
-      ct_cta: 'Écrire sur WhatsApp', newtab: '(nouvel onglet)', wa_aria: 'Écrire sur WhatsApp (nouvel onglet)',
+      ct_cta: 'Écrire sur WhatsApp', newtab: '(nouvel onglet)', wa_aria: 'Écrire sur WhatsApp (nouvel onglet)', how_h: 'Comment commander', how_1: 'Choisissez votre pièce', how_2: 'Touchez « Commander » : WhatsApp s’ouvre avec la pièce', how_3: 'Prix, taille et livraison confirmés avec vous',
       wa_general: "Bonjour Valora Suisse, j'aimerais avoir des informations.",
       wa_bespoke: "Bonjour Valora Suisse, j'aimerais créer une pièce sur mesure.",
       f_tag: 'Ce qui a de la valeur demeure.', f_loc: 'Suisse', f_rights: '© 2026 Valora Suisse — Tous droits réservés', f_by: 'Conçu par',
@@ -115,7 +115,7 @@
       cert_alt: 'Certificado de autenticidade Valora Suisse com o selo',
       ct_h: 'Uma peça espera por você',
       ct_p: 'Para qualquer pedido, informação ou criação sob medida, nossa equipe acompanha você com o mesmo cuidado dedicado a cada joia.',
-      ct_cta: 'Falar no WhatsApp', newtab: '(abre em nova aba)', wa_aria: 'Falar no WhatsApp (abre em nova aba)',
+      ct_cta: 'Falar no WhatsApp', newtab: '(abre em nova aba)', wa_aria: 'Falar no WhatsApp (abre em nova aba)', how_h: 'Como comprar', how_1: 'Escolha a sua peça', how_2: 'Toque em «Encomendar»: o WhatsApp abre com a peça', how_3: 'Preço, tamanho e entrega combinados com você',
       wa_general: 'Olá, Valora Suisse! Gostaria de mais informações.',
       wa_bespoke: 'Olá, Valora Suisse! Gostaria de criar uma peça sob medida.',
       f_tag: 'O que tem valor permanece.', f_loc: 'Suíça', f_rights: '© 2026 Valora Suisse — Todos os direitos reservados', f_by: 'Criado por',
@@ -178,7 +178,7 @@
       cert_alt: 'Valora Suisse certificate of authenticity with its seal',
       ct_h: 'A piece awaits you',
       ct_p: 'For any request, information or bespoke creation, our team accompanies you with the same attention given to every jewel.',
-      ct_cta: 'Write on WhatsApp', newtab: '(opens in a new tab)', wa_aria: 'Write on WhatsApp (opens in a new tab)',
+      ct_cta: 'Write on WhatsApp', newtab: '(opens in a new tab)', wa_aria: 'Write on WhatsApp (opens in a new tab)', how_h: 'How to order', how_1: 'Choose your piece', how_2: 'Tap “Order”: WhatsApp opens with the piece', how_3: 'Price, size and delivery confirmed with you',
       wa_general: 'Hello Valora Suisse, I would like some information.',
       wa_bespoke: 'Hello Valora Suisse, I would like to create a bespoke piece.',
       f_tag: 'What has value endures.', f_loc: 'Switzerland', f_rights: '© 2026 Valora Suisse — All rights reserved', f_by: 'Designed by',
@@ -241,7 +241,7 @@
       cert_alt: 'Certificado de autenticidad Valora Suisse con su sello',
       ct_h: 'Una pieza te espera',
       ct_p: 'Para cualquier consulta, información o creación a medida, nuestro equipo te acompaña con la misma atención dedicada a cada joya.',
-      ct_cta: 'Escribir por WhatsApp', newtab: '(se abre en una pestaña nueva)', wa_aria: 'Escribir por WhatsApp (se abre en una pestaña nueva)',
+      ct_cta: 'Escribir por WhatsApp', newtab: '(se abre en una pestaña nueva)', wa_aria: 'Escribir por WhatsApp (se abre en una pestaña nueva)', how_h: 'Cómo comprar', how_1: 'Elige tu pieza', how_2: 'Toca «Encargar»: WhatsApp se abre con la pieza', how_3: 'Precio, talla y envío confirmados contigo',
       wa_general: 'Hola, Valora Suisse. Me gustaría recibir información.',
       wa_bespoke: 'Hola, Valora Suisse. Me gustaría crear una pieza a medida.',
       f_tag: 'Lo que tiene valor permanece.', f_loc: 'Suiza', f_rights: '© 2026 Valora Suisse — Todos los derechos reservados', f_by: 'Creado por',
@@ -277,7 +277,8 @@
       { ref: 'SH-669', h: 1067 }, { ref: 'SH-667', h: 1067 }, { ref: 'SH-977', h: 1067 }, { ref: 'SH-437', h: 1067 },
       { ref: 'SH-702', h: 1067 }, { ref: 'SH-280', h: 1067 }, { ref: 'SH-589', h: 1067 }, { ref: 'SH-625', h: 1067 },
     ] },
-    colliers: { cat: 'pcat_collier', pt: 'Colar', items: [
+    // colares: foto recortada no pingente (assets/products/<ref>-c-*), a original tem muito expositor
+    colliers: { cat: 'pcat_collier', pt: 'Colar', crop: true, items: [
       { ref: 'SH-358', h: 1067 }, { ref: 'SH-422', h: 1067 }, { ref: 'SH-560', h: 1067 }, { ref: 'SH-882', h: 1067 },
       { ref: 'SH-679', h: 1067 }, { ref: 'SH-239', h: 1067 },
     ] },
@@ -331,7 +332,7 @@
   /* ===================================================== imagens que falham (substitui onerror inline) */
   document.querySelectorAll('img[data-fallback]').forEach((img) => {
     const hide = () => {
-      if (img.dataset.fallback === 'cover') img.parentNode.classList.add('no-img');
+      if (img.dataset.fallback === 'cover') (img.closest('.cover') || img.parentNode).classList.add('no-img');
       img.hidden = true;
     };
     if (img.complete && img.naturalWidth === 0) hide();
@@ -346,12 +347,13 @@
     const slug = pieceSlug(p);
     const url = `pecas/${slug}/`;
     const sizes = '(min-width: 1101px) 250px, (min-width: 821px) 38vw, (min-width: 561px) 31vw, 47vw';
-    const base = `assets/products/${slug}`;
+    const crop = !!P[gid].crop;
+    const base = `assets/products/${slug}${crop ? '-c' : ''}`;
     const media = h('picture', null,
       h('source', { type: 'image/webp', srcset: `${base}-480.webp 480w, ${base}-800.webp 800w`, sizes }),
       h('img', {
         src: `${base}-800.jpg`, srcset: `${base}-480.jpg 480w, ${base}-800.jpg 800w`, sizes,
-        width: 800, height: p.h, loading: 'lazy', decoding: 'async', alt: '',
+        width: 800, height: crop ? 1000 : p.h, loading: 'lazy', decoding: 'async', alt: '',
       }));
     return h('article', { class: 'prod', 'data-g': gid },
       h('div', { class: 'p-img' }, h('a', { href: url, tabindex: '-1', 'aria-hidden': 'true' }, media)),
@@ -489,7 +491,8 @@
     const a = e.target.closest('a[href^="#"]');
     if (!a) return;
     e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
+    let target = document.querySelector(a.getAttribute('href'));
+    if (target && target.offsetParent === null && target.dataset.alt) target = $(target.dataset.alt);
     dialogs.menu.opener = null;
     dialogs.menu.close();
     if (!target) return;

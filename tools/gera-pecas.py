@@ -38,13 +38,25 @@ def picture(slug, h800, sizes, eager=False):
     )
 
 
+def picture_crop(slug, sizes):
+    # colares: recorte no pingente, só em 480 e 800 (4:5)
+    base = f'/assets/products/{slug}-c'
+    return (
+        f'<picture><source type="image/webp" srcset="{base}-480.webp 480w, {base}-800.webp 800w" sizes="{sizes}">'
+        f'<img src="{base}-800.jpg" srcset="{base}-480.jpg 480w, {base}-800.jpg 800w" sizes="{sizes}" '
+        f'width="800" height="1000" loading="lazy" decoding="async" alt=""></picture>'
+    )
+
+
 def mini_card(p):
     g = GRUPOS[p['grupo']]
     slug = p['ref'].lower()
+    sizes = "(min-width: 1101px) 250px, (min-width: 561px) 38vw, 47vw"
+    crop = os.path.exists(os.path.join(ROOT, f'assets/products/{slug}-c-480.jpg'))
     return (
         f'<article class="prod" data-g="{p["grupo"]}">'
         f'<div class="p-img"><a href="/pecas/{slug}/" tabindex="-1" aria-hidden="true">'
-        f'{picture(slug, p["h800"], "(min-width: 1101px) 250px, (min-width: 561px) 38vw, 72vw")}</a></div>'
+        f'{picture_crop(slug, sizes) if crop else picture(slug, p["h800"], sizes)}</a></div>'
         f'<h3 class="p-name"><a href="/pecas/{slug}/"><span class="p-cat" data-i18n="{g[2]}">{e(g[3])}</span> <span class="p-sku">{e(p["ref"])}</span></a></h3>'
         '<p class="p-ask" data-i18n="price_request">Prix sur demande</p>'
         '</article>'
@@ -93,7 +105,7 @@ def page(p, todas, footer):
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="/assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/assets/site.css?v=4">
+<link rel="stylesheet" href="/assets/site.css?v=5">
 </head>
 <body class="pc-page">
 
@@ -155,7 +167,7 @@ def page(p, todas, footer):
 
 {footer}
 
-<script src="/assets/piece.js?v=4"></script>
+<script src="/assets/piece.js?v=5"></script>
 </body>
 </html>
 '''

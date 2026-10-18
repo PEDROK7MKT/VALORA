@@ -26,7 +26,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" href="assets/fonts/cormorant-garamond-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/site.css?v=4">
+<link rel="preload" href="assets/hero-ring-800.jpg" as="image" media="(max-width: 767px)">
+<link rel="stylesheet" href="assets/site.css?v=5">
 </head>
 <body>
 
@@ -114,6 +115,14 @@
         <a href="#boucles" class="cat"><picture class="cat-img"><source type="image/webp" srcset="assets/cat-boucles-240.webp 240w, assets/cat-boucles-480.webp 480w" sizes="(min-width: 821px) 300px, 24vw"><img src="assets/cat-boucles-480.jpg" srcset="assets/cat-boucles-240.jpg 240w, assets/cat-boucles-480.jpg 480w" sizes="(min-width: 821px) 300px, 24vw" width="480" height="480" alt="" decoding="async"></picture><b data-i18n="nav_boucles_full">Boucles d'oreilles</b><small>8 <span data-i18n="crN">créations</span></small></a>
         <a href="#bracelets" class="cat"><picture class="cat-img"><source type="image/webp" srcset="assets/cat-bracelets-240.webp 240w, assets/cat-bracelets-480.webp 480w" sizes="(min-width: 821px) 300px, 24vw"><img src="assets/cat-bracelets-480.jpg" srcset="assets/cat-bracelets-240.jpg 240w, assets/cat-bracelets-480.jpg 480w" sizes="(min-width: 821px) 300px, 24vw" width="480" height="480" alt="" decoding="async"></picture><b data-i18n="nav_bracelets">Bracelets</b><small>1 <span data-i18n="cr1">création</span></small></a>
       </nav>
+      <div class="how" role="group" aria-labelledby="how-h">
+        <p class="how-h" id="how-h" data-i18n="how_h">Comment commander</p>
+        <ol class="how-steps">
+          <li><span class="how-n" aria-hidden="true">1</span><span data-i18n="how_1">Choisissez votre pièce</span></li>
+          <li><span class="how-n" aria-hidden="true">2</span><span data-i18n="how_2">Touchez « Commander » : WhatsApp s’ouvre avec la pièce</span></li>
+          <li><span class="how-n" aria-hidden="true">3</span><span data-i18n="how_3">Prix, taille et livraison confirmés avec vous</span></li>
+        </ol>
+      </div>
     </div>
   </section>
 
@@ -166,7 +175,7 @@
         <p data-i18n="m_p1">Le nom VALORA vient de l'idée de valeur — non seulement la valeur matérielle d'un bijou, mais la valeur affective, familiale et éternelle qu'il représente.</p>
       </div>
       <div class="cover">
-        <img src="assets/brand-cover.jpg" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover">
+        <picture><source type="image/webp" srcset="assets/brand-cover.webp"><img src="assets/brand-cover.jpg" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover"></picture>
       </div>
     </div>
   </section>
@@ -191,14 +200,14 @@
         <h2 id="ecrin-h" data-i18n="e_h">Chaque détail compte</h2>
       </div>
       <div class="mosaic">
-        <figure class="mo tall"><img src="assets/brand-bag.jpg" width="961" height="1019" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e1">Le sac Valora</figcaption></figure>
-        <figure class="mo"><img src="assets/brand-box.jpg" width="812" height="707" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e2">Écrin &amp; pochette</figcaption></figure>
-        <figure class="mo"><img src="assets/brand-seal.jpg" width="388" height="345" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e3">Sceau de cire</figcaption></figure>
-        <figure class="mo"><img src="assets/brand-envelope.jpg" width="806" height="537" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e5">Enveloppe &amp; cachet</figcaption></figure>
-        <figure class="mo wide"><img src="assets/brand-tissue.jpg" width="774" height="832" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e4">Papier de soie signé</figcaption></figure>
-        <figure class="mo"><img src="assets/brand-medal.jpg" width="400" height="562" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e8">Médaille gravée</figcaption></figure>
-        <figure class="mo wide"><img src="assets/brand-card.jpg" width="781" height="624" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e6">Carte « Merci »</figcaption></figure>
-        <figure class="mo wide"><img src="assets/brand-ribbon.jpg" width="700" height="381" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e7">Ruban satin</figcaption></figure>
+        <figure class="mo tall"><picture><source type="image/webp" srcset="assets/brand-bag.webp"><img src="assets/brand-bag.jpg" width="961" height="1019" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e1">Le sac Valora</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="assets/brand-box.webp"><img src="assets/brand-box.jpg" width="812" height="707" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e2">Écrin &amp; pochette</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="assets/brand-seal.webp"><img src="assets/brand-seal.jpg" width="388" height="345" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e3">Sceau de cire</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="assets/brand-envelope.webp"><img src="assets/brand-envelope.jpg" width="806" height="537" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e5">Enveloppe &amp; cachet</figcaption></figure>
+        <figure class="mo wide"><picture><source type="image/webp" srcset="assets/brand-tissue.webp"><img src="assets/brand-tissue.jpg" width="774" height="832" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e4">Papier de soie signé</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="assets/brand-medal.webp"><img src="assets/brand-medal.jpg" width="400" height="562" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e8">Médaille gravée</figcaption></figure>
+        <figure class="mo wide"><picture><source type="image/webp" srcset="assets/brand-card.webp"><img src="assets/brand-card.jpg" width="781" height="624" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e6">Carte « Merci »</figcaption></figure>
+        <figure class="mo wide"><picture><source type="image/webp" srcset="assets/brand-ribbon.webp"><img src="assets/brand-ribbon.jpg" width="700" height="381" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e7">Ruban satin</figcaption></figure>
       </div>
       <ul class="vals">
         <li class="val"><h3 data-i18n="v1">Design</h3><p data-i18n="v1p">Des créations pensées avec sensibilité et un regard authentique sur chaque détail.</p></li>
@@ -211,7 +220,7 @@
 
   <section id="garantie" aria-labelledby="cert-h">
     <div class="sec cert">
-      <img src="assets/brand-certificate.jpg" width="1200" height="730" loading="lazy" decoding="async" alt="Certificat d'authenticité Valora Suisse avec son sceau" data-i18n-alt="cert_alt" data-fallback>
+      <picture><source type="image/webp" srcset="assets/brand-certificate.webp"><img src="assets/brand-certificate.jpg" width="1200" height="730" loading="lazy" decoding="async" alt="Certificat d'authenticité Valora Suisse avec son sceau" data-i18n-alt="cert_alt" data-fallback></picture>
       <div>
         <span class="eye" data-i18n="c_eye">Garantie</span>
         <h2 id="cert-h" data-i18n="c_h">Certificat d'authenticité</h2>
@@ -222,7 +231,7 @@
     </div>
   </section>
 
-  <section class="contact" id="contact" aria-labelledby="ct-h">
+  <section class="contact" id="contact" data-alt="ft-contact" aria-labelledby="ct-h">
     <div class="sec">
       <h2 id="ct-h" data-i18n="ct_h">Une pièce vous attend</h2>
       <p data-i18n="ct_p">Pour toute demande, information ou création sur mesure, notre équipe vous accompagne avec la même attention que celle portée à chaque bijou.</p>
@@ -256,7 +265,7 @@
       <a href="#ecrin" data-i18n="e_eye">L'écrin</a>
       <a href="#garantie" data-i18n="c_eye">Garantie</a>
     </nav>
-    <div class="ft-col ft-contact">
+    <div class="ft-col ft-contact" id="ft-contact">
       <p class="ft-h" data-i18n="nav_contact">Contact</p>
       <ul>
         <li><a href="https://wa.me/41764407717" data-wa="general" target="_blank" rel="noopener noreferrer"><svg aria-hidden="true" focusable="false"><use href="#i-wa"/></svg>+41 76 440 77 17<span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a></li>
@@ -394,7 +403,7 @@
     </form>
   </div>
   <div class="co-done" id="doneView" hidden>
-    <img src="assets/lacre-sm.webp" width="96" height="96" alt="">
+    <img src="assets/lacre-sm.webp" width="96" height="96" loading="lazy" alt="">
     <h2 id="doneTitle" tabindex="-1" data-i18n="d_h">Votre sélection est prête</h2>
     <p data-i18n="d_p">Merci d'avoir choisi Valora Suisse. Que ce bijou accompagne vos plus beaux moments.</p>
     <small data-i18n="d_s">Démonstration : aucune commande n'a été enregistrée et aucun e-mail n'a été envoyé.</small>
@@ -402,6 +411,6 @@
   </div>
 </dialog>
 
-<script src="assets/site.js?v=4"></script>
+<script src="assets/site.js?v=5"></script>
 </body>
 </html>
