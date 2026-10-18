@@ -188,5 +188,17 @@
     const b = e.target.closest('.lang button');
     if (b) setLang(b.dataset.lang, true);
   });
+  // Contagem de pedidos: mesmo envio do assets/site.js, com origem "pagina-da-peca"
+  const ORDER_LOG = '/api/pedido/';
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-wa="order"]');
+    if (!a || !navigator.sendBeacon) return;
+    const peca = a.dataset.waName || '';
+    try {
+      navigator.sendBeacon(ORDER_LOG, new URLSearchParams({
+        referencia: peca.split(' ').pop(), peca, idioma: LANG, origem: 'pagina-da-peca', teste: storage.get('valora:teste') === '1' ? '1' : '0',
+      }));
+    } catch (err) { /* sem contagem, o pedido segue */ }
+  });
   setLang(initialLang(), false);
 })();

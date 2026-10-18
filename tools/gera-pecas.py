@@ -167,7 +167,7 @@ def page(p, todas, footer):
 
 {footer}
 
-<script src="/assets/piece.js?v=5"></script>
+<script src="/assets/piece.js?v=6"></script>
 </body>
 </html>
 '''

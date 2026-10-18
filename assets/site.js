@@ -663,5 +663,21 @@
     if (b) setLang(b.dataset.lang, true);
   });
 
+  /* ===================================================== contagem de pedidos
+     Cada toque em "Encomendar" vai para /api/pedido/ (função da Vercel, mesmo domínio), que grava em
+     pedidos_whatsapp no Supabase. sendBeacon não atrasa a abertura do WhatsApp e, se falhar, o pedido
+     segue do mesmo jeito. Testes: localStorage valora:teste = 1 marca a linha. */
+  const ORDER_LOG = '/api/pedido/';
+  document.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-wa="order"]');
+    if (!a || !navigator.sendBeacon) return;
+    const peca = a.dataset.waName || '';
+    try {
+      navigator.sendBeacon(ORDER_LOG, new URLSearchParams({
+        referencia: peca.split(' ').pop(), peca, idioma: LANG, origem: 'vitrine', teste: storage.get('valora:teste') === '1' ? '1' : '0',
+      }));
+    } catch (err) { /* sem contagem, o pedido segue */ }
+  });
+
   setLang(initialLang(), false);
 })();
