@@ -1391,3 +1391,7 @@ dialog::backdrop { background: rgba(3, 45, 31, .55); }
   .showroom .sec { padding-top: 48px; padding-bottom: 48px; }
   .sr-ctas .btn { flex: 1 1 100%; }
 }
+/* menu: 6 idiomas numa grade de 6 colunas, com o rótulo em cima */
+.mp-lang { flex-direction: column; align-items: stretch; gap: 8px; }
+.mp-foot .lang { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }
+.mp-foot .lang button { min-width: 0; }
