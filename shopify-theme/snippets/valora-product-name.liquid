@@ -4,6 +4,7 @@
   categoria no idioma escolhido + a referência ("Bague SH-387", "Ring SH-387"...).
   Quando a peça ganhar um nome de verdade, o nome aparece como está na Shopify.
   Uso: {%- render 'valora-product-name', product: product -%}
+  Nos cards (card: true, g: grupo): tipo da peça em versalete (.p-cat) + referência ou nome grande (.p-sku).
 {%- endcomment -%}
 {%- liquid
   assign words = product.title | split: ' '
@@ -24,5 +25,27 @@
         assign cat_fr = 'Bracelet'
     endcase
   endif
+
+  # nome de verdade: o tipo da peça sai do grupo
+  assign g_key = ''
+  case g
+    when 'bagues'
+      assign g_key = 'pcat_bague'
+      assign g_fr = 'Bague'
+    when 'colliers'
+      assign g_key = 'pcat_collier'
+      assign g_fr = 'Collier'
+    when 'boucles'
+      assign g_key = 'pcat_boucles'
+      assign g_fr = "Boucles d'oreilles"
+    when 'bracelets'
+      assign g_key = 'pcat_bracelet'
+      assign g_fr = 'Bracelet'
+  endcase
 -%}
-{%- if cat_key != blank -%}<span data-i18n="{{ cat_key }}">{{ cat_fr }}</span> {{ words[1] | escape }}{%- else -%}{{ product.title | escape }}{%- endif -%}
+{%- if card -%}
+  {%- if cat_key != blank -%}<span class="p-cat" data-i18n="{{ cat_key }}">{{ cat_fr }}</span> <span class="p-sku">{{ words[1] | escape }}</span>
+  {%- else -%}{%- if g_key != blank -%}<span class="p-cat" data-i18n="{{ g_key }}">{{ g_fr }}</span> {% endif -%}<span class="p-sku">{{ product.title | escape }}</span>{%- endif -%}
+{%- else -%}
+  {%- if cat_key != blank -%}<span data-i18n="{{ cat_key }}">{{ cat_fr }}</span> {{ words[1] | escape }}{%- else -%}{{ product.title | escape }}{%- endif -%}
+{%- endif -%}

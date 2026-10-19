@@ -1,0 +1,8 @@
+{%- comment -%}
+  Categoria com foto na página inicial (quadro no computador, círculo no celular).
+  Uso: {%- render 'valora-cat', handle: 'aneis', gid: 'bagues', key: 'nav_bagues', label: 'Bagues' -%}
+  A foto é a de uma peça do grupo, recortada (assets/cat-<gid>-240|480).
+{%- endcomment -%}
+{%- assign c = collections[handle] -%}
+{%- assign sizes = '(min-width: 821px) 300px, 24vw' -%}
+<a href="#{{ gid }}" class="cat"><picture class="cat-img"><source type="image/webp" srcset="{{ 'cat-' | append: gid | append: '-240.webp' | asset_url }} 240w, {{ 'cat-' | append: gid | append: '-480.webp' | asset_url }} 480w" sizes="{{ sizes }}"><img src="{{ 'cat-' | append: gid | append: '-480.jpg' | asset_url }}" srcset="{{ 'cat-' | append: gid | append: '-240.jpg' | asset_url }} 240w, {{ 'cat-' | append: gid | append: '-480.jpg' | asset_url }} 480w" sizes="{{ sizes }}" width="480" height="480" alt="" decoding="async"></picture><b data-i18n="{{ key }}">{{ label }}</b><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>

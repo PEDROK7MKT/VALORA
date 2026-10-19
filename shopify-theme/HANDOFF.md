@@ -179,3 +179,16 @@ português); políticas de reembolso/termos (hoje só a de privacidade existe).
 - Domínio: hoje `valorasuisse.com` aponta para a Vercel. Plano no README da raiz: a loja vai para o
   domínio raiz via Shopify e o convite `/lancamento` vai para um subdomínio na Vercel.
 - Tirar a senha da loja no lançamento.
+
+## Versão nova (19/10/2026) — mesmo design do valorasuisse.com
+- Página inicial: peças logo depois do topo, categorias com foto (assets/cat-*), "Comment commander"
+  (com preço fala de carrinho; sem preço, do WhatsApp — automático), abas de categoria presas no celular,
+  ícone por categoria, selos com ícones, marca enxuta, topo do celular com a joia (assets/hero-ring-800.jpg).
+- Cards: tipo em versalete + referência/nome grande; com preço → preço + "Ajouter au panier";
+  sem preço → "Prix sur demande" + WhatsApp. Anéis e brincos aproximados por CSS (data-g).
+  Colares: a 1ª foto de cada colar na Shopify é o recorte no pingente (a foto original ficou como 2ª).
+- Menu lateral com as categorias em foto e WhatsApp; rodapé verde com políticas da loja.
+- Idiomas: FR · DE · IT · EN · PT · ES no tema (assets/valora.js) e publicados na loja (o checkout segue).
+  O idioma padrão da loja ainda é pt-PT: trocar para Français em Configurações → Idiomas (só pelo painel).
+- Seção "Espaço de atendimento" (sections/valora-showroom.liquid): preencher no editor do tema
+  (foto, endereço, horário, link do mapa). Sem endereço e sem foto, não aparece.

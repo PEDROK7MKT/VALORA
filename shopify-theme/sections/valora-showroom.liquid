@@ -1,0 +1,51 @@
+{%- comment -%}
+  Espaço de atendimento (sob agendamento): foto do espaço + endereço + horário + botões.
+  Preenche-se no editor do tema (Página inicial → "Espaço de atendimento").
+  Enquanto não houver endereço nem foto, a seção não aparece.
+{%- endcomment -%}
+{%- liquid
+  assign s = section.settings
+  assign has_content = false
+  if s.address != blank or s.image != blank
+    assign has_content = true
+  endif
+-%}
+{%- if has_content -%}
+<section class="showroom" id="atelier" aria-labelledby="sr-h">
+  <div class="sec sr-grid{% if s.image == blank %} sr-grid--text{% endif %}">
+    {%- if s.image != blank -%}
+      <figure class="sr-img">
+        {{ s.image | image_url: width: 1400 | image_tag: widths: '480, 800, 1200, 1400', sizes: '(min-width: 821px) 50vw, 100vw', loading: 'lazy', alt: s.image.alt }}
+      </figure>
+    {%- endif -%}
+    <div class="sr-info">
+      <span class="eye" data-i18n="sr_eye">Sur rendez-vous</span>
+      <h2 id="sr-h" data-i18n="sr_h">Notre espace en Suisse</h2>
+      <p class="sr-p" data-i18n="sr_p">Voyez les pièces de près, essayez-les et recevez nos conseils dans notre espace, sur rendez-vous.</p>
+      {%- if s.address != blank -%}
+        <address class="sr-addr"><svg aria-hidden="true" focusable="false"><use href="#i-pin"/></svg><span>{{ s.address | escape | newline_to_br }}</span></address>
+      {%- endif -%}
+      {%- if s.hours != blank -%}<p class="sr-hours">{{ s.hours | escape }}</p>{%- endif -%}
+      <div class="sr-ctas">
+        <a class="btn btn-green" href="https://wa.me/41764407717" data-wa="visit" target="_blank" rel="noopener noreferrer"><span data-i18n="sr_cta">Prendre rendez-vous</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+        {%- if s.map_url != blank -%}
+          <a class="btn btn-outline" href="{{ s.map_url }}" target="_blank" rel="noopener noreferrer"><span data-i18n="sr_map">Itinéraire</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Espaço de atendimento",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Foto do espaço (parede, mesa de atendimento)" },
+    { "type": "textarea", "id": "address", "label": "Endereço", "info": "Ex.: Rue du Rhône 1, 1204 Genève. Uma linha por parte do endereço." },
+    { "type": "text", "id": "hours", "label": "Horário (opcional)", "info": "Ex.: Mardi–samedi, sur rendez-vous" },
+    { "type": "url", "id": "map_url", "label": "Link do Google Maps (opcional)" }
+  ],
+  "presets": [{ "name": "Espaço de atendimento" }]
+}
+{% endschema %}

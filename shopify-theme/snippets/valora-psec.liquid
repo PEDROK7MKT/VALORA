@@ -1,0 +1,15 @@
+{%- comment -%}
+  Grupo de peças da página inicial: título com ícone da categoria + grade de cards.
+  Uso: {%- render 'valora-psec', handle: 'aneis', gid: 'bagues', key: 'nav_bagues', label: 'Bagues', icon: 'ring' -%}
+{%- endcomment -%}
+{%- assign c = collections[handle] -%}
+<section class="psec" id="{{ gid }}" aria-labelledby="h-{{ gid }}">
+  <div class="sec">
+    <div class="psec-h"><svg class="psec-ico" aria-hidden="true" focusable="false"><use href="#i-{{ icon }}"/></svg><h2 id="h-{{ gid }}" data-i18n="{{ key }}">{{ label }}</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
+    <div class="grid5" id="g-{{ gid }}">
+      {%- for product in c.products limit: 50 -%}
+        {%- render 'valora-product-card', product: product, gid: gid -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>

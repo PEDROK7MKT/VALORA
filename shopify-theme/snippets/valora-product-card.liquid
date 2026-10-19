@@ -1,7 +1,30 @@
+{%- comment -%}
+  Card de peça (página inicial, coleções, busca e "mais da coleção").
+  Uso: {%- render 'valora-product-card', product: product, gid: 'bagues' -%}  (gid é opcional)
+  - tipo da peça em versalete + nome/referência grande;
+  - com preço: preço + "Ajouter au panier" (carrinho da Shopify);
+  - sem preço (CHF 0): "Prix sur demande" + pedido pelo WhatsApp da marca com o link da peça;
+  - data-g aproxima a foto conforme o tipo (as fotos têm muito expositor em volta).
+{%- endcomment -%}
 {%- liquid
   assign v = product.selected_or_first_available_variant
   assign img = product.featured_image
   assign pid = 'pn-' | append: product.id
+
+  # grupo da peça: vem da página inicial; nas outras páginas sai das coleções da peça
+  assign g = gid | default: ''
+  if g == blank
+    assign hs = product.collections | map: 'handle'
+    if hs contains 'aneis'
+      assign g = 'bagues'
+    elsif hs contains 'colares'
+      assign g = 'colliers'
+    elsif hs contains 'brincos'
+      assign g = 'boucles'
+    elsif hs contains 'pulseiras'
+      assign g = 'bracelets'
+    endif
+  endif
 
   # Nome provisório "Anel SH-387": a referência já está no nome, então a linha "Réf." some
   assign words = product.title | split: ' '
@@ -10,19 +33,18 @@
     assign provisional = true
   endif
 
-  # Sem preço (CHF 0): "Prix sur demande" e o pedido vai para o WhatsApp da marca com o link da peça
   assign on_request = false
   if product.price_max == 0
     assign on_request = true
   endif
 -%}
-<article class="prod">
+<article class="prod" data-g="{{ g }}">
   <div class="p-img">
     <a href="{{ product.url }}" tabindex="-1" aria-hidden="true">
       {%- if img -%}
         <img src="{{ img | image_url: width: 800 }}"
           srcset="{{ img | image_url: width: 480 }} 480w, {{ img | image_url: width: 800 }} 800w"
-          sizes="(min-width: 1101px) 250px, (min-width: 561px) 38vw, 72vw"
+          sizes="(min-width: 1101px) 250px, (min-width: 821px) 38vw, (min-width: 561px) 31vw, 47vw"
           width="800" height="{{ 800 | divided_by: img.aspect_ratio | round }}"
           loading="lazy" decoding="async" alt="{{ img.alt | default: product.title | escape }}">
       {%- else -%}
@@ -30,7 +52,7 @@
       {%- endif -%}
     </a>
   </div>
-  <h3 class="p-name" id="{{ pid }}"><a href="{{ product.url }}">{%- render 'valora-product-name', product: product -%}</a></h3>
+  <h3 class="p-name" id="{{ pid }}"><a href="{{ product.url }}">{%- render 'valora-product-name', product: product, card: true, g: g -%}</a></h3>
   {%- if v.sku != blank and provisional == false -%}<p class="p-ref"><span data-i18n="ref">Réf.</span> {{ v.sku | escape }}</p>{%- endif -%}
   {%- if on_request -%}
     <div class="p-foot p-foot--ask">
@@ -38,10 +60,10 @@
       <a class="add order" href="https://wa.me/41764407717" data-wa="order" data-wa-name="{{ product.title | escape }}" data-wa-url="{{ shop.url }}{{ product.url }}" target="_blank" rel="noopener noreferrer" aria-describedby="{{ pid }}"><span data-i18n="btn_order">Commander</span><span class="sr-only" data-i18n="newtab">(nouvel onglet)</span></a>
     </div>
   {%- else -%}
-    <div class="p-foot">
-      <span class="price" data-cents="{{ product.price }}">{{ product.price | money }}</span>
-      <button class="add" type="button" data-variant="{{ v.id }}" data-name="{{ product.title | escape }}" aria-describedby="{{ pid }}"{% unless product.available %} disabled{% endunless %}>
-        <span data-i18n="btn_add">Ajouter</span>
+    <div class="p-foot p-foot--buy">
+      <span class="price" data-cents="{{ product.price }}">{% if product.price_varies %}<span data-i18n="from">dès</span> {% endif %}{{ product.price | money }}</span>
+      <button class="add buy" type="button" data-variant="{{ v.id }}" data-name="{{ product.title | escape }}" aria-describedby="{{ pid }}"{% unless product.available %} disabled data-sold-out="true"{% endunless %}>
+        <span data-i18n="{% if product.available %}btn_add_cart{% else %}sold_out{% endif %}">{% if product.available %}Ajouter au panier{% else %}Épuisé{% endif %}</span>
       </button>
     </div>
   {%- endif -%}

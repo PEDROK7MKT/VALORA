@@ -1,3 +1,16 @@
+{%- liquid
+  # Com preço em alguma peça, o "Comment commander" fala de carrinho; sem preço, do pedido pelo WhatsApp
+  assign shop_mode = false
+  assign handles = 'aneis,colares,brincos,pulseiras' | split: ','
+  for hd in handles
+    for p in collections[hd].products limit: 50
+      if p.price_max > 0
+        assign shop_mode = true
+        break
+      endif
+    endfor
+  endfor
+-%}
   <section class="hero" id="top" aria-labelledby="hero-title">
     <video id="heroVideo" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" poster="{{ 'hero-poster.jpg' | asset_url }}" data-desktop-mp4="https://cdn.shopify.com/s/files/1/0960/9566/6557/files/valora-hero-desktop.mp4?v=1792227709" data-desktop-webm="https://cdn.shopify.com/s/files/1/0960/9566/6557/files/valora-hero-desktop.webm?v=1792227709" data-mobile-mp4="https://cdn.shopify.com/s/files/1/0960/9566/6557/files/valora-hero-mobile.mp4?v=1792227709"></video>
     <div class="hero-in">
@@ -17,11 +30,51 @@
 
   <div class="ribbon ribbon--hero" aria-hidden="true"></div>
 
+  <div class="shop">
+  <section class="collection" id="collection" aria-labelledby="collection-h">
+    <div class="sec">
+      <div class="sec-h"><h2 id="collection-h" data-i18n="cat_h">La collection</h2></div>
+      <nav class="cats" aria-labelledby="collection-h">
+        {%- render 'valora-cat', handle: 'aneis', gid: 'bagues', key: 'nav_bagues', label: 'Bagues' -%}
+        {%- render 'valora-cat', handle: 'colares', gid: 'colliers', key: 'nav_colliers', label: 'Colliers' -%}
+        {%- render 'valora-cat', handle: 'brincos', gid: 'boucles', key: 'nav_boucles_full', label: "Boucles d'oreilles" -%}
+        {%- render 'valora-cat', handle: 'pulseiras', gid: 'bracelets', key: 'nav_bracelets', label: 'Bracelets' -%}
+      </nav>
+      <div class="how" role="group" aria-labelledby="how-h">
+        <p class="how-h" id="how-h" data-i18n="how_h">Comment commander</p>
+        <ol class="how-steps">
+          <li><span class="how-n" aria-hidden="true">1</span><span data-i18n="how_1">Choisissez votre pièce</span></li>
+          {%- if shop_mode -%}
+          <li><span class="how-n" aria-hidden="true">2</span><span data-i18n="how_2_cart">Ajoutez-la au panier et payez en toute sécurité</span></li>
+          <li><span class="how-n" aria-hidden="true">3</span><span data-i18n="how_3_cart">Livraison assurée, avec certificat d'authenticité</span></li>
+          {%- else -%}
+          <li><span class="how-n" aria-hidden="true">2</span><span data-i18n="how_2">Touchez « Commander » : WhatsApp s’ouvre avec la pièce</span></li>
+          <li><span class="how-n" aria-hidden="true">3</span><span data-i18n="how_3">Prix, taille et livraison confirmés avec vous</span></li>
+          {%- endif -%}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- Abas de categoria: só no celular, ficam presas abaixo do cabeçalho enquanto as peças passam -->
+  <nav class="chips" id="chips" aria-labelledby="collection-h">
+    <a href="#bagues" class="chip"><span data-i18n="nav_bagues">Bagues</span><small>{{ collections['aneis'].products_count }}</small></a>
+    <a href="#colliers" class="chip"><span data-i18n="nav_colliers">Colliers</span><small>{{ collections['colares'].products_count }}</small></a>
+    <a href="#boucles" class="chip"><span data-i18n="nav_boucles">Boucles</span><small>{{ collections['brincos'].products_count }}</small></a>
+    <a href="#bracelets" class="chip"><span data-i18n="nav_bracelets">Bracelets</span><small>{{ collections['pulseiras'].products_count }}</small></a>
+  </nav>
+
+  {%- render 'valora-psec', handle: 'aneis', gid: 'bagues', key: 'nav_bagues', label: 'Bagues', icon: 'ring' -%}
+  {%- render 'valora-psec', handle: 'colares', gid: 'colliers', key: 'nav_colliers', label: 'Colliers', icon: 'necklace' -%}
+  {%- render 'valora-psec', handle: 'brincos', gid: 'boucles', key: 'nav_boucles_full', label: "Boucles d'oreilles", icon: 'earrings' -%}
+  {%- render 'valora-psec', handle: 'pulseiras', gid: 'bracelets', key: 'nav_bracelets', label: 'Bracelets', icon: 'bracelet' -%}
+  </div>
+
   <ul class="trust">
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t1">Certificat d'authenticité</span></li>
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t2">Création sur mesure</span></li>
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t3">Livraison assurée</span></li>
-    <li><svg aria-hidden="true" focusable="false"><use href="#i-star"/></svg><span data-i18n="t4">Paiement sécurisé</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-cert"/></svg><span data-i18n="t1">Certificat d'authenticité</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-pen"/></svg><span data-i18n="t2">Création sur mesure</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-box"/></svg><span data-i18n="t3">Livraison assurée</span></li>
+    <li><svg aria-hidden="true" focusable="false"><use href="#i-lock"/></svg><span data-i18n="t4">Paiement sécurisé</span></li>
   </ul>
 
   <section class="ground--papel" id="maison" aria-labelledby="maison-h">
@@ -30,68 +83,9 @@
         <span class="eye" data-i18n="m_eye">La Maison</span>
         <h2 id="maison-h" data-i18n="m_h">L'univers Valora</h2>
         <p data-i18n="m_p1">Le nom VALORA vient de l'idée de valeur — non seulement la valeur matérielle d'un bijou, mais la valeur affective, familiale et éternelle qu'il représente.</p>
-        <p data-i18n="m_p2">Le vert profond symbolise la permanence, l'exclusivité et la confiance. L'or incarne l'excellence, la tradition de la haute joaillerie et la préciosité de chaque création.</p>
-        <p data-i18n="m_p3">Des formes élégantes, des espaces généreux et une typographie raffinée reflètent une maison discrète mais mémorable — où le vrai luxe réside dans la qualité, l'authenticité et la permanence.</p>
       </div>
       <div class="cover">
-        <img src="{{ 'brand-cover.jpg' | asset_url }}" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover">
-      </div>
-    </div>
-  </section>
-
-  <section class="collection" id="collection" aria-labelledby="collection-h">
-    <div class="sec">
-      <div class="sec-h"><h2 id="collection-h" data-i18n="cat_h">La collection</h2></div>
-      <nav class="cats" aria-labelledby="collection-h">
-        <a href="#bagues" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bagues">Bagues</b><small>{% assign c = collections['aneis'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
-        <a href="#colliers" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_colliers">Colliers</b><small>{% assign c = collections['colares'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
-        <a href="#boucles" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_boucles_full">Boucles d'oreilles</b><small>{% assign c = collections['brincos'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
-        <a href="#bracelets" class="cat"><svg aria-hidden="true" focusable="false"><use href="#i-star-line"/></svg><b data-i18n="nav_bracelets">Bracelets</b><small>{% assign c = collections['pulseiras'] %}{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></a>
-      </nav>
-    </div>
-  </section>
-
-  {%- assign c = collections['aneis'] -%}
-  <section class="psec" id="bagues" aria-labelledby="h-bagues">
-    <div class="sec">
-      <div class="psec-h"><h2 id="h-bagues" data-i18n="nav_bagues">Bagues</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
-      <div class="grid5" id="g-bagues">
-        {%- for product in c.products limit: 50 -%}
-          {%- render 'valora-product-card', product: product -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </section>
-  {%- assign c = collections['colares'] -%}
-  <section class="psec" id="colliers" aria-labelledby="h-colliers">
-    <div class="sec">
-      <div class="psec-h"><h2 id="h-colliers" data-i18n="nav_colliers">Colliers</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
-      <div class="grid5" id="g-colliers">
-        {%- for product in c.products limit: 50 -%}
-          {%- render 'valora-product-card', product: product -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </section>
-  {%- assign c = collections['brincos'] -%}
-  <section class="psec" id="boucles" aria-labelledby="h-boucles">
-    <div class="sec">
-      <div class="psec-h"><h2 id="h-boucles" data-i18n="nav_boucles_full">Boucles d'oreilles</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
-      <div class="grid5" id="g-boucles">
-        {%- for product in c.products limit: 50 -%}
-          {%- render 'valora-product-card', product: product -%}
-        {%- endfor -%}
-      </div>
-    </div>
-  </section>
-  {%- assign c = collections['pulseiras'] -%}
-  <section class="psec" id="bracelets" aria-labelledby="h-bracelets">
-    <div class="sec">
-      <div class="psec-h"><h2 id="h-bracelets" data-i18n="nav_bracelets">Bracelets</h2><small>{{ c.products_count }} <span data-i18n="{% if c.products_count == 1 %}cr1{% else %}crN{% endif %}">{% if c.products_count == 1 %}création{% else %}créations{% endif %}</span></small></div>
-      <div class="grid5" id="g-bracelets">
-        {%- for product in c.products limit: 50 -%}
-          {%- render 'valora-product-card', product: product -%}
-        {%- endfor -%}
+        <picture><source type="image/webp" srcset="{{ 'brand-cover.webp' | asset_url }}"><img src="{{ 'brand-cover.jpg' | asset_url }}" width="1200" height="730" loading="lazy" decoding="async" alt="Le nom Valora gravé en relief sur un velours vert" data-i18n-alt="cover_alt" data-fallback="cover"></picture>
       </div>
     </div>
   </section>
@@ -116,14 +110,14 @@
         <h2 id="ecrin-h" data-i18n="e_h">Chaque détail compte</h2>
       </div>
       <div class="mosaic">
-        <figure class="mo tall"><img src="{{ 'brand-bag.jpg' | asset_url }}" width="961" height="1019" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e1">Le sac Valora</figcaption></figure>
-        <figure class="mo"><img src="{{ 'brand-box.jpg' | asset_url }}" width="812" height="707" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e2">Écrin &amp; pochette</figcaption></figure>
-        <figure class="mo"><img src="{{ 'brand-seal.jpg' | asset_url }}" width="388" height="345" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e3">Sceau de cire</figcaption></figure>
-        <figure class="mo"><img src="{{ 'brand-envelope.jpg' | asset_url }}" width="806" height="537" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e5">Enveloppe &amp; cachet</figcaption></figure>
-        <figure class="mo wide"><img src="{{ 'brand-tissue.jpg' | asset_url }}" width="774" height="832" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e4">Papier de soie signé</figcaption></figure>
-        <figure class="mo"><img src="{{ 'brand-medal.jpg' | asset_url }}" width="400" height="562" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e8">Médaille gravée</figcaption></figure>
-        <figure class="mo wide"><img src="{{ 'brand-card.jpg' | asset_url }}" width="781" height="624" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e6">Carte « Merci »</figcaption></figure>
-        <figure class="mo wide"><img src="{{ 'brand-ribbon.jpg' | asset_url }}" width="700" height="381" loading="lazy" decoding="async" alt="" data-fallback><figcaption data-i18n="e7">Ruban satin</figcaption></figure>
+        <figure class="mo tall"><picture><source type="image/webp" srcset="{{ 'brand-bag.webp' | asset_url }}"><img src="{{ 'brand-bag.jpg' | asset_url }}" width="961" height="1019" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e1">Le sac Valora</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="{{ 'brand-box.webp' | asset_url }}"><img src="{{ 'brand-box.jpg' | asset_url }}" width="812" height="707" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e2">Écrin &amp; pochette</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="{{ 'brand-seal.webp' | asset_url }}"><img src="{{ 'brand-seal.jpg' | asset_url }}" width="388" height="345" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e3">Sceau de cire</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="{{ 'brand-envelope.webp' | asset_url }}"><img src="{{ 'brand-envelope.jpg' | asset_url }}" width="806" height="537" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e5">Enveloppe &amp; cachet</figcaption></figure>
+        <figure class="mo wide"><picture><source type="image/webp" srcset="{{ 'brand-tissue.webp' | asset_url }}"><img src="{{ 'brand-tissue.jpg' | asset_url }}" width="774" height="832" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e4">Papier de soie signé</figcaption></figure>
+        <figure class="mo"><picture><source type="image/webp" srcset="{{ 'brand-medal.webp' | asset_url }}"><img src="{{ 'brand-medal.jpg' | asset_url }}" width="400" height="562" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e8">Médaille gravée</figcaption></figure>
+        <figure class="mo wide"><picture><source type="image/webp" srcset="{{ 'brand-card.webp' | asset_url }}"><img src="{{ 'brand-card.jpg' | asset_url }}" width="781" height="624" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e6">Carte « Merci »</figcaption></figure>
+        <figure class="mo wide"><picture><source type="image/webp" srcset="{{ 'brand-ribbon.webp' | asset_url }}"><img src="{{ 'brand-ribbon.jpg' | asset_url }}" width="700" height="381" loading="lazy" decoding="async" alt="" data-fallback></picture><figcaption data-i18n="e7">Ruban satin</figcaption></figure>
       </div>
       <ul class="vals">
         <li class="val"><h3 data-i18n="v1">Design</h3><p data-i18n="v1p">Des créations pensées avec sensibilité et un regard authentique sur chaque détail.</p></li>
@@ -136,7 +130,7 @@
 
   <section id="garantie" aria-labelledby="cert-h">
     <div class="sec cert">
-      <img src="{{ 'brand-certificate.jpg' | asset_url }}" width="1200" height="730" loading="lazy" decoding="async" alt="Certificat d'authenticité Valora Suisse avec son sceau" data-i18n-alt="cert_alt" data-fallback>
+      <picture><source type="image/webp" srcset="{{ 'brand-certificate.webp' | asset_url }}"><img src="{{ 'brand-certificate.jpg' | asset_url }}" width="1200" height="730" loading="lazy" decoding="async" alt="Certificat d'authenticité Valora Suisse avec son sceau" data-i18n-alt="cert_alt" data-fallback></picture>
       <div>
         <span class="eye" data-i18n="c_eye">Garantie</span>
         <h2 id="cert-h" data-i18n="c_h">Certificat d'authenticité</h2>
@@ -147,7 +141,7 @@
     </div>
   </section>
 
-  <section class="contact" id="contact" aria-labelledby="ct-h">
+  <section class="contact" id="contact" data-alt="ft-contact" aria-labelledby="ct-h">
     <div class="sec">
       <h2 id="ct-h" data-i18n="ct_h">Une pièce vous attend</h2>
       <p data-i18n="ct_p">Pour toute demande, information ou création sur mesure, notre équipe vous accompagne avec la même attention que celle portée à chaque bijou.</p>
